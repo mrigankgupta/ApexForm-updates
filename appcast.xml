@@ -5,6 +5,33 @@
     <link>https://github.com/mrigankgupta/ApexForm-updates</link>
     <description>Sparkle feed for ApexForm (direct download builds).</description>
     <language>en</language>
+    <!--
+      Source-of-truth copy kept in the private repo. Publish with:
+        ./scripts/ship-public-beta.sh
+      Canonical public feed (Sparkle SUFeedURL):
+        https://raw.githubusercontent.com/mrigankgupta/ApexForm-updates/main/appcast.xml
+    -->
+    <item>
+      <title>Version 1.0.0-beta.2 (Public Beta 2)</title>
+      <sparkle:version>8</sparkle:version>
+      <sparkle:shortVersionString>1.0.0-beta.2</sparkle:shortVersionString>
+      <pubDate>Thu, 23 Jul 2026 03:40:00 +0000</pubDate>
+      <description><![CDATA[
+        <h2>ApexForm Public Beta 2</h2>
+        <ul>
+          <li>Hardened squat/twist counting (fewer freeloads, better leave-frame reps)</li>
+          <li>Bio-Tax return-settle after away; Escape dismisses by default</li>
+          <li>No slouch cues when screen locked or face off calibrated desk</li>
+          <li>Multi-person mute + Pause/Unpause fix</li>
+          <li>Public Sparkle updates feed (source stays private)</li>
+        </ul>
+      ]]></description>
+      <enclosure
+        url="https://github.com/mrigankgupta/ApexForm-updates/releases/download/v1.0.0-beta.2/ApexForm-1.0.0-beta.2.dmg"
+        sparkle:edSignature="O3/XVRNs65/lqJyqjt7rBS+8OnOGMo1Ozv+ze9DTcDxov5MNceNamhp0qTCSg7xcxSw87lzigo5NWlbNwS+KAw=="
+        length="5148315"
+        type="application/octet-stream" />
+    </item>
     <item>
       <title>Version 1.0.0-beta (Public Beta)</title>
       <sparkle:version>7</sparkle:version>
