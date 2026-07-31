@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ApexForm — posture &amp; movement coach for Mac</title>
+  <meta name="description" content="ApexForm is a Mac menu-bar coach that keeps you upright and moving — posture cues when you slouch, short movement breaks when you've sat too long. On-device, private, free forever.">
+  <meta property="og:title" content="ApexForm — posture &amp; movement coach for Mac">
+  <meta property="og:description" content="Posture cues when you slouch, short movement breaks when you've sat too long. On-device and private. Free forever, one-time Pro unlock.">
+  <meta property="og:type" content="website">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --bg-card: #161b22;
+      --bg-card-hover: #1c2129;
+      --border: #2d333b;
+      --text: #e6edf3;
+      --muted: #9198a1;
+      --accent: #4ade80;
+      --accent-dim: #22c55e;
+      --accent-soft: rgba(74, 222, 128, 0.12);
+      --radius: 14px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
+
+    header.hero {
+      padding: 5.5rem 0 4rem;
+      text-align: center;
+      background:
+        radial-gradient(ellipse 70% 55% at 50% -10%, rgba(74, 222, 128, 0.14), transparent),
+        var(--bg);
+    }
+    .badge {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+      background: var(--accent-soft);
+      border: 1px solid rgba(74, 222, 128, 0.3);
+      border-radius: 999px;
+      padding: 0.3rem 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 3.6rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.12;
+    }
+    .hero h1 .accent { color: var(--accent); }
+    .hero p.sub {
+      max-width: 38rem;
+      margin: 1.25rem auto 0;
+      font-size: 1.15rem;
+      color: var(--muted);
+    }
+    .cta-row { margin-top: 2.25rem; display: flex; gap: 0.9rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-block;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 10px;
+      padding: 0.8rem 1.6rem;
+      transition: transform 0.12s ease, background 0.12s ease;
+    }
+    .btn:hover { text-decoration: none; transform: translateY(-1px); }
+    .btn-primary { background: var(--accent-dim); color: #052e16; }
+    .btn-primary:hover { background: var(--accent); }
+    .btn-secondary { background: var(--bg-card); color: var(--text); border: 1px solid var(--border); }
+    .btn-secondary:hover { background: var(--bg-card-hover); }
+    .hero .fine { margin-top: 1rem; font-size: 0.85rem; color: var(--muted); }
+
+    section { padding: 4rem 0; }
+    section h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      text-align: center;
+      margin-bottom: 0.6rem;
+    }
+    section p.lead { text-align: center; color: var(--muted); max-width: 36rem; margin: 0 auto 2.5rem; }
+
+    .grid { display: grid; gap: 1.1rem; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+    .card .icon { font-size: 1.6rem; display: block; margin-bottom: 0.7rem; }
+    .card h3 { font-size: 1.05rem; font-weight: 650; margin-bottom: 0.4rem; }
+    .card p { font-size: 0.92rem; color: var(--muted); }
+    .card .pro-tag {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em;
+      color: var(--accent); background: var(--accent-soft);
+      border-radius: 5px; padding: 0.1rem 0.45rem; margin-left: 0.4rem;
+      vertical-align: middle;
+    }
+
+    .steps { display: grid; gap: 1.1rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); counter-reset: step; }
+    .step { position: relative; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem 1.5rem 1.5rem 1.5rem; }
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 2rem; height: 2rem; border-radius: 50%;
+      background: var(--accent-soft); color: var(--accent);
+      font-weight: 700; margin-bottom: 0.8rem;
+    }
+    .step h3 { font-size: 1rem; margin-bottom: 0.35rem; }
+    .step p { font-size: 0.92rem; color: var(--muted); }
+
+    .pricing { display: grid; gap: 1.1rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); max-width: 700px; margin: 0 auto; }
+    .plan {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.8rem;
+      display: flex; flex-direction: column;
+    }
+    .plan.featured { border-color: rgba(74, 222, 128, 0.45); }
+    .plan h3 { font-size: 1.15rem; }
+    .plan .price { font-size: 1.9rem; font-weight: 700; margin: 0.5rem 0 0.2rem; }
+    .plan .price small { font-size: 0.85rem; font-weight: 500; color: var(--muted); }
+    .plan ul { list-style: none; margin: 1.1rem 0 1.4rem; flex: 1; }
+    .plan li { font-size: 0.92rem; color: var(--muted); padding: 0.28rem 0 0.28rem 1.5rem; position: relative; }
+    .plan li::before { content: "✓"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+    .plan .btn { text-align: center; }
+    .trial-note { text-align: center; color: var(--muted); font-size: 0.9rem; margin-top: 1.5rem; }
+
+    .privacy-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .privacy-box p { color: var(--muted); font-size: 0.98rem; }
+    .privacy-box strong { color: var(--text); }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 0 3rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    footer .links { margin-bottom: 0.8rem; display: flex; gap: 1.4rem; justify-content: center; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="badge">PUBLIC BETA · FREE DOWNLOAD</span>
+    <h1>Sit tall. <span class="accent">Move often.</span><br>Right from your menu bar.</h1>
+    <p class="sub">ApexForm is a posture &amp; movement coach for your Mac. Gentle cues when you slouch, short movement breaks when you've sat too long — all on-device, nothing in the cloud.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://github.com/mrigankgupta/ApexForm-updates/releases/latest">Download for Mac</a>
+      <a class="btn btn-secondary" href="#pricing">Free forever · Pro unlock</a>
+    </div>
+    <p class="fine">Notarized DMG · macOS 14+ · works with any webcam, AirPods optional</p>
+  </div>
+</header>
+
+<section id="features">
+  <div class="wrap">
+    <h2>A coach, not a boss</h2>
+    <p class="lead">ApexForm taps you on the shoulder instead of writing you up. Quiet posture coaching in the background, playful movement breaks when you need them.</p>
+    <div class="grid">
+      <div class="card">
+        <span class="icon">🧍</span>
+        <h3>Real posture coaching</h3>
+        <p>Calibrate your "good" posture once. Your camera (and optionally AirPods motion) detects slouching in real time — with gentle, adjustable nudges.</p>
+      </div>
+      <div class="card">
+        <span class="icon">⏰</span>
+        <h3>Chronic slouch alarms</h3>
+        <p>Slouching for minutes, not seconds? Escalate from a ping to a window shake or a live posture mirror so you actually sit back up.</p>
+      </div>
+      <div class="card">
+        <span class="icon">🏃</span>
+        <h3>Bio-Tax movement breaks</h3>
+        <p>Short full-screen breaks that pay your "sitting tax": blink resets, squats, and seated twists — auto-counted by your camera.</p>
+      </div>
+      <div class="card">
+        <span class="icon">🧍‍♂️</span>
+        <h3>Standing work <span class="pro-tag">PRO</span></h3>
+        <p>Sit-to-stand nudges after long seated stretches, standing session tracking, and weekly standing stats.</p>
+      </div>
+      <div class="card">
+        <span class="icon">📊</span>
+        <h3>This Week dashboard</h3>
+        <p>A local dashboard of blinks, squats, twists, slouch events, standing time, and focus breaks. Your data never leaves your Mac.</p>
+      </div>
+      <div class="card">
+        <span class="icon">❤️</span>
+        <h3>Apple Health sync <span class="pro-tag">PRO</span></h3>
+        <p>Opt-in, write-only sync of standing sessions and squat/twist breaks as workouts. ApexForm never reads your Health data.</p>
+      </div>
+      <div class="card">
+        <span class="icon">🏠</span>
+        <h3>Home &amp; Office desks <span class="pro-tag">PRO</span></h3>
+        <p>Calibrate a second desk and switch between setups — posture baselines stay accurate wherever you work.</p>
+      </div>
+      <div class="card">
+        <span class="icon">🎧</span>
+        <h3>AirPods head tracking</h3>
+        <p>No camera? AirPods motion coaches your head posture — slouch and chronic alarms work even with the lid closed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <h2>How it works</h2>
+    <p class="lead">Set up once, then forget it's there — until you need it.</p>
+    <div class="steps">
+      <div class="step">
+        <h3>Calibrate</h3>
+        <p>Sit the way you'd like to sit and capture your baseline in about 30 seconds. That's your posture, not a generic ideal.</p>
+      </div>
+      <div class="step">
+        <h3>Work like normal</h3>
+        <p>ApexForm lives in the menu bar and analyzes everything on-device, in memory. No recordings, no uploads, no accounts.</p>
+      </div>
+      <div class="step">
+        <h3>Get nudged, keep moving</h3>
+        <p>Slouch and you'll get a gentle cue. Sit too long and a short movement break invites you to reset — blinks, squats, or twists.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <h2>Fair pricing</h2>
+    <p class="lead">Every download starts with 10 days of full Pro. After that, ApexForm stays free forever — no lockout, no subscription.</p>
+    <div class="pricing">
+      <div class="plan">
+        <h3>Free</h3>
+        <div class="price">$0 <small>forever</small></div>
+        <ul>
+          <li>Posture coaching (Normal detection)</li>
+          <li>Real-time slouch alerts + chronic ping</li>
+          <li>Blink movement breaks</li>
+          <li>This Week local dashboard</li>
+          <li>Camera and/or AirPods</li>
+          <li>Auto-updates</li>
+        </ul>
+        <a class="btn btn-secondary" href="https://github.com/mrigankgupta/ApexForm-updates/releases/latest">Download free</a>
+      </div>
+      <div class="plan featured">
+        <h3>Pro</h3>
+        <div class="price">One-time unlock <small>· no subscription</small></div>
+        <ul>
+          <li>Relaxed &amp; Strict detection levels</li>
+          <li>Shake &amp; posture-mirror alarms</li>
+          <li>Squat &amp; twist breaks, full schedules</li>
+          <li>Standing work + sit-to-stand nudges</li>
+          <li>Second desk (Home / Office)</li>
+          <li>Apple Health workout sync</li>
+          <li>Advanced tuning</li>
+        </ul>
+        <a class="btn btn-primary" href="https://github.com/mrigankgupta/ApexForm-updates/releases/latest">Try free for 10 days</a>
+      </div>
+    </div>
+    <p class="trial-note">Pro purchase opens soon — beta testers get the full Pro trial today.</p>
+  </div>
+</section>
+
+<section id="privacy">
+  <div class="wrap">
+    <div class="privacy-box">
+      <h2>Private by design</h2>
+      <p>Your camera and AirPods motion are processed <strong>entirely on your Mac</strong>, in memory. <strong>No video is ever recorded, stored, or uploaded.</strong> No account, no analytics, no ads. Apple Health sync is opt-in and write-only.</p>
+      <p style="margin-top: 1rem;"><a href="privacy.html">Read the full privacy policy →</a></p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="links">
+      <a href="https://github.com/mrigankgupta/ApexForm-updates/releases/latest">Download</a>
+      <a href="privacy.html">Privacy policy</a>
+      <a href="mailto:support@apexform.com">Support</a>
+    </div>
+    <p>© 2026 ApexForm · Made for people who sit too much.</p>
+  </div>
+</footer>
+
+</body>
+</html>
