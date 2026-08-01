@@ -4,306 +4,1020 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ApexForm — posture &amp; movement coach for Mac</title>
-  <meta name="description" content="ApexForm is a Mac menu-bar coach that keeps you upright and moving — posture cues when you slouch, short movement breaks when you've sat too long. On-device, private, free forever.">
+  <meta name="description" content="ApexForm is a Mac menu-bar coach that keeps you upright and moving — posture cues when you slouch, short Bio-Tax breaks when you've sat too long. On-device, private, free forever.">
   <meta property="og:title" content="ApexForm — posture &amp; movement coach for Mac">
   <meta property="og:description" content="Posture cues when you slouch, short movement breaks when you've sat too long. On-device and private. Free forever, one-time Pro unlock.">
   <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0d1117;
-      --bg-card: #161b22;
-      --bg-card-hover: #1c2129;
-      --border: #2d333b;
-      --text: #e6edf3;
-      --muted: #9198a1;
-      --accent: #4ade80;
-      --accent-dim: #22c55e;
-      --accent-soft: rgba(74, 222, 128, 0.12);
-      --radius: 14px;
+      --ink: #13201c;
+      --ink-soft: #3a4a44;
+      --muted: #5c6b64;
+      --line: rgba(19, 32, 28, 0.12);
+      --surface: rgba(255, 255, 255, 0.55);
+      --accent: #0d7a63;
+      --accent-deep: #095a49;
+      --accent-soft: rgba(13, 122, 99, 0.12);
+      --warm: #e8b86d;
+      --mist: #e7eef1;
+      --mist-deep: #d3e0e6;
+      --desk: #c5b8a8;
+      --screen: #1a2421;
+      --font-display: "Bricolage Grotesque", Georgia, serif;
+      --font-body: "Figtree", sans-serif;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .wrap { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
 
-    header.hero {
-      padding: 5.5rem 0 4rem;
-      text-align: center;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--ink);
       background:
-        radial-gradient(ellipse 70% 55% at 50% -10%, rgba(74, 222, 128, 0.14), transparent),
-        var(--bg);
+        radial-gradient(ellipse 90% 55% at 70% -10%, rgba(13, 122, 99, 0.10), transparent 55%),
+        radial-gradient(ellipse 70% 45% at 10% 20%, rgba(232, 184, 109, 0.14), transparent 50%),
+        linear-gradient(165deg, #f4f8f9 0%, var(--mist) 42%, #eef3f5 100%);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
-    .badge {
-      display: inline-block;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      color: var(--accent);
-      background: var(--accent-soft);
-      border: 1px solid rgba(74, 222, 128, 0.3);
-      border-radius: 999px;
-      padding: 0.3rem 0.9rem;
-      margin-bottom: 1.5rem;
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.35;
+      background-image:
+        linear-gradient(rgba(19, 32, 28, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(19, 32, 28, 0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, #000 20%, transparent 75%);
     }
-    .hero h1 {
-      font-size: clamp(2.4rem, 6vw, 3.6rem);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.12;
+
+    a { color: var(--accent-deep); text-decoration: none; }
+    a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+    .wrap {
+      width: min(1080px, calc(100% - 2.5rem));
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
     }
-    .hero h1 .accent { color: var(--accent); }
-    .hero p.sub {
-      max-width: 38rem;
-      margin: 1.25rem auto 0;
-      font-size: 1.15rem;
+
+    /* —— Nav (minimal; brand lives in hero) —— */
+    .topnav {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: flex-end;
+      gap: 1.25rem;
+      padding: 1.1rem 0 0;
+      font-size: 0.9rem;
+      font-weight: 500;
       color: var(--muted);
     }
-    .cta-row { margin-top: 2.25rem; display: flex; gap: 0.9rem; justify-content: center; flex-wrap: wrap; }
+    .topnav a { color: var(--ink-soft); }
+    .topnav a:hover { color: var(--accent-deep); }
+
+    /* —— Hero: one composition —— */
+    .hero {
+      position: relative;
+      min-height: min(100vh, 900px);
+      display: flex;
+      flex-direction: column;
+      isolation: isolate;
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 2;
+      padding: 2.5rem 0 1.5rem;
+      max-width: 36rem;
+    }
+
+    .brand {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(3.4rem, 9vw, 5.6rem);
+      letter-spacing: -0.045em;
+      line-height: 0.95;
+      color: var(--ink);
+      margin-bottom: 1.1rem;
+    }
+
+    .brand span {
+      color: var(--accent);
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: clamp(1.35rem, 2.8vw, 1.85rem);
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      color: var(--ink-soft);
+      max-width: 18ch;
+    }
+
+    .hero .sub {
+      margin-top: 0.85rem;
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 32rem;
+    }
+
+    .cta-row {
+      margin-top: 1.75rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
     .btn {
-      display: inline-block;
-      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-body);
+      font-size: 0.98rem;
       font-weight: 600;
       border-radius: 10px;
-      padding: 0.8rem 1.6rem;
-      transition: transform 0.12s ease, background 0.12s ease;
+      padding: 0.85rem 1.45rem;
+      border: 1px solid transparent;
+      transition: background 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease), transform 0.2s var(--ease);
     }
     .btn:hover { text-decoration: none; transform: translateY(-1px); }
-    .btn-primary { background: var(--accent-dim); color: #052e16; }
-    .btn-primary:hover { background: var(--accent); }
-    .btn-secondary { background: var(--bg-card); color: var(--text); border: 1px solid var(--border); }
-    .btn-secondary:hover { background: var(--bg-card-hover); }
-    .hero .fine { margin-top: 1rem; font-size: 0.85rem; color: var(--muted); }
+    .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-    section { padding: 4rem 0; }
+    .btn-primary {
+      background: var(--accent);
+      color: #f4fffb;
+    }
+    .btn-primary:hover { background: var(--accent-deep); color: #fff; }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink-soft);
+      border-color: var(--line);
+    }
+    .btn-ghost:hover { background: var(--surface); color: var(--ink); }
+
+    /* Full-bleed desk / Mac atmosphere */
+    .hero-stage {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .desk-plane {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 42%;
+      background:
+        linear-gradient(180deg, transparent 0%, rgba(197, 184, 168, 0.35) 18%, #c9bbaa 55%, #b9a894 100%);
+    }
+
+    .window-light {
+      position: absolute;
+      top: -8%;
+      right: -5%;
+      width: min(62vw, 720px);
+      height: min(70vh, 620px);
+      background:
+        radial-gradient(ellipse 55% 50% at 60% 35%, rgba(255, 255, 255, 0.75), transparent 70%),
+        linear-gradient(135deg, rgba(211, 224, 230, 0.55), transparent 60%);
+      transform: rotate(-8deg);
+    }
+
+    .mac-shell {
+      position: absolute;
+      right: max(2%, calc(50% - 480px));
+      bottom: 14%;
+      width: min(58vw, 560px);
+      aspect-ratio: 16 / 10.5;
+      border-radius: 14px 14px 8px 8px;
+      background: linear-gradient(180deg, #2a3531 0%, var(--screen) 40%);
+      border: 1px solid rgba(19, 32, 28, 0.35);
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.08) inset,
+        0 28px 60px rgba(19, 32, 28, 0.22);
+      overflow: hidden;
+    }
+
+    .mac-chin {
+      position: absolute;
+      left: 50%;
+      bottom: 7.5%;
+      transform: translateX(-50%);
+      width: min(22vw, 180px);
+      height: 18px;
+      background: linear-gradient(180deg, #a89a88, #8f8170);
+      border-radius: 0 0 6px 6px;
+      clip-path: polygon(8% 0, 92% 0, 100% 100%, 0 100%);
+    }
+
+    .menubar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 26px;
+      padding: 0 10px;
+      background: rgba(10, 16, 14, 0.92);
+      color: rgba(244, 248, 249, 0.88);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+
+    .menubar-left { display: flex; gap: 10px; align-items: center; opacity: 0.75; }
+    .menubar-right { display: flex; gap: 8px; align-items: center; }
+
+    .apex-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: rgba(13, 122, 99, 0.28);
+      color: #9fe8d4;
+      font-weight: 600;
+      font-size: 10px;
+      animation: pill-pulse 2.8s var(--ease) infinite;
+    }
+
+    .apex-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #4ade80;
+      animation: dot-breathe 2.8s var(--ease) infinite;
+    }
+
+    @keyframes pill-pulse {
+      0%, 100% { background: rgba(13, 122, 99, 0.22); }
+      50% { background: rgba(13, 122, 99, 0.42); }
+    }
+
+    @keyframes dot-breathe {
+      0%, 100% { transform: scale(1); opacity: 0.85; }
+      50% { transform: scale(1.25); opacity: 1; }
+    }
+
+    .desktop {
+      position: absolute;
+      inset: 26px 0 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(13, 122, 99, 0.18), transparent 55%),
+        linear-gradient(180deg, #24302c 0%, #1a2421 100%);
+    }
+
+    .desktop-hint {
+      position: absolute;
+      left: 50%;
+      top: 42%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: rgba(244, 248, 249, 0.22);
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      user-select: none;
+    }
+
+    .hero-fade {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 120px;
+      background: linear-gradient(180deg, transparent, var(--mist));
+      z-index: 1;
+    }
+
+    /* —— Sections —— */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 5.5rem 0;
+    }
+
     section h2 {
-      font-size: 1.8rem;
+      font-family: var(--font-display);
       font-weight: 700;
-      letter-spacing: -0.01em;
-      text-align: center;
-      margin-bottom: 0.6rem;
-    }
-    section p.lead { text-align: center; color: var(--muted); max-width: 36rem; margin: 0 auto 2.5rem; }
-
-    .grid { display: grid; gap: 1.1rem; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-    .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-    }
-    .card .icon { font-size: 1.6rem; display: block; margin-bottom: 0.7rem; }
-    .card h3 { font-size: 1.05rem; font-weight: 650; margin-bottom: 0.4rem; }
-    .card p { font-size: 0.92rem; color: var(--muted); }
-    .card .pro-tag {
-      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em;
-      color: var(--accent); background: var(--accent-soft);
-      border-radius: 5px; padding: 0.1rem 0.45rem; margin-left: 0.4rem;
-      vertical-align: middle;
+      font-size: clamp(1.75rem, 3.5vw, 2.35rem);
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 0.55rem;
     }
 
-    .steps { display: grid; gap: 1.1rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); counter-reset: step; }
-    .step { position: relative; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem 1.5rem 1.5rem 1.5rem; }
-    .step::before {
-      counter-increment: step;
-      content: counter(step);
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 2rem; height: 2rem; border-radius: 50%;
-      background: var(--accent-soft); color: var(--accent);
-      font-weight: 700; margin-bottom: 0.8rem;
-    }
-    .step h3 { font-size: 1rem; margin-bottom: 0.35rem; }
-    .step p { font-size: 0.92rem; color: var(--muted); }
-
-    .pricing { display: grid; gap: 1.1rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); max-width: 700px; margin: 0 auto; }
-    .plan {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.8rem;
-      display: flex; flex-direction: column;
-    }
-    .plan.featured { border-color: rgba(74, 222, 128, 0.45); }
-    .plan h3 { font-size: 1.15rem; }
-    .plan .price { font-size: 1.9rem; font-weight: 700; margin: 0.5rem 0 0.2rem; }
-    .plan .price small { font-size: 0.85rem; font-weight: 500; color: var(--muted); }
-    .plan ul { list-style: none; margin: 1.1rem 0 1.4rem; flex: 1; }
-    .plan li { font-size: 0.92rem; color: var(--muted); padding: 0.28rem 0 0.28rem 1.5rem; position: relative; }
-    .plan li::before { content: "✓"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
-    .plan .btn { text-align: center; }
-    .trial-note { text-align: center; color: var(--muted); font-size: 0.9rem; margin-top: 1.5rem; }
-
-    .privacy-box {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 2rem;
-      max-width: 700px;
-      margin: 0 auto;
-      text-align: center;
-    }
-    .privacy-box p { color: var(--muted); font-size: 0.98rem; }
-    .privacy-box strong { color: var(--text); }
-
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 2.5rem 0 3rem;
-      text-align: center;
+    section .lead {
       color: var(--muted);
-      font-size: 0.9rem;
+      font-size: 1.05rem;
+      max-width: 34rem;
+      margin-bottom: 2.25rem;
     }
-    footer .links { margin-bottom: 0.8rem; display: flex; gap: 1.4rem; justify-content: center; flex-wrap: wrap; }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+    }
+    .reveal.is-in {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* —— How it works: one continuous scene —— */
+    .loop {
+      background:
+        linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.35) 8%, rgba(255, 255, 255, 0.45) 92%, transparent);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .loop-scene {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr minmax(200px, 280px);
+      gap: 2rem;
+      align-items: center;
+      min-height: 340px;
+      padding: 1.5rem 0 0.5rem;
+    }
+
+    .stage-frame {
+      position: relative;
+      height: 320px;
+      border-radius: 16px;
+      background:
+        radial-gradient(ellipse 70% 80% at 30% 40%, rgba(13, 122, 99, 0.08), transparent 60%),
+        linear-gradient(160deg, #f7fafb, #e4ecef);
+      border: 1px solid var(--line);
+      overflow: hidden;
+    }
+
+    /* This frame is the interaction canvas — allowed as interaction container */
+    .silhouette-wrap {
+      position: absolute;
+      left: 8%;
+      bottom: 12%;
+      width: 42%;
+      height: 78%;
+    }
+
+    .silhouette {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .sil-body {
+      fill: none;
+      stroke: var(--ink);
+      stroke-width: 3.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: d 0.85s var(--ease), stroke 0.5s ease;
+    }
+
+    .sil-head {
+      fill: none;
+      stroke: var(--ink);
+      stroke-width: 3.2;
+      transition: cx 0.85s var(--ease), cy 0.85s var(--ease), stroke 0.5s ease;
+    }
+
+    .stage-frame[data-phase="slouch"] .sil-body,
+    .stage-frame[data-phase="slouch"] .sil-head {
+      stroke: #b45309;
+    }
+    .stage-frame[data-phase="cue"] .sil-body,
+    .stage-frame[data-phase="cue"] .sil-head {
+      stroke: #b45309;
+    }
+    .stage-frame[data-phase="recover"] .sil-body,
+    .stage-frame[data-phase="recover"] .sil-head,
+    .stage-frame[data-phase="biotax"] .sil-body,
+    .stage-frame[data-phase="biotax"] .sil-head,
+    .stage-frame[data-phase="done"] .sil-body,
+    .stage-frame[data-phase="done"] .sil-head {
+      stroke: var(--accent);
+    }
+
+    .cue-toast {
+      position: absolute;
+      top: 14%;
+      right: 8%;
+      padding: 0.55rem 0.85rem;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--line);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--ink-soft);
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+      max-width: 11rem;
+    }
+
+    .stage-frame[data-phase="cue"] .cue-toast,
+    .stage-frame[data-phase="slouch"] .cue-toast {
+      opacity: 1;
+      transform: none;
+    }
+
+    .biotax-panel {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translateX(-50%) translateY(12px);
+      width: min(88%, 280px);
+      padding: 0.9rem 1rem;
+      border-radius: 12px;
+      background: rgba(19, 32, 28, 0.92);
+      color: #eef6f3;
+      opacity: 0;
+      transition: opacity 0.45s var(--ease), transform 0.45s var(--ease);
+    }
+
+    .stage-frame[data-phase="biotax"] .biotax-panel,
+    .stage-frame[data-phase="done"] .biotax-panel {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .biotax-panel .label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(159, 232, 212, 0.85);
+      margin-bottom: 0.35rem;
+    }
+
+    .biotax-panel .title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.65rem;
+    }
+
+    .progress-track {
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.12);
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 3px;
+      background: #4ade80;
+      transition: width 0.35s linear;
+    }
+
+    .stage-frame[data-phase="done"] .progress-fill {
+      width: 100%;
+      transition: width 0.9s var(--ease);
+    }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.45rem;
+      font-size: 0.75rem;
+      color: rgba(238, 246, 243, 0.65);
+    }
+
+    .loop-caption {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .phase-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .phase-list li {
+      display: grid;
+      grid-template-columns: 10px 1fr;
+      gap: 0.7rem;
+      align-items: start;
+      font-size: 0.95rem;
+      color: var(--muted);
+      transition: color 0.35s ease;
+    }
+
+    .phase-list li::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      margin-top: 0.4rem;
+      border-radius: 50%;
+      background: var(--line);
+      transition: background 0.35s ease, transform 0.35s var(--ease);
+    }
+
+    .phase-list li.is-active {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .phase-list li.is-active::before {
+      background: var(--accent);
+      transform: scale(1.25);
+    }
+
+    .phase-list li.is-done {
+      color: var(--ink-soft);
+    }
+
+    .phase-list li.is-done::before {
+      background: var(--accent);
+    }
+
+    /* —— Free / Pro —— */
+    .plans {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .plan-col {
+      padding: 1.75rem 1.5rem 1.75rem 0;
+    }
+
+    .plan-col + .plan-col {
+      padding-left: 1.5rem;
+      border-left: 1px solid var(--line);
+    }
+
+    .plan-col h3 {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.2rem;
+    }
+
+    .plan-col .price {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .plan-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .plan-col li {
+      font-size: 0.95rem;
+      color: var(--ink-soft);
+      padding-left: 1.1rem;
+      position: relative;
+    }
+
+    .plan-col li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.55rem;
+      width: 6px;
+      height: 6px;
+      border-radius: 1px;
+      background: var(--accent);
+      opacity: 0.7;
+    }
+
+    .plan-note {
+      margin-top: 1.5rem;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    /* —— Privacy strip —— */
+    .privacy-strip {
+      padding: 3.5rem 0 1rem;
+    }
+
+    .privacy-strip p {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 40rem;
+    }
+
+    .privacy-strip strong { color: var(--ink); font-weight: 600; }
+
+    /* —— Footer —— */
+    footer {
+      position: relative;
+      z-index: 1;
+      padding: 2.75rem 0 3.25rem;
+      border-top: 1px solid var(--line);
+      margin-top: 2rem;
+    }
+
+    footer .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.92rem;
+      font-weight: 500;
+    }
+
+    footer .copy {
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    /* —— Reduced motion —— */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .apex-pill,
+      .apex-dot { animation: none; }
+      .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+      .sil-body,
+      .sil-head,
+      .cue-toast,
+      .biotax-panel,
+      .progress-fill,
+      .btn { transition: none !important; }
+    }
+
+    /* —— Responsive —— */
+    @media (max-width: 820px) {
+      .hero {
+        min-height: auto;
+      }
+
+      .hero-copy {
+        padding: 1.75rem 0 0;
+        max-width: none;
+      }
+
+      .hero-stage {
+        position: relative;
+        height: 320px;
+        margin-top: 1.5rem;
+      }
+
+      .mac-shell {
+        right: 50%;
+        transform: translateX(50%);
+        bottom: 18%;
+        width: min(92vw, 420px);
+      }
+
+      .mac-chin {
+        bottom: 10%;
+      }
+
+      .desk-plane { height: 48%; }
+
+      .hero-fade {
+        background: linear-gradient(180deg, transparent, #eaf1f4);
+      }
+
+      .loop-scene {
+        grid-template-columns: 1fr;
+        min-height: 0;
+      }
+
+      .stage-frame { height: 300px; }
+
+      .plans {
+        grid-template-columns: 1fr;
+      }
+
+      .plan-col {
+        padding: 1.25rem 0;
+      }
+
+      .plan-col + .plan-col {
+        padding-left: 0;
+        border-left: none;
+        border-top: 1px solid var(--line);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .wrap { width: calc(100% - 1.75rem); }
+      .brand { font-size: clamp(2.8rem, 14vw, 3.6rem); }
+      .cta-row { flex-direction: column; align-items: stretch; }
+      .btn { width: 100%; }
+    }
   </style>
 </head>
 <body>
 
-<header class="hero">
   <div class="wrap">
-    <span class="badge">PUBLIC BETA · 10-DAY PRO TRIAL</span>
-    <h1>Sit tall. <span class="accent">Move often.</span><br>Right from your menu bar.</h1>
-    <p class="sub">ApexForm is a posture &amp; movement coach for your Mac. Gentle cues when you slouch, short movement breaks when you've sat too long — all on-device, nothing in the cloud.</p>
-    <div class="cta-row">
-      <a class="btn btn-primary" href="https://github.com/mrigankgupta/ApexForm-updates/releases/latest">Download for Mac</a>
-      <a class="btn btn-secondary" href="#pricing">Free forever · Pro unlock</a>
-    </div>
-    <p class="fine">Notarized DMG · macOS 14+ · 10-day full Pro trial, then free forever · webcam or AirPods</p>
-  </div>
-</header>
-
-<section id="features">
-  <div class="wrap">
-    <h2>A coach, not a boss</h2>
-    <p class="lead">ApexForm taps you on the shoulder instead of writing you up. Quiet posture coaching in the background, playful movement breaks when you need them.</p>
-    <div class="grid">
-      <div class="card">
-        <span class="icon">🧍</span>
-        <h3>Real posture coaching</h3>
-        <p>Calibrate your "good" posture once. Your camera (and optionally AirPods motion) detects slouching in real time — with gentle, adjustable nudges.</p>
-      </div>
-      <div class="card">
-        <span class="icon">⏰</span>
-        <h3>Chronic slouch alarms</h3>
-        <p>Slouching for minutes, not seconds? Escalate from a ping to a window shake or a live posture mirror so you actually sit back up.</p>
-      </div>
-      <div class="card">
-        <span class="icon">🏃</span>
-        <h3>Bio-Tax movement breaks</h3>
-        <p>Short full-screen breaks that pay your "sitting tax": blink resets, squats, and seated twists — auto-counted by your camera.</p>
-      </div>
-      <div class="card">
-        <span class="icon">🧍‍♂️</span>
-        <h3>Standing work <span class="pro-tag">PRO</span></h3>
-        <p>Sit-to-stand nudges after long seated stretches, standing session tracking, and weekly standing stats.</p>
-      </div>
-      <div class="card">
-        <span class="icon">📊</span>
-        <h3>This Week dashboard</h3>
-        <p>A local dashboard of blinks, squats, twists, slouch events, standing time, and focus breaks. Your data never leaves your Mac.</p>
-      </div>
-      <div class="card">
-        <span class="icon">❤️</span>
-        <h3>Apple Health sync <span class="pro-tag">PRO</span></h3>
-        <p>Opt-in, write-only sync of standing sessions and squat/twist breaks as workouts. ApexForm never reads your Health data.</p>
-      </div>
-      <div class="card">
-        <span class="icon">🏠</span>
-        <h3>Home &amp; Office desks <span class="pro-tag">PRO</span></h3>
-        <p>Calibrate a second desk and switch between setups — posture baselines stay accurate wherever you work.</p>
-      </div>
-      <div class="card">
-        <span class="icon">🎧</span>
-        <h3>AirPods head tracking</h3>
-        <p>No camera? AirPods motion coaches your head posture — slouch and chronic alarms work even with the lid closed.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="how">
-  <div class="wrap">
-    <h2>How it works</h2>
-    <p class="lead">Set up once, then forget it's there — until you need it.</p>
-    <div class="steps">
-      <div class="step">
-        <h3>Calibrate</h3>
-        <p>Sit the way you'd like to sit and capture your baseline in about 30 seconds. That's your posture, not a generic ideal.</p>
-      </div>
-      <div class="step">
-        <h3>Work like normal</h3>
-        <p>ApexForm lives in the menu bar and analyzes everything on-device, in memory. No recordings, no uploads, no accounts.</p>
-      </div>
-      <div class="step">
-        <h3>Get nudged, keep moving</h3>
-        <p>Slouch and you'll get a gentle cue. Sit too long and a short movement break invites you to reset — blinks, squats, or twists.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="pricing">
-  <div class="wrap">
-    <h2>Fair pricing</h2>
-    <p class="lead">Every download starts with 10 days of full Pro. After that, ApexForm stays free forever — no lockout, no subscription.</p>
-    <div class="pricing">
-      <div class="plan">
-        <h3>Free</h3>
-        <div class="price">$0 <small>forever</small></div>
-        <ul>
-          <li>Posture coaching (Normal detection)</li>
-          <li>Real-time slouch alerts + chronic ping</li>
-          <li>Blink movement breaks</li>
-          <li>This Week local dashboard</li>
-          <li>Camera and/or AirPods</li>
-          <li>Auto-updates</li>
-        </ul>
-        <a class="btn btn-secondary" href="https://github.com/mrigankgupta/ApexForm-updates/releases/latest">Download free</a>
-      </div>
-      <div class="plan featured">
-        <h3>Pro</h3>
-        <div class="price">One-time unlock <small>· no subscription</small></div>
-        <ul>
-          <li>Relaxed &amp; Strict detection levels</li>
-          <li>Shake &amp; posture-mirror alarms</li>
-          <li>Squat &amp; twist breaks, full schedules</li>
-          <li>Standing work + sit-to-stand nudges</li>
-          <li>Second desk (Home / Office)</li>
-          <li>Apple Health workout sync</li>
-          <li>Advanced tuning</li>
-        </ul>
-        <a class="btn btn-primary" href="https://github.com/mrigankgupta/ApexForm-updates/releases/latest">Try free for 10 days</a>
-      </div>
-    </div>
-    <p class="trial-note">Pro checkout isn’t live yet — every download still includes a full 10-day Pro trial. Bugs: <a href="mailto:support@apexform.com">support@apexform.com</a>.</p>
-  </div>
-</section>
-
-<section id="privacy">
-  <div class="wrap">
-    <div class="privacy-box">
-      <h2>Private by design</h2>
-      <p>Your camera and AirPods motion are processed <strong>entirely on your Mac</strong>, in memory. <strong>No video is ever recorded, stored, or uploaded.</strong> No account, no analytics, no ads. Apple Health sync is opt-in and write-only.</p>
-      <p style="margin-top: 1rem;"><a href="privacy.html">Read the full privacy policy →</a></p>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap">
-    <div class="links">
-      <a href="https://github.com/mrigankgupta/ApexForm-updates/releases/latest">Download</a>
-      <a href="privacy.html">Privacy policy</a>
+    <nav class="topnav" aria-label="Secondary">
+      <a href="privacy.html">Privacy</a>
       <a href="mailto:support@apexform.com">Support</a>
-    </div>
-    <p>© 2026 ApexForm · Made for people who sit too much.</p>
+    </nav>
   </div>
-</footer>
 
+  <header class="hero">
+    <div class="hero-stage" aria-hidden="true">
+      <div class="window-light"></div>
+      <div class="desk-plane"></div>
+      <div class="mac-shell">
+        <div class="menubar">
+          <div class="menubar-left">
+            <span>File</span>
+            <span>Edit</span>
+            <span>View</span>
+          </div>
+          <div class="menubar-right">
+            <span class="apex-pill"><span class="apex-dot" aria-hidden="true"></span>ApexForm</span>
+            <span>9:41</span>
+          </div>
+        </div>
+        <div class="desktop">
+          <div class="desktop-hint">Quiet coaching,<br>right where you work</div>
+        </div>
+      </div>
+      <div class="mac-chin"></div>
+      <div class="hero-fade"></div>
+    </div>
+
+    <div class="wrap hero-copy">
+      <p class="brand">Apex<span>Form</span></p>
+      <h1>Stay upright. Keep moving.</h1>
+      <p class="sub">A macOS menu-bar coach that nudges posture and short Bio-Tax breaks — on-device, private, free forever after a soft 10-day Pro trial.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://github.com/mrigankgupta/ApexForm-updates/releases/latest">Download for Mac</a>
+        <a class="btn btn-ghost" href="#how">See how it works</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="loop" id="how">
+    <div class="wrap">
+      <div class="reveal">
+        <h2>How it works</h2>
+        <p class="lead">One quiet loop in your menu bar: notice a slouch, cue a reset, then clear a short Bio-Tax break when you’ve sat too long.</p>
+      </div>
+
+      <div class="loop-scene reveal" id="loop-demo" aria-live="polite">
+        <div class="stage-frame" id="stage" data-phase="idle">
+          <div class="silhouette-wrap">
+            <svg class="silhouette" viewBox="0 0 120 200" role="img" aria-label="Animated posture silhouette">
+              <circle class="sil-head" id="sil-head" cx="60" cy="36" r="16" />
+              <path class="sil-body" id="sil-body" d="M60 54 L60 110 M60 70 L38 95 M60 70 L82 95 M60 110 L42 160 M60 110 L78 160" />
+            </svg>
+          </div>
+          <div class="cue-toast" id="cue-toast">Sit a little taller</div>
+          <div class="biotax-panel" id="biotax-panel">
+            <div class="label">Bio-Tax</div>
+            <div class="title" id="biotax-title">Blink reset</div>
+            <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+            <div class="progress-meta">
+              <span id="progress-count">0 / 10 blinks</span>
+              <span id="progress-status">Waiting…</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="loop-caption">
+          <ol class="phase-list" id="phase-list">
+            <li data-phase="idle" class="is-active">Working — menu bar stays quiet</li>
+            <li data-phase="slouch">Slouch detected</li>
+            <li data-phase="cue">Soft posture cue</li>
+            <li data-phase="recover">You sit tall again</li>
+            <li data-phase="biotax">Bio-Tax break clears</li>
+            <li data-phase="done">Back to flow</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="wrap">
+      <div class="reveal">
+        <h2>Free forever. Pro when you want more.</h2>
+        <p class="lead">Every download starts with 10 days of full Pro. After that, Normal posture coaching and blink breaks stay free — no lockout, no subscription.</p>
+      </div>
+
+      <div class="plans reveal">
+        <div class="plan-col">
+          <h3>Free</h3>
+          <p class="price">$0 forever</p>
+          <ul>
+            <li>Posture coaching (Normal detection)</li>
+            <li>Real-time slouch alerts + chronic ping</li>
+            <li>Blink movement breaks</li>
+            <li>This Week local dashboard</li>
+            <li>Camera and/or AirPods</li>
+            <li>Auto-updates</li>
+          </ul>
+        </div>
+        <div class="plan-col">
+          <h3>Pro</h3>
+          <p class="price">One-time unlock · purchase opens soon</p>
+          <ul>
+            <li>Relaxed &amp; Strict detection</li>
+            <li>Shake &amp; posture-mirror alarms</li>
+            <li>Squat &amp; twist breaks, full schedules</li>
+            <li>Standing work + sit-to-stand nudges</li>
+            <li>Home / Office desk baselines</li>
+            <li>Apple Health workout sync (write-only)</li>
+          </ul>
+        </div>
+      </div>
+      <p class="plan-note reveal">Public beta — try the full Pro trial today. Checkout isn’t live yet. Bugs: <a href="mailto:support@apexform.com">support@apexform.com</a>.</p>
+    </div>
+  </section>
+
+  <section class="privacy-strip" id="privacy">
+    <div class="wrap reveal">
+      <h2>Private by design</h2>
+      <p>Camera and AirPods motion stay <strong>on your Mac</strong>, in memory. <strong>No video is recorded, stored, or uploaded.</strong> No account, no ads. <a href="privacy.html">Full privacy policy</a>.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="links">
+        <a href="https://github.com/mrigankgupta/ApexForm-updates/releases/latest">Download</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="mailto:support@apexform.com">Support</a>
+      </div>
+      <p class="copy">© 2026 ApexForm · macOS 14+ · Public beta</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      /* Scroll reveals */
+      var reveals = document.querySelectorAll(".reveal");
+      if (!reduceMotion && "IntersectionObserver" in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-in");
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.18, rootMargin: "0px 0px -40px 0px" });
+        reveals.forEach(function (el) { io.observe(el); });
+      } else {
+        reveals.forEach(function (el) { el.classList.add("is-in"); });
+      }
+
+      /* Product loop demo */
+      var stage = document.getElementById("stage");
+      var phaseList = document.getElementById("phase-list");
+      var silHead = document.getElementById("sil-head");
+      var silBody = document.getElementById("sil-body");
+      var progressFill = document.getElementById("progress-fill");
+      var progressCount = document.getElementById("progress-count");
+      var progressStatus = document.getElementById("progress-status");
+      var biotaxTitle = document.getElementById("biotax-title");
+      var cueToast = document.getElementById("cue-toast");
+
+      var upright = {
+        head: { cx: 60, cy: 36 },
+        body: "M60 54 L60 110 M60 70 L38 95 M60 70 L82 95 M60 110 L42 160 M60 110 L78 160"
+      };
+      var slouch = {
+        head: { cx: 72, cy: 48 },
+        body: "M66 64 L58 112 M64 78 L40 98 M68 76 L88 102 M58 112 L44 162 M58 112 L82 158"
+      };
+
+      function setPose(pose) {
+        silHead.setAttribute("cx", pose.head.cx);
+        silHead.setAttribute("cy", pose.head.cy);
+        silBody.setAttribute("d", pose.body);
+      }
+
+      function setPhaseUI(phase) {
+        stage.setAttribute("data-phase", phase);
+        var items = phaseList.querySelectorAll("li");
+        var reached = true;
+        items.forEach(function (li) {
+          var p = li.getAttribute("data-phase");
+          li.classList.remove("is-active", "is-done");
+          if (p === phase) {
+            li.classList.add("is-active");
+            reached = false;
+          } else if (reached) {
+            li.classList.add("is-done");
+          }
+        });
+      }
+
+      function setProgress(n, total, status) {
+        progressCount.textContent = n + " / " + total + " blinks";
+        progressStatus.textContent = status;
+        progressFill.style.width = Math.round((n / total) * 100) + "%";
+      }
+
+      var timers = [];
+      function clearTimers() {
+        timers.forEach(function (t) { clearTimeout(t); });
+        timers = [];
+      }
+      function later(ms, fn) {
+        timers.push(setTimeout(fn, ms));
+      }
+
+      function runLoop() {
+        clearTimers();
+        setPose(upright);
+        setPhaseUI("idle");
+        setProgress(0, 10, "Waiting…");
+        progressFill.style.width = "0%";
+        biotaxTitle.textContent = "Blink reset";
+        cueToast.textContent = "Sit a little taller";
+
+        if (reduceMotion) {
+          setPhaseUI("done");
+          setProgress(10, 10, "Cleared");
+          progressFill.style.width = "100%";
+          return;
+        }
+
+        later(1600, function () {
+          setPose(slouch);
+          setPhaseUI("slouch");
+        });
+        later(2800, function () {
+          setPhaseUI("cue");
+        });
+        later(4200, function () {
+          setPose(upright);
+          setPhaseUI("recover");
+        });
+        later(5600, function () {
+          setPhaseUI("biotax");
+          setProgress(0, 10, "Counting…");
+          var n = 0;
+          function tick() {
+            n += 1;
+            setProgress(n, 10, n >= 10 ? "Cleared" : "Counting…");
+            if (n < 10) {
+              later(220, tick);
+            } else {
+              later(400, function () {
+                setPhaseUI("done");
+                biotaxTitle.textContent = "Break cleared";
+              });
+              later(3200, runLoop);
+            }
+          }
+          later(350, tick);
+        });
+      }
+
+      /* Start loop when visible */
+      var demo = document.getElementById("loop-demo");
+      if ("IntersectionObserver" in window) {
+        var started = false;
+        var dio = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting && !started) {
+              started = true;
+              runLoop();
+            }
+          });
+        }, { threshold: 0.35 });
+        dio.observe(demo);
+      } else {
+        runLoop();
+      }
+    })();
+  </script>
 </body>
 </html>
