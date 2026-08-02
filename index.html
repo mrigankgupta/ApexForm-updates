@@ -357,24 +357,103 @@
       padding: 1.5rem 0 0.5rem;
     }
 
+    /* Interaction canvas for the product loop */
     .stage-frame {
       position: relative;
-      height: 320px;
+      height: 340px;
       border-radius: 16px;
       background:
-        radial-gradient(ellipse 70% 80% at 30% 40%, rgba(13, 122, 99, 0.08), transparent 60%),
-        linear-gradient(160deg, #f7fafb, #e4ecef);
+        radial-gradient(ellipse 55% 70% at 28% 55%, rgba(13, 122, 99, 0.10), transparent 62%),
+        linear-gradient(165deg, #f8fbfc 0%, #e6eef1 100%);
       border: 1px solid var(--line);
       overflow: hidden;
     }
 
-    /* This frame is the interaction canvas — allowed as interaction container */
+    .stage-menubar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 32px;
+      padding: 0 12px;
+      background: rgba(19, 32, 28, 0.92);
+      color: rgba(244, 248, 249, 0.72);
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .stage-mb-left {
+      display: flex;
+      gap: 10px;
+      opacity: 0.7;
+    }
+
+    .stage-cue {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 9px;
+      border-radius: 7px;
+      background: rgba(13, 122, 99, 0.22);
+      color: #9fe8d4;
+      font-weight: 600;
+      font-size: 11px;
+      transition: background 0.35s var(--ease), box-shadow 0.35s var(--ease), color 0.35s ease;
+    }
+
+    .stage-cue-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #4ade80;
+      transition: transform 0.35s var(--ease), background 0.35s ease;
+    }
+
+    .stage-frame[data-phase="slouch"] .stage-cue {
+      background: rgba(180, 83, 9, 0.28);
+      color: #fcd34d;
+    }
+    .stage-frame[data-phase="slouch"] .stage-cue-dot {
+      background: #f59e0b;
+    }
+
+    .stage-frame[data-phase="cue"] .stage-cue {
+      background: rgba(180, 83, 9, 0.38);
+      color: #fde68a;
+      animation: cue-pill-pulse 1.05s var(--ease) infinite;
+    }
+    .stage-frame[data-phase="cue"] .stage-cue-dot {
+      background: #fbbf24;
+      animation: cue-dot-pulse 1.05s var(--ease) infinite;
+    }
+
+    @keyframes cue-pill-pulse {
+      0%, 100% { background: rgba(180, 83, 9, 0.28); box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); }
+      50% { background: rgba(180, 83, 9, 0.48); box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.12); }
+    }
+    @keyframes cue-dot-pulse {
+      0%, 100% { transform: scale(1); opacity: 0.85; }
+      50% { transform: scale(1.35); opacity: 1; }
+    }
+
+    .desk-scene {
+      position: absolute;
+      inset: 32px 0 0;
+      z-index: 1;
+    }
+
     .silhouette-wrap {
       position: absolute;
-      left: 8%;
-      bottom: 12%;
-      width: 42%;
+      left: 4%;
+      bottom: 18%;
+      width: min(52%, 220px);
       height: 78%;
+      opacity: 1;
+      transition: opacity 0.45s var(--ease);
     }
 
     .silhouette {
@@ -383,80 +462,138 @@
       overflow: visible;
     }
 
-    .sil-body {
+    .sil-chair {
+      fill: rgba(19, 32, 28, 0.08);
+      stroke: rgba(19, 32, 28, 0.14);
+      stroke-width: 1.5;
+    }
+
+    .sil-desk {
+      fill: rgba(197, 184, 168, 0.55);
+      stroke: rgba(19, 32, 28, 0.12);
+      stroke-width: 1.25;
+    }
+
+    .sil-monitor {
+      fill: var(--screen);
+      opacity: 0.88;
+    }
+
+    .sil-figure {
       fill: none;
       stroke: var(--ink);
-      stroke-width: 3.2;
+      stroke-width: 2.75;
       stroke-linecap: round;
       stroke-linejoin: round;
-      transition: d 0.85s var(--ease), stroke 0.5s ease;
+      transition: stroke 0.55s ease;
+    }
+
+    .sil-fill {
+      fill: rgba(19, 32, 28, 0.06);
+      stroke: none;
+      transition: fill 0.55s ease;
+    }
+
+    .sil-upper {
+      transform-origin: 80px 116px;
+      transform: rotate(0deg) translate(0, 0);
+      transition: transform 0.9s var(--ease);
     }
 
     .sil-head {
-      fill: none;
-      stroke: var(--ink);
-      stroke-width: 3.2;
-      transition: cx 0.85s var(--ease), cy 0.85s var(--ease), stroke 0.5s ease;
+      transform-origin: 80px 44px;
+      transform: rotate(0deg);
+      transition: transform 0.9s var(--ease);
     }
 
-    .stage-frame[data-phase="slouch"] .sil-body,
-    .stage-frame[data-phase="slouch"] .sil-head {
+    .stage-frame[data-phase="slouch"] .sil-figure,
+    .stage-frame[data-phase="cue"] .sil-figure {
       stroke: #b45309;
     }
-    .stage-frame[data-phase="cue"] .sil-body,
+    .stage-frame[data-phase="slouch"] .sil-fill,
+    .stage-frame[data-phase="cue"] .sil-fill {
+      fill: rgba(180, 83, 9, 0.10);
+    }
+
+    .stage-frame[data-phase="slouch"] .sil-upper,
+    .stage-frame[data-phase="cue"] .sil-upper {
+      transform: rotate(16deg) translate(6px, 8px);
+    }
+    .stage-frame[data-phase="slouch"] .sil-head,
     .stage-frame[data-phase="cue"] .sil-head {
-      stroke: #b45309;
+      transform: rotate(10deg);
     }
-    .stage-frame[data-phase="recover"] .sil-body,
-    .stage-frame[data-phase="recover"] .sil-head,
-    .stage-frame[data-phase="biotax"] .sil-body,
-    .stage-frame[data-phase="biotax"] .sil-head,
-    .stage-frame[data-phase="done"] .sil-body,
-    .stage-frame[data-phase="done"] .sil-head {
+
+    .stage-frame[data-phase="recover"] .sil-figure,
+    .stage-frame[data-phase="biotax"] .sil-figure,
+    .stage-frame[data-phase="done"] .sil-figure {
       stroke: var(--accent);
+    }
+    .stage-frame[data-phase="recover"] .sil-fill,
+    .stage-frame[data-phase="biotax"] .sil-fill,
+    .stage-frame[data-phase="done"] .sil-fill {
+      fill: rgba(13, 122, 99, 0.12);
+    }
+
+    .stage-frame[data-phase="biotax"] .silhouette-wrap {
+      opacity: 0.28;
+    }
+
+    .stage-frame[data-phase="done"] .biotax-panel {
+      transition-delay: 0s;
     }
 
     .cue-toast {
       position: absolute;
-      top: 14%;
+      top: 48px;
       right: 8%;
+      z-index: 2;
       padding: 0.55rem 0.85rem;
       border-radius: 10px;
-      background: rgba(255, 255, 255, 0.92);
+      background: rgba(255, 255, 255, 0.94);
       border: 1px solid var(--line);
       font-size: 0.82rem;
       font-weight: 600;
       color: var(--ink-soft);
       opacity: 0;
-      transform: translateY(-8px);
+      transform: translateY(-8px) scale(0.96);
       transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
       max-width: 11rem;
+      pointer-events: none;
     }
 
-    .stage-frame[data-phase="cue"] .cue-toast,
-    .stage-frame[data-phase="slouch"] .cue-toast {
+    .stage-frame[data-phase="cue"] .cue-toast {
       opacity: 1;
       transform: none;
+      animation: cue-toast-breathe 1.05s var(--ease) infinite;
+    }
+
+    @keyframes cue-toast-breathe {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(180, 83, 9, 0); }
+      50% { box-shadow: 0 0 0 5px rgba(180, 83, 9, 0.08); }
     }
 
     .biotax-panel {
       position: absolute;
       left: 50%;
-      bottom: 10%;
-      transform: translateX(-50%) translateY(12px);
+      bottom: 12%;
+      z-index: 4;
+      transform: translateX(-50%) translateY(16px) scale(0.96);
       width: min(88%, 280px);
-      padding: 0.9rem 1rem;
+      padding: 0.95rem 1.05rem;
       border-radius: 12px;
-      background: rgba(19, 32, 28, 0.92);
+      background: rgba(19, 32, 28, 0.94);
       color: #eef6f3;
       opacity: 0;
+      pointer-events: none;
       transition: opacity 0.45s var(--ease), transform 0.45s var(--ease);
     }
 
     .stage-frame[data-phase="biotax"] .biotax-panel,
     .stage-frame[data-phase="done"] .biotax-panel {
       opacity: 1;
-      transform: translateX(-50%) translateY(0);
+      transform: translateX(-50%) translateY(0) scale(1);
+      pointer-events: auto;
     }
 
     .biotax-panel .label {
@@ -470,9 +607,14 @@
 
     .biotax-panel .title {
       font-family: var(--font-display);
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: 600;
-      margin-bottom: 0.65rem;
+      margin-bottom: 0.7rem;
+      transition: color 0.3s ease;
+    }
+
+    .stage-frame[data-phase="done"] .biotax-panel .title {
+      color: #86efac;
     }
 
     .progress-track {
@@ -487,12 +629,8 @@
       width: 0%;
       border-radius: 3px;
       background: #4ade80;
-      transition: width 0.35s linear;
-    }
-
-    .stage-frame[data-phase="done"] .progress-fill {
-      width: 100%;
-      transition: width 0.9s var(--ease);
+      transition: width 0.22s linear;
+      will-change: width;
     }
 
     .progress-meta {
@@ -503,17 +641,42 @@
       color: rgba(238, 246, 243, 0.65);
     }
 
+    .blink-flash {
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+      pointer-events: none;
+      background: rgba(74, 222, 128, 0.12);
+      opacity: 0;
+    }
+
+    .stage-frame[data-phase="biotax"] .blink-flash.is-on {
+      animation: blink-flash 0.22s var(--ease);
+    }
+
+    @keyframes blink-flash {
+      0% { opacity: 0; }
+      40% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
     .loop-caption {
       display: flex;
       flex-direction: column;
       gap: 0.85rem;
     }
 
+    .phase-hint {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin: 0;
+    }
+
     .phase-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 0.55rem;
+      gap: 0.35rem;
     }
 
     .phase-list li {
@@ -523,7 +686,22 @@
       align-items: start;
       font-size: 0.95rem;
       color: var(--muted);
-      transition: color 0.35s ease;
+      padding: 0.35rem 0.45rem;
+      margin: 0 -0.45rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: color 0.35s ease, background 0.25s ease;
+      user-select: none;
+    }
+
+    .phase-list li:hover {
+      background: rgba(13, 122, 99, 0.06);
+      color: var(--ink-soft);
+    }
+
+    .phase-list li:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
     }
 
     .phase-list li::before {
@@ -539,6 +717,7 @@
     .phase-list li.is-active {
       color: var(--ink);
       font-weight: 600;
+      background: rgba(13, 122, 99, 0.08);
     }
 
     .phase-list li.is-active::before {
@@ -658,17 +837,25 @@
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .apex-pill,
-      .apex-dot { animation: none; }
+      .apex-dot,
+      .stage-cue,
+      .stage-cue-dot,
+      .cue-toast,
+      .blink-flash { animation: none !important; }
       .reveal {
         opacity: 1;
         transform: none;
         transition: none;
       }
-      .sil-body,
+      .sil-upper,
       .sil-head,
+      .sil-figure,
+      .sil-fill,
       .cue-toast,
       .biotax-panel,
       .progress-fill,
+      .stage-cue,
+      .silhouette-wrap,
       .btn { transition: none !important; }
     }
 
@@ -712,6 +899,7 @@
       }
 
       .stage-frame { height: 300px; }
+      .silhouette-wrap { width: min(48%, 180px); left: 6%; }
 
       .plans {
         grid-template-columns: 1fr;
@@ -789,14 +977,59 @@
 
       <div class="loop-scene reveal" id="loop-demo" aria-live="polite">
         <div class="stage-frame" id="stage" data-phase="idle">
-          <div class="silhouette-wrap">
-            <svg class="silhouette" viewBox="0 0 120 200" role="img" aria-label="Animated posture silhouette">
-              <circle class="sil-head" id="sil-head" cx="60" cy="36" r="16" />
-              <path class="sil-body" id="sil-body" d="M60 54 L60 110 M60 70 L38 95 M60 70 L82 95 M60 110 L42 160 M60 110 L78 160" />
-            </svg>
+          <div class="stage-menubar" aria-hidden="true">
+            <div class="stage-mb-left">
+              <span>File</span>
+              <span>Edit</span>
+              <span>View</span>
+            </div>
+            <div class="stage-cue" id="stage-cue">
+              <span class="stage-cue-dot"></span>
+              ApexForm
+            </div>
           </div>
+
+          <div class="desk-scene">
+            <div class="silhouette-wrap">
+              <svg class="silhouette" viewBox="0 0 170 210" role="img" aria-label="Animated desk posture silhouette">
+                <!-- Chair -->
+                <path class="sil-chair" d="M38 132 C38 126 44 122 52 122 H108 C116 122 122 126 122 132 V172 H110 V140 H50 V172 H38 Z" />
+                <path class="sil-chair" d="M50 96 H74 V122 H50 Z" opacity="0.65" />
+                <!-- Desk + monitor -->
+                <rect class="sil-desk" x="102" y="124" width="62" height="7" rx="1.5" />
+                <rect class="sil-monitor" x="120" y="76" width="34" height="44" rx="2.5" />
+                <rect class="sil-desk" x="133" y="120" width="8" height="5" rx="1" />
+                <!-- Seated figure -->
+                <g class="sil-figure">
+                  <g class="sil-upper" id="sil-upper">
+                    <ellipse class="sil-fill" cx="80" cy="44" rx="16" ry="18" />
+                    <path class="sil-fill" d="M66 60 C65 78 62 96 60 116 L100 116 C98 96 95 78 94 60 Z" />
+                    <g class="sil-head" id="sil-head">
+                      <ellipse cx="80" cy="44" rx="16" ry="18" />
+                      <path d="M80 62 V70" />
+                    </g>
+                    <!-- Torso outline -->
+                    <path d="M66 70 C64 88 62 102 60 116" />
+                    <path d="M94 70 C96 88 98 102 100 116" />
+                    <!-- Shoulder line -->
+                    <path d="M66 74 H94" />
+                    <!-- Arms: left resting, right to keyboard -->
+                    <path d="M66 78 C54 92 48 104 46 116" />
+                    <path d="M94 80 C108 92 124 108 132 120" />
+                  </g>
+                  <!-- Seat / thighs / calves -->
+                  <path d="M60 116 C58 124 56 130 54 134 H106 C102 126 100 120 100 116" />
+                  <path d="M56 134 L46 176" />
+                  <path d="M102 134 L112 176" />
+                </g>
+              </svg>
+            </div>
+          </div>
+
           <div class="cue-toast" id="cue-toast">Sit a little taller</div>
+
           <div class="biotax-panel" id="biotax-panel">
+            <div class="blink-flash" id="blink-flash"></div>
             <div class="label">Bio-Tax</div>
             <div class="title" id="biotax-title">Blink reset</div>
             <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
@@ -808,13 +1041,14 @@
         </div>
 
         <div class="loop-caption">
+          <p class="phase-hint">Autoplays · hover to pause · click a step to jump</p>
           <ol class="phase-list" id="phase-list">
-            <li data-phase="idle" class="is-active">Working — menu bar stays quiet</li>
-            <li data-phase="slouch">Slouch detected</li>
-            <li data-phase="cue">Soft posture cue</li>
-            <li data-phase="recover">You sit tall again</li>
-            <li data-phase="biotax">Bio-Tax break clears</li>
-            <li data-phase="done">Back to flow</li>
+            <li data-phase="idle" class="is-active" tabindex="0" role="button">Working — menu bar stays quiet</li>
+            <li data-phase="slouch" tabindex="0" role="button">Slouch detected</li>
+            <li data-phase="cue" tabindex="0" role="button">Soft posture cue</li>
+            <li data-phase="recover" tabindex="0" role="button">You sit tall again</li>
+            <li data-phase="biotax" tabindex="0" role="button">Bio-Tax break clears</li>
+            <li data-phase="done" tabindex="0" role="button">Back to flow</li>
           </ol>
         </div>
       </div>
@@ -899,31 +1133,40 @@
       /* Product loop demo */
       var stage = document.getElementById("stage");
       var phaseList = document.getElementById("phase-list");
-      var silHead = document.getElementById("sil-head");
-      var silBody = document.getElementById("sil-body");
       var progressFill = document.getElementById("progress-fill");
       var progressCount = document.getElementById("progress-count");
       var progressStatus = document.getElementById("progress-status");
       var biotaxTitle = document.getElementById("biotax-title");
-      var cueToast = document.getElementById("cue-toast");
+      var blinkFlash = document.getElementById("blink-flash");
+      var demo = document.getElementById("loop-demo");
 
-      var upright = {
-        head: { cx: 60, cy: 36 },
-        body: "M60 54 L60 110 M60 70 L38 95 M60 70 L82 95 M60 110 L42 160 M60 110 L78 160"
-      };
-      var slouch = {
-        head: { cx: 72, cy: 48 },
-        body: "M66 64 L58 112 M64 78 L40 98 M68 76 L88 102 M58 112 L44 162 M58 112 L82 158"
-      };
+      var PHASES = ["idle", "slouch", "cue", "recover", "biotax", "done"];
+      var HOLD = { idle: 1800, slouch: 1400, cue: 1600, recover: 1400, biotax: 0, done: 2600 };
+      var BLINK_TOTAL = 10;
+      var BLINK_MS = 240;
 
-      function setPose(pose) {
-        silHead.setAttribute("cx", pose.head.cx);
-        silHead.setAttribute("cy", pose.head.cy);
-        silBody.setAttribute("d", pose.body);
+      var currentIdx = 0;
+      var paused = false;
+      var inView = false;
+      var timers = [];
+      var blinkN = 0;
+
+      function clearTimers() {
+        timers.forEach(function (t) { clearTimeout(t); });
+        timers = [];
+      }
+
+      function later(ms, fn) {
+        var id = setTimeout(function () {
+          if (paused) return;
+          fn();
+        }, ms);
+        timers.push(id);
       }
 
       function setPhaseUI(phase) {
         stage.setAttribute("data-phase", phase);
+        currentIdx = PHASES.indexOf(phase);
         var items = phaseList.querySelectorAll("li");
         var reached = true;
         items.forEach(function (li) {
@@ -938,84 +1181,145 @@
         });
       }
 
-      function setProgress(n, total, status) {
-        progressCount.textContent = n + " / " + total + " blinks";
+      function setProgress(n, status) {
+        blinkN = n;
+        progressCount.textContent = n + " / " + BLINK_TOTAL + " blinks";
         progressStatus.textContent = status;
-        progressFill.style.width = Math.round((n / total) * 100) + "%";
+        progressFill.style.width = Math.round((n / BLINK_TOTAL) * 100) + "%";
       }
 
-      var timers = [];
-      function clearTimers() {
-        timers.forEach(function (t) { clearTimeout(t); });
-        timers = [];
-      }
-      function later(ms, fn) {
-        timers.push(setTimeout(fn, ms));
+      function flashBlink() {
+        if (!blinkFlash || reduceMotion) return;
+        blinkFlash.classList.remove("is-on");
+        void blinkFlash.offsetWidth;
+        blinkFlash.classList.add("is-on");
       }
 
-      function runLoop() {
-        clearTimers();
-        setPose(upright);
-        setPhaseUI("idle");
-        setProgress(0, 10, "Waiting…");
-        progressFill.style.width = "0%";
+      function resetBiotax() {
         biotaxTitle.textContent = "Blink reset";
-        cueToast.textContent = "Sit a little taller";
+        setProgress(0, "Waiting…");
+        progressFill.style.width = "0%";
+        if (blinkFlash) blinkFlash.classList.remove("is-on");
+      }
+
+      function runBiotaxCount() {
+        setProgress(0, "Counting…");
+        biotaxTitle.textContent = "Blink reset";
+        var n = 0;
+        function tick() {
+          if (paused) return;
+          n += 1;
+          setProgress(n, n >= BLINK_TOTAL ? "Cleared" : "Counting…");
+          flashBlink();
+          if (n < BLINK_TOTAL) {
+            later(BLINK_MS, tick);
+          } else {
+            later(450, function () {
+              biotaxTitle.textContent = "Break cleared";
+              advanceFrom("biotax");
+            });
+          }
+        }
+        later(320, tick);
+      }
+
+      function enterPhase(phase) {
+        clearTimers();
+        setPhaseUI(phase);
+
+        if (phase === "idle" || phase === "slouch" || phase === "cue" || phase === "recover") {
+          resetBiotax();
+        }
+
+        if (phase === "done") {
+          biotaxTitle.textContent = "Break cleared";
+          setProgress(BLINK_TOTAL, "Cleared");
+          progressFill.style.width = "100%";
+        }
 
         if (reduceMotion) {
           setPhaseUI("done");
-          setProgress(10, 10, "Cleared");
+          biotaxTitle.textContent = "Break cleared";
+          setProgress(BLINK_TOTAL, "Cleared");
           progressFill.style.width = "100%";
           return;
         }
 
-        later(1600, function () {
-          setPose(slouch);
-          setPhaseUI("slouch");
-        });
-        later(2800, function () {
-          setPhaseUI("cue");
-        });
-        later(4200, function () {
-          setPose(upright);
-          setPhaseUI("recover");
-        });
-        later(5600, function () {
-          setPhaseUI("biotax");
-          setProgress(0, 10, "Counting…");
-          var n = 0;
-          function tick() {
-            n += 1;
-            setProgress(n, 10, n >= 10 ? "Cleared" : "Counting…");
-            if (n < 10) {
-              later(220, tick);
-            } else {
-              later(400, function () {
-                setPhaseUI("done");
-                biotaxTitle.textContent = "Break cleared";
-              });
-              later(3200, runLoop);
-            }
-          }
-          later(350, tick);
+        if (paused || !inView) return;
+
+        if (phase === "biotax") {
+          runBiotaxCount();
+          return;
+        }
+
+        later(HOLD[phase], function () {
+          advanceFrom(phase);
         });
       }
 
-      /* Start loop when visible */
-      var demo = document.getElementById("loop-demo");
+      function advanceFrom(phase) {
+        var idx = PHASES.indexOf(phase);
+        var next = PHASES[(idx + 1) % PHASES.length];
+        enterPhase(next);
+      }
+
+      function jumpTo(phase) {
+        if (PHASES.indexOf(phase) < 0) return;
+        var keepPaused = paused;
+        paused = false;
+        enterPhase(phase);
+        if (keepPaused) {
+          paused = true;
+          clearTimers();
+        }
+      }
+
+      function pauseDemo() {
+        if (reduceMotion) return;
+        paused = true;
+        clearTimers();
+      }
+
+      function resumeDemo() {
+        if (reduceMotion) return;
+        paused = false;
+        if (!inView) return;
+        enterPhase(PHASES[currentIdx] || "idle");
+      }
+
+      /* Step click / keyboard jump */
+      phaseList.querySelectorAll("li").forEach(function (li) {
+        function go() {
+          jumpTo(li.getAttribute("data-phase"));
+        }
+        li.addEventListener("click", go);
+        li.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            go();
+          }
+        });
+      });
+
+      demo.addEventListener("mouseenter", pauseDemo);
+      demo.addEventListener("mouseleave", resumeDemo);
+
+      /* Start / pause with visibility */
       if ("IntersectionObserver" in window) {
-        var started = false;
         var dio = new IntersectionObserver(function (entries) {
           entries.forEach(function (entry) {
-            if (entry.isIntersecting && !started) {
-              started = true;
-              runLoop();
+            inView = entry.isIntersecting;
+            if (inView) {
+              if (!paused) enterPhase(PHASES[currentIdx] || "idle");
+            } else {
+              clearTimers();
             }
           });
-        }, { threshold: 0.35 });
+        }, { threshold: 0.3 });
         dio.observe(demo);
       } else {
-        runLoop();
+        inView = true;
+        enterPhase("idle");
       }
     })();
   </script>
