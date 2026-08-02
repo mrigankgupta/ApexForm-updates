@@ -11,27 +11,23 @@
   <meta http-equiv="Cache-Control" content="no-cache">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --ink: #101a17;
-      --ink-soft: #2f3d38;
-      --muted: #5a6962;
-      --line: rgba(16, 26, 23, 0.12);
-      --surface: rgba(255, 255, 255, 0.58);
+      --ink: #0a1210;
+      --ink-soft: #22352e;
+      --muted: #5a6d64;
+      --line: rgba(10, 18, 16, 0.1);
+      --line-strong: rgba(10, 18, 16, 0.15);
       --accent: #0c735d;
-      --accent-deep: #085445;
-      --accent-soft: rgba(12, 115, 93, 0.12);
-      --warm: #d4a45c;
-      --mist: #e8eef1;
-      --page: #eef3f5;
-      --screen: #161f1c;
-      --app-green: #34c759;
-      --app-amber: #ff9f0a;
-      --font-display: "Bricolage Grotesque", Georgia, serif;
-      --font-body: "Figtree", -apple-system, sans-serif;
-      --font-ui: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Figtree", sans-serif;
+      --accent-deep: #065443;
+      --leaf: #17a07e;
+      --page: #e9f0ec;
+      --page-deep: #d8e3dd;
+      --font-display: "Syne", "DM Sans", system-ui, sans-serif;
+      --font-body: "DM Sans", system-ui, -apple-system, sans-serif;
       --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -40,34 +36,66 @@
     body {
       font-family: var(--font-body);
       color: var(--ink);
-      background:
-        radial-gradient(ellipse 80% 48% at 88% -6%, rgba(12, 115, 93, 0.1), transparent 56%),
-        radial-gradient(ellipse 55% 38% at 6% 16%, rgba(212, 164, 92, 0.11), transparent 50%),
-        linear-gradient(168deg, #f5f8fa 0%, var(--mist) 46%, var(--page) 100%);
+      background: var(--page);
       line-height: 1.55;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
 
-    body::before {
-      content: "";
+    .atmosphere {
       position: fixed;
       inset: 0;
-      pointer-events: none;
       z-index: 0;
-      opacity: 0.22;
-      background-image:
-        linear-gradient(rgba(16, 26, 23, 0.028) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(16, 26, 23, 0.028) 1px, transparent 1px);
-      background-size: 56px 56px;
-      mask-image: radial-gradient(ellipse 78% 68% at 50% 28%, #000 18%, transparent 74%);
+      pointer-events: none;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse 95% 58% at 38% -14%, rgba(12, 115, 93, 0.24), transparent 58%),
+        radial-gradient(ellipse 48% 36% at 100% 8%, rgba(23, 160, 126, 0.12), transparent 55%),
+        radial-gradient(ellipse 42% 34% at -6% 52%, rgba(170, 190, 180, 0.28), transparent 60%),
+        radial-gradient(ellipse 65% 40% at 72% 100%, rgba(6, 84, 67, 0.08), transparent 52%),
+        linear-gradient(170deg, #f5f9f7 0%, var(--page) 44%, var(--page-deep) 100%);
     }
 
-    a { color: var(--accent-deep); text-decoration: none; }
-    a:hover { text-decoration: underline; text-underline-offset: 3px; }
+    .atmosphere::before {
+      content: "";
+      position: absolute;
+      width: 68vmax;
+      height: 68vmax;
+      top: -26vmax;
+      left: 34%;
+      translate: -50% 0;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(12, 115, 93, 0.22) 0%, rgba(12, 115, 93, 0.05) 45%, transparent 70%);
+      animation: orb-drift 22s var(--ease) infinite alternate;
+      will-change: transform;
+    }
+
+    .atmosphere::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.42;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+      background-size: 150px 150px;
+      mix-blend-mode: multiply;
+    }
+
+    @keyframes orb-drift {
+      from { transform: translate3d(-3%, 0, 0) scale(1); }
+      to   { transform: translate3d(4%, 5%, 0) scale(1.1); }
+    }
+
+    a { color: var(--accent-deep); text-decoration: none; transition: color 0.2s ease; }
+    a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
 
     .wrap {
-      width: min(1100px, calc(100% - 2.5rem));
+      width: min(900px, calc(100% - 2.75rem));
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .wrap-wide {
+      width: min(1080px, calc(100% - 2.75rem));
       margin: 0 auto;
       position: relative;
       z-index: 1;
@@ -76,70 +104,69 @@
     .topnav {
       display: flex;
       justify-content: flex-end;
-      gap: 1.25rem;
-      padding: 1.15rem 0 0;
-      font-size: 0.9rem;
+      gap: 1.5rem;
+      padding: 1.4rem 0 0;
+      font-size: 0.875rem;
       font-weight: 500;
     }
-    .topnav a { color: var(--ink-soft); }
-    .topnav a:hover { color: var(--accent-deep); }
+    .topnav a { color: var(--muted); text-decoration: none; }
+    .topnav a:hover { color: var(--ink); }
 
-    /* —— Hero: two-column composition, no overlapping layers —— */
     .hero {
       position: relative;
       z-index: 1;
-      padding: 0.5rem 0 3.25rem;
+      min-height: min(92vh, 840px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 2.25rem 0 4.75rem;
     }
 
-    .hero-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.9fr);
-      gap: clamp(2rem, 4.5vw, 3.75rem);
-      align-items: center;
-      min-height: min(72vh, 600px);
-      padding: 1.75rem 0 0;
-    }
-
-    .hero-copy {
-      position: relative;
-      z-index: 2;
-      max-width: 32rem;
-      min-width: 0;
-    }
+    .hero-inner { max-width: 38rem; }
 
     .brand {
       font-family: var(--font-display);
       font-weight: 800;
-      font-size: clamp(3.4rem, 8vw, 5.4rem);
-      letter-spacing: -0.045em;
-      line-height: 0.94;
+      font-size: clamp(4.25rem, 12vw, 7.25rem);
+      letter-spacing: -0.062em;
+      line-height: 0.86;
       color: var(--ink);
-      margin-bottom: 1.1rem;
+      margin-bottom: 1.8rem;
     }
-    .brand span { color: var(--accent); }
+    .brand span {
+      color: var(--accent);
+      animation: form-glow 7s var(--ease) infinite;
+    }
+
+    @keyframes form-glow {
+      0%, 100% { color: var(--accent); }
+      50% { color: var(--leaf); }
+    }
 
     .hero h1 {
       font-family: var(--font-display);
       font-weight: 600;
-      font-size: clamp(1.35rem, 2.6vw, 1.8rem);
-      letter-spacing: -0.02em;
-      line-height: 1.25;
+      font-size: clamp(1.6rem, 3.4vw, 2.3rem);
+      letter-spacing: -0.035em;
+      line-height: 1.15;
       color: var(--ink-soft);
-      max-width: 18ch;
+      max-width: 13ch;
     }
 
     .hero .sub {
-      margin-top: 0.85rem;
-      font-size: 1.05rem;
+      margin-top: 1.2rem;
+      font-size: 1.085rem;
+      font-weight: 400;
       color: var(--muted);
-      max-width: 29rem;
+      max-width: 30.5rem;
+      line-height: 1.58;
     }
 
     .cta-row {
-      margin-top: 1.75rem;
+      margin-top: 2.2rem;
       display: flex;
       flex-wrap: wrap;
-      gap: 0.75rem;
+      gap: 1.15rem 1.55rem;
       align-items: center;
     }
 
@@ -149,857 +176,345 @@
       justify-content: center;
       font-family: var(--font-body);
       font-size: 0.98rem;
-      font-weight: 600;
-      border-radius: 10px;
-      padding: 0.85rem 1.45rem;
-      border: 1px solid transparent;
-      transition: background 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease), transform 0.2s var(--ease);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      border-radius: 999px;
+      padding: 0.98rem 1.7rem;
+      border: none;
+      text-decoration: none;
+      transition: background 0.25s var(--ease), transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
     }
     .btn:hover { text-decoration: none; transform: translateY(-1px); }
     .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-    .btn-primary { background: var(--accent); color: #f4fffb; }
-    .btn-primary:hover { background: var(--accent-deep); color: #fff; }
-    .btn-ghost {
-      background: transparent;
-      color: var(--ink-soft);
-      border-color: var(--line);
-    }
-    .btn-ghost:hover { background: var(--surface); color: var(--ink); }
 
-    .hero-visual {
-      position: relative;
-      z-index: 1;
-      min-width: 0;
-      justify-self: stretch;
-      /* Room for soft shadow without invading the copy column */
-      padding: 0.35rem 0.15rem 1.25rem;
-    }
-
-    .hero-visual::before {
-      content: "";
-      position: absolute;
-      inset: 4% 2% -6% 8%;
-      background:
-        radial-gradient(ellipse 60% 55% at 55% 40%, rgba(255, 255, 255, 0.5), transparent 72%),
-        radial-gradient(ellipse 70% 60% at 70% 30%, rgba(90, 140, 130, 0.18), transparent 65%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .hero-desktop {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      aspect-ratio: 16 / 11;
-      border-radius: 14px;
-      overflow: hidden;
-      background:
-        radial-gradient(ellipse 80% 60% at 70% 0%, rgba(70, 130, 120, 0.28), transparent 55%),
-        linear-gradient(165deg, #2a3833 0%, #1a2421 55%, #121a18 100%);
+    .btn-primary {
+      background: var(--ink);
+      color: #f3faf7;
       box-shadow:
         0 1px 0 rgba(255, 255, 255, 0.08) inset,
-        0 22px 44px rgba(16, 26, 23, 0.2);
-      border: 1px solid rgba(16, 26, 23, 0.26);
-      animation: hero-float 7s var(--ease) infinite;
+        0 10px 32px rgba(10, 18, 16, 0.18);
     }
-
-    @keyframes hero-float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-5px); }
-    }
-
-    .mb {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 28px;
-      padding: 0 12px;
-      background: rgba(8, 12, 10, 0.78);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      color: rgba(245, 248, 247, 0.9);
-      font-family: var(--font-ui);
-      font-size: 11px;
-      font-weight: 500;
-    }
-
-    .mb-left { opacity: 0.7; font-size: 13px; }
-    .mb-right {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .mb-cc {
-      display: inline-flex;
-      gap: 7px;
-      align-items: center;
-      opacity: 0.78;
-    }
-    .mb-cc svg { width: 12px; height: 12px; display: block; fill: currentColor; }
-
-    .mb-status {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 22px;
-      height: 18px;
-      border-radius: 4px;
-      color: var(--app-amber);
-      background: rgba(255, 159, 10, 0.2);
-      box-shadow: 0 0 0 1px rgba(255, 159, 10, 0.22);
-    }
-    .mb-status svg { width: 13px; height: 13px; display: block; fill: currentColor; }
-
-    .mb-clock {
-      font-variant-numeric: tabular-nums;
-      opacity: 0.85;
-      min-width: 2.4rem;
-      text-align: right;
-    }
-
-    .hero-desk-body {
-      position: absolute;
-      inset: 28px 0 0;
-      background:
-        radial-gradient(ellipse 70% 50% at 60% 20%, rgba(12, 115, 93, 0.14), transparent 60%),
-        linear-gradient(180deg, #24302c 0%, #18221f 100%);
-    }
-
-    .hero-app {
-      position: absolute;
-      left: 7%;
-      top: 12%;
-      width: 62%;
-      height: 68%;
-      border-radius: 11px;
-      background: rgba(28, 36, 33, 0.9);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
-      overflow: hidden;
-    }
-
-    .hero-app-bar {
-      height: 28px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 0 12px;
-      background: rgba(18, 24, 22, 0.95);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .hero-app-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.12);
-    }
-    .hero-app-dot:nth-child(1) { background: #ff5f57; }
-    .hero-app-dot:nth-child(2) { background: #febc2e; }
-    .hero-app-dot:nth-child(3) { background: #28c840; }
-
-    .hero-app-title {
-      margin-left: 6px;
-      font-family: var(--font-ui);
-      font-size: 10px;
-      color: rgba(245, 248, 247, 0.4);
-    }
-
-    .hero-app-body {
-      padding: 14px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .hero-app-line {
-      height: 6px;
-      border-radius: 3px;
-      background: rgba(255, 255, 255, 0.07);
-    }
-    .hero-app-line.w1 { width: 72%; background: rgba(12, 115, 93, 0.35); }
-    .hero-app-line.w2 { width: 88%; }
-    .hero-app-line.w3 { width: 64%; }
-    .hero-app-line.w4 { width: 80%; margin-top: 4px; }
-
-    .hero-cue {
-      position: absolute;
-      left: 50%;
-      top: 42%;
-      transform: translate(-50%, -50%);
-      z-index: 2;
-      padding: 12px 18px;
-      border-radius: 12px;
-      background: rgba(28, 32, 30, 0.82);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+    .btn-primary:hover {
+      background: var(--accent-deep);
       color: #fff;
-      font-family: var(--font-ui);
-      font-size: clamp(0.78rem, 1.4vw, 0.92rem);
-      font-weight: 600;
-      letter-spacing: -0.015em;
-      white-space: nowrap;
-      animation: cue-soft 3.6s var(--ease) infinite;
-    }
-
-    @keyframes cue-soft {
-      0%, 100% { opacity: 0.92; transform: translate(-50%, -50%); }
-      50% { opacity: 1; transform: translate(-50%, calc(-50% - 3px)); }
-    }
-
-    /* —— Sections —— */
-    section {
-      position: relative;
-      z-index: 1;
-      padding: 5rem 0;
-    }
-
-    section h2 {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: clamp(1.75rem, 3.5vw, 2.35rem);
-      letter-spacing: -0.03em;
-      line-height: 1.15;
-      margin-bottom: 0.55rem;
-    }
-
-    section .lead {
-      color: var(--muted);
-      font-size: 1.05rem;
-      max-width: 36rem;
-      margin-bottom: 2.25rem;
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(14px);
-      transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
-    }
-    .reveal.is-in { opacity: 1; transform: none; }
-
-    /* —— How it works —— */
-    .loop {
-      background:
-        linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.4) 12%, rgba(255, 255, 255, 0.44) 88%, transparent);
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .loop-scene {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(200px, 240px);
-      gap: 2rem;
-      align-items: center;
-      padding-top: 0.25rem;
-    }
-
-    .demo-stage {
-      --green: var(--app-green);
-      --amber: var(--app-amber);
-      position: relative;
-      height: 420px;
-      border-radius: 16px;
-      overflow: hidden;
-      background: #0c1210;
-      border: 1px solid rgba(16, 26, 23, 0.2);
       box-shadow:
-        0 1px 0 rgba(255, 255, 255, 0.05) inset,
-        0 24px 52px rgba(16, 26, 23, 0.14);
+        0 1px 0 rgba(255, 255, 255, 0.1) inset,
+        0 12px 36px rgba(6, 84, 67, 0.28);
     }
 
-    .demo-wallpaper {
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 62% 52% at 76% 16%, rgba(72, 130, 118, 0.42), transparent 58%),
-        radial-gradient(ellipse 42% 38% at 16% 80%, rgba(160, 130, 90, 0.24), transparent 55%),
-        linear-gradient(155deg, #364540 0%, #222c28 44%, #141b18 100%);
-      transition: filter 0.55s var(--ease), transform 0.55s var(--ease);
-    }
-
-    .demo-stage[data-beat="focus"] .demo-wallpaper,
-    .demo-stage[data-beat="done"] .demo-wallpaper {
-      filter: blur(11px) brightness(0.42) saturate(0.85);
-      transform: scale(1.03);
-    }
-
-    .demo-windows {
-      position: absolute;
-      inset: 34px 0 0;
-      pointer-events: none;
-      transition: opacity 0.45s ease, filter 0.55s var(--ease);
-    }
-
-    .demo-stage[data-beat="focus"] .demo-windows,
-    .demo-stage[data-beat="done"] .demo-windows {
-      opacity: 0.28;
-      filter: blur(5px);
-    }
-
-    .win {
-      position: absolute;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
-      background: rgba(32, 40, 37, 0.92);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-    }
-
-    .win-main {
-      left: 6%;
-      top: 9%;
-      width: min(66%, 370px);
-      height: 76%;
-    }
-
-    .win-side {
-      right: 5%;
-      top: 20%;
-      width: 27%;
-      height: 54%;
-      background: rgba(28, 36, 33, 0.86);
-      opacity: 0.92;
-    }
-
-    .win-bar {
-      height: 36px;
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      padding: 0 14px;
-      background: rgba(20, 26, 24, 0.95);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .win-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.12);
-    }
-    .win-dot:nth-child(1) { background: #ff5f57; }
-    .win-dot:nth-child(2) { background: #febc2e; }
-    .win-dot:nth-child(3) { background: #28c840; }
-
-    .win-title {
-      margin-left: 8px;
-      font-family: var(--font-ui);
-      font-size: 11px;
+    .text-link {
+      font-size: 0.95rem;
       font-weight: 500;
-      color: rgba(245, 248, 247, 0.45);
+      color: var(--muted);
+      text-decoration: none;
       letter-spacing: -0.01em;
     }
+    .text-link:hover { color: var(--ink); text-decoration: none; }
+    .text-link::after {
+      content: " →";
+      transition: margin-left 0.2s var(--ease);
+    }
+    .text-link:hover::after { margin-left: 0.2rem; }
 
-    .win-body {
-      padding: 18px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 11px;
-    }
-
-    .win-line {
-      height: 8px;
-      border-radius: 4px;
-      background: rgba(255, 255, 255, 0.07);
-    }
-    .win-line.a { width: 84%; }
-    .win-line.b { width: 66%; }
-    .win-line.c { width: 90%; }
-    .win-line.d { width: 52%; }
-    .win-line.e { width: 74%; }
-    .win-line.gap { margin-top: 6px; }
-    .win-line.accent {
-      width: 38%;
-      background: rgba(12, 115, 93, 0.35);
-    }
-
-    .demo-menubar {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 6;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 30px;
-      padding: 0 12px;
-      background: rgba(10, 14, 12, 0.8);
-      backdrop-filter: blur(18px) saturate(1.25);
-      -webkit-backdrop-filter: blur(18px) saturate(1.25);
-      color: rgba(245, 248, 247, 0.92);
-      font-family: var(--font-ui);
-      font-size: 11px;
-      font-weight: 500;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-    }
-
-    .demo-mb-left {
-      display: flex;
-      align-items: center;
-      opacity: 0.55;
-    }
-    .demo-mb-apple { font-size: 13px; line-height: 1; opacity: 0.95; }
-
-    .demo-mb-right {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-    }
-
-    .cc-icons {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      opacity: 0.72;
-      color: rgba(245, 248, 247, 0.92);
-    }
-    .cc-icons svg {
-      width: 12px;
-      height: 12px;
-      display: block;
-      fill: currentColor;
-    }
-
-    .status-item {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 24px;
-      height: 20px;
-      border-radius: 5px;
-      color: rgba(245, 248, 247, 0.92);
-      transition: color 0.4s var(--ease), background 0.4s var(--ease), box-shadow 0.4s var(--ease);
-    }
-
-    .status-item svg {
-      width: 14px;
-      height: 14px;
-      display: block;
-      fill: currentColor;
-    }
-
-    .demo-stage[data-beat="quiet"] .status-item {
-      color: rgba(245, 248, 247, 0.88);
-    }
-
-    .demo-stage[data-beat="cue"] .status-item {
-      color: var(--amber);
-      background: rgba(255, 159, 10, 0.2);
-      box-shadow: 0 0 0 1px rgba(255, 159, 10, 0.25);
-      animation: status-nudge 0.85s var(--ease) 2;
-    }
-
-    .demo-stage[data-beat="recover"] .status-item {
-      color: var(--green);
-      background: rgba(52, 199, 89, 0.16);
-    }
-
-    .demo-stage[data-beat="focus"] .status-item,
-    .demo-stage[data-beat="done"] .status-item {
-      color: rgba(245, 248, 247, 0.45);
-      background: transparent;
-    }
-
-    @keyframes status-nudge {
-      0%, 100% { transform: scale(1); }
-      40% { transform: scale(1.1); }
-      70% { transform: scale(0.97); }
-    }
-
-    .demo-clock {
-      font-variant-numeric: tabular-nums;
-      opacity: 0.82;
-      min-width: 2.5rem;
-      text-align: right;
-      letter-spacing: 0.01em;
-    }
-
-    .cue-hud {
-      position: absolute;
-      top: 52px;
-      left: 50%;
-      z-index: 5;
-      padding: 14px 24px;
-      border-radius: 14px;
-      background: rgba(28, 32, 30, 0.8);
-      backdrop-filter: blur(22px) saturate(1.25);
-      -webkit-backdrop-filter: blur(22px) saturate(1.25);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.32);
-      color: #fff;
-      font-family: var(--font-ui);
-      font-size: 0.98rem;
-      font-weight: 600;
-      letter-spacing: -0.015em;
-      white-space: nowrap;
+    .rise {
       opacity: 0;
-      transform: translate(-50%, -10px);
-      pointer-events: none;
-      transition: opacity 0.22s ease, transform 0.4s var(--ease);
+      transform: translateY(20px);
+      animation: rise-in 0.95s var(--ease-out) forwards;
+    }
+    .rise-d1 { animation-delay: 0.1s; }
+    .rise-d2 { animation-delay: 0.24s; }
+    .rise-d3 { animation-delay: 0.4s; }
+
+    @keyframes rise-in {
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    .demo-stage[data-beat="cue"] .cue-hud {
-      opacity: 1;
-      transform: translate(-50%, 0);
-      animation: hud-shake 0.42s var(--ease);
+    .proof {
+      position: relative;
+      z-index: 1;
+      padding: 0.5rem 0 5.75rem;
     }
 
-    @keyframes hud-shake {
-      0%, 100% { transform: translate(-50%, 0); }
-      18% { transform: translate(calc(-50% - 7px), 0); }
-      36% { transform: translate(calc(-50% + 6px), 0); }
-      54% { transform: translate(calc(-50% - 5px), 0); }
-      72% { transform: translate(calc(-50% + 3px), 0); }
-    }
-
-    .focus-scrim {
-      position: absolute;
-      inset: 30px 0 0;
-      z-index: 4;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.25rem;
-      background: rgba(6, 10, 9, 0.5);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.5s var(--ease);
-    }
-
-    .demo-stage[data-beat="focus"] .focus-scrim,
-    .demo-stage[data-beat="done"] .focus-scrim {
-      opacity: 1;
-    }
-
-    .focus-card {
-      width: min(100%, 300px);
-      padding: 2rem 1.5rem 1.6rem;
-      border-radius: 20px;
-      background: rgba(18, 24, 22, 0.96);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 28px 60px rgba(0, 0, 0, 0.45);
-      text-align: center;
-      color: #fff;
-      transform: translateY(16px) scale(0.97);
-      opacity: 0;
-      transition: transform 0.55s var(--ease), opacity 0.45s var(--ease);
-    }
-
-    .demo-stage[data-beat="focus"] .focus-card,
-    .demo-stage[data-beat="done"] .focus-card {
-      transform: none;
-      opacity: 1;
-    }
-
-    .focus-kicker {
-      font-family: var(--font-ui);
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(159, 232, 212, 0.78);
-      margin-bottom: 0.55rem;
-    }
-
-    .focus-instruction {
-      font-family: var(--font-ui);
-      font-size: 1.3rem;
-      font-weight: 600;
-      letter-spacing: -0.025em;
-      line-height: 1.15;
-      margin-bottom: 0.85rem;
-    }
-
-    .focus-count {
-      font-family: var(--font-ui);
-      font-size: clamp(2.8rem, 8vw, 3.5rem);
-      font-weight: 700;
-      letter-spacing: -0.045em;
-      line-height: 1;
-      font-variant-numeric: tabular-nums;
-      margin-bottom: 1.05rem;
-      transition: transform 0.22s var(--ease);
-    }
-
-    .focus-count.is-tick { transform: scale(1.035); }
-
-    .focus-track {
-      height: 5px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.12);
-      overflow: hidden;
-      width: 88%;
-      margin: 0 auto;
-    }
-
-    .focus-fill {
-      height: 100%;
-      width: 0%;
-      border-radius: inherit;
-      background: var(--green);
-      transition: width 0.16s linear;
-    }
-
-    .focus-celebrate {
-      display: none;
-      font-family: var(--font-ui);
-      font-size: 1.55rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      color: var(--green);
-      padding: 0.85rem 0 0.4rem;
-    }
-
-    .demo-stage[data-beat="done"] .focus-instruction,
-    .demo-stage[data-beat="done"] .focus-count,
-    .demo-stage[data-beat="done"] .focus-track {
-      display: none;
-    }
-
-    .demo-stage[data-beat="done"] .focus-celebrate {
-      display: block;
-    }
-
-    .loop-caption {
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-    }
-
-    .phase-hint {
-      font-size: 0.78rem;
-      color: var(--muted);
-      margin: 0;
-    }
-
-    .phase-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-      margin: 0;
-      padding: 0;
-    }
-
-    .phase-list li {
+    .proof-strip {
       display: grid;
-      grid-template-columns: 10px 1fr;
-      gap: 0.7rem;
-      align-items: start;
-      font-size: 0.94rem;
-      color: var(--muted);
-      padding: 0.45rem 0.55rem;
-      margin: 0 -0.55rem;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: color 0.3s ease, background 0.25s ease;
-      user-select: none;
-    }
-
-    .phase-list li:hover {
-      background: rgba(12, 115, 93, 0.06);
-      color: var(--ink-soft);
-    }
-
-    .phase-list li:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px;
-    }
-
-    .phase-list li::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      margin-top: 0.42rem;
-      border-radius: 50%;
-      background: var(--line);
-      transition: background 0.3s ease, transform 0.3s var(--ease);
-    }
-
-    .phase-list li.is-active {
-      color: var(--ink);
-      font-weight: 600;
-      background: rgba(12, 115, 93, 0.08);
-    }
-
-    .phase-list li.is-active::before {
-      background: var(--accent);
-      transform: scale(1.25);
-    }
-
-    .phase-list li.is-done { color: var(--ink-soft); }
-    .phase-list li.is-done::before { background: var(--accent); }
-
-    /* —— Free / Pro —— */
-    .plans {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
+      grid-template-columns: repeat(3, 1fr);
       border-top: 1px solid var(--line);
       border-bottom: 1px solid var(--line);
     }
 
-    .plan-col { padding: 1.85rem 1.75rem 1.85rem 0; }
-    .plan-col + .plan-col {
+    .proof-item { padding: 2.1rem 1.75rem 2.1rem 0; }
+    .proof-item + .proof-item {
       padding-left: 1.75rem;
       border-left: 1px solid var(--line);
     }
 
-    .plan-col h3 {
+    .proof-item .label {
       font-family: var(--font-display);
-      font-size: 1.35rem;
+      font-size: 1.22rem;
       font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.2rem;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
     }
-
-    .plan-col .price {
+    .proof-item p {
       font-size: 0.95rem;
       color: var(--muted);
-      margin-bottom: 1.1rem;
+      line-height: 1.5;
+      max-width: 22ch;
     }
 
-    .plan-col ul {
+    section { position: relative; z-index: 1; }
+
+    .section-head { margin-bottom: 2.85rem; }
+    .section-head h2 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(1.95rem, 3.7vw, 2.65rem);
+      letter-spacing: -0.042em;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 0.85rem;
+    }
+    .section-head .lead {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 34rem;
+      line-height: 1.55;
+    }
+
+    .how { padding: 1.5rem 0 5.5rem; }
+
+    .steps { list-style: none; }
+
+    .step {
+      display: grid;
+      grid-template-columns: 4.75rem 1fr;
+      gap: 1.15rem;
+      padding: 1.9rem 0;
+      border-top: 1px solid var(--line);
+      align-items: start;
+    }
+    .step:last-child { border-bottom: 1px solid var(--line); }
+
+    .step-num {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: -0.03em;
+      color: var(--accent);
+      padding-top: 0.2rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .step-body h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.32rem;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: 0.4rem;
+    }
+    .step-body p {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 38rem;
+      line-height: 1.55;
+    }
+
+    .step-icon {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin-top: 0.9rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .status-glyph {
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      background: rgba(12, 115, 93, 0.1);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .status-glyph svg {
+      width: 12px;
+      height: 12px;
+      fill: var(--leaf);
+      animation: status-breathe 4.8s var(--ease) infinite;
+    }
+
+    @keyframes status-breathe {
+      0%, 100% { fill: var(--leaf); opacity: 1; }
+      40% { fill: #c9a227; opacity: 0.8; }
+      70% { fill: var(--leaf); opacity: 1; }
+    }
+
+    .pricing { padding: 1.5rem 0 4.25rem; }
+
+    .plans {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid var(--line-strong);
+      border-bottom: 1px solid var(--line-strong);
+    }
+
+    .plan { padding: 2.35rem 2rem 2.35rem 0; }
+    .plan + .plan {
+      padding-left: 2rem;
+      border-left: 1px solid var(--line);
+    }
+
+    .plan h3 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+    }
+    .plan .price {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 1.4rem;
+      font-weight: 500;
+    }
+    .plan ul {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.55rem;
     }
-
-    .plan-col li {
+    .plan li {
       font-size: 0.95rem;
       color: var(--ink-soft);
-      padding-left: 1.1rem;
+      padding-left: 1rem;
       position: relative;
+      line-height: 1.4;
     }
-
-    .plan-col li::before {
+    .plan li::before {
       content: "";
       position: absolute;
       left: 0;
       top: 0.55rem;
-      width: 6px;
-      height: 6px;
+      width: 5px;
+      height: 5px;
       border-radius: 1px;
       background: var(--accent);
-      opacity: 0.7;
+      opacity: 0.8;
     }
 
     .plan-note {
-      margin-top: 1.5rem;
-      font-size: 0.92rem;
-      color: var(--muted);
-    }
-
-    .privacy-strip { padding: 3.75rem 0 1.25rem; }
-    .privacy-strip p {
-      font-size: 1.05rem;
+      margin-top: 1.75rem;
+      font-size: 0.9rem;
       color: var(--muted);
       max-width: 40rem;
     }
-    .privacy-strip strong { color: var(--ink); font-weight: 600; }
+
+    .privacy { padding: 3.5rem 0 1rem; }
+    .privacy h2 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(1.5rem, 2.8vw, 1.95rem);
+      letter-spacing: -0.03em;
+      margin-bottom: 0.75rem;
+    }
+    .privacy p {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 38rem;
+      line-height: 1.55;
+    }
+    .privacy strong { color: var(--ink); font-weight: 700; }
 
     footer {
       position: relative;
       z-index: 1;
-      padding: 2.75rem 0 3.25rem;
+      padding: 3rem 0 3.5rem;
+      margin-top: 2.5rem;
       border-top: 1px solid var(--line);
-      margin-top: 2rem;
     }
-
     footer .links {
       display: flex;
       flex-wrap: wrap;
-      gap: 1.25rem;
-      margin-bottom: 0.75rem;
-      font-size: 0.92rem;
+      gap: 1.5rem;
+      margin-bottom: 0.85rem;
+      font-size: 0.9rem;
       font-weight: 500;
     }
+    footer .links a { color: var(--ink-soft); text-decoration: none; }
+    footer .links a:hover { color: var(--accent-deep); }
+    footer .copy { font-size: 0.85rem; color: var(--muted); }
 
-    footer .copy {
-      font-size: 0.88rem;
-      color: var(--muted);
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.85s var(--ease-out), transform 0.85s var(--ease-out);
+    }
+    .reveal.is-in {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
-      .hero-desktop,
-      .hero-cue,
-      .status-item,
-      .cue-hud { animation: none !important; }
+      .atmosphere::before,
+      .brand span,
+      .status-glyph svg { animation: none !important; }
+      .rise {
+        opacity: 1;
+        transform: none;
+        animation: none;
+      }
       .reveal {
         opacity: 1;
         transform: none;
         transition: none;
       }
-      .cue-hud,
-      .focus-scrim,
-      .focus-card,
-      .focus-fill,
-      .status-item,
-      .demo-wallpaper,
-      .demo-windows,
-      .btn { transition: none !important; }
+      .btn { transition: none; }
     }
 
-    @media (max-width: 900px) {
-      .hero-layout {
-        grid-template-columns: 1fr;
-        min-height: 0;
-        gap: 1.5rem;
-        padding-top: 1rem;
-      }
-      .hero-copy { max-width: none; }
-      .hero-visual { padding-bottom: 0.5rem; }
-      .hero-desktop { animation: none; }
-      .hero-cue {
-        white-space: normal;
-        text-align: center;
-        max-width: calc(100% - 2rem);
-      }
-      .loop-scene {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-      .demo-stage { height: 360px; }
-      .win-main { width: min(74%, 300px); }
-      .win-side { display: none; }
-      .cue-hud {
-        font-size: 0.88rem;
-        padding: 12px 16px;
-        white-space: normal;
-        text-align: center;
-        max-width: calc(100% - 2rem);
-      }
-      .focus-card { width: min(100%, 280px); padding: 1.4rem 1.1rem; }
-      .focus-count { font-size: 2.6rem; }
-      .focus-instruction { font-size: 1.15rem; }
-      .plans { grid-template-columns: 1fr; }
-      .plan-col { padding: 1.35rem 0; }
-      .plan-col + .plan-col {
+    @media (max-width: 780px) {
+      .proof-strip { grid-template-columns: 1fr; }
+      .proof-item { padding: 1.5rem 0; }
+      .proof-item + .proof-item {
         padding-left: 0;
         border-left: none;
         border-top: 1px solid var(--line);
       }
+      .proof-item p { max-width: none; }
+      .plans { grid-template-columns: 1fr; }
+      .plan { padding: 1.75rem 0; }
+      .plan + .plan {
+        padding-left: 0;
+        border-left: none;
+        border-top: 1px solid var(--line);
+      }
+      .step {
+        grid-template-columns: 3.25rem 1fr;
+        gap: 0.85rem;
+        padding: 1.5rem 0;
+      }
     }
 
     @media (max-width: 480px) {
-      .wrap { width: calc(100% - 1.75rem); }
-      .brand { font-size: clamp(2.8rem, 14vw, 3.6rem); }
-      .cta-row { flex-direction: column; align-items: stretch; }
+      .wrap, .wrap-wide { width: calc(100% - 1.75rem); }
+      .hero { min-height: auto; padding: 1.75rem 0 3.25rem; }
+      .brand { font-size: clamp(3.5rem, 16vw, 4.5rem); margin-bottom: 1.25rem; }
+      .hero h1 { max-width: none; }
+      .cta-row { flex-direction: column; align-items: flex-start; gap: 1rem; }
       .btn { width: 100%; }
-      .hero { padding-bottom: 2.5rem; }
-      .demo-stage { height: 320px; }
+      .proof { padding-bottom: 3.75rem; }
+      .how, .pricing { padding-bottom: 3.5rem; }
     }
   </style>
 </head>
 <body>
+  <div class="atmosphere" aria-hidden="true"></div>
 
-  <div class="wrap">
+  <div class="wrap-wide">
     <nav class="topnav" aria-label="Secondary">
       <a href="privacy.html">Privacy</a>
       <a href="mailto:support@apexform.com">Support</a>
@@ -1007,164 +522,93 @@
   </div>
 
   <header class="hero">
-    <div class="wrap hero-layout">
-      <div class="hero-copy">
-        <p class="brand">Apex<span>Form</span></p>
-        <h1>Stay upright. Keep moving.</h1>
-        <p class="sub">A macOS menu-bar coach that nudges posture and short Bio-Tax breaks — on-device, private, free forever after a soft 10-day Pro trial.</p>
-        <div class="cta-row">
+    <div class="wrap">
+      <div class="hero-inner">
+        <p class="brand rise">Apex<span>Form</span></p>
+        <h1 class="rise rise-d1">Stay upright. Keep moving.</h1>
+        <p class="sub rise rise-d2">A quiet macOS menu-bar coach — posture cues when you slouch, short Bio-Tax breaks when you’ve sat too long. On-device. Private. Free forever after a soft 10-day Pro trial.</p>
+        <div class="cta-row rise rise-d3">
           <a class="btn btn-primary" href="https://github.com/mrigankgupta/ApexForm-updates/releases/latest">Download for Mac</a>
-          <a class="btn btn-ghost" href="#how">See how it works</a>
-        </div>
-      </div>
-
-      <div class="hero-visual" aria-hidden="true">
-        <div class="hero-desktop">
-          <div class="mb">
-            <span class="mb-left"></span>
-            <div class="mb-right">
-              <span class="mb-cc">
-                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.2 7.2c2.4-2.6 5.4-3.9 6.8-3.9s4.4 1.3 6.8 3.9l-1.1 1.1C11.8 6.4 9.6 5.4 8 5.4S4.2 6.4 2.3 8.3L1.2 7.2zm2.9 2.9c1.5-1.6 3-2.4 3.9-2.4s2.4.8 3.9 2.4l-1.15 1.15C9.7 10 8.7 9.4 8 9.4s-1.7.6-2.75 1.85L4.1 10.1zm2.85 2.85L8 14.1l1.05-1.15C8.6 12.5 8.3 12.3 8 12.3s-.6.2-1.05.65z"/></svg>
-                <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="4.5" width="11" height="7" rx="1.4" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="13.2" y="6.4" width="1.3" height="3.2" rx="0.4"/><rect x="3" y="6" width="6.5" height="4" rx="0.6"/></svg>
-                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.2 3.2h3.4v3.4H3.2V3.2zm6.2 0h3.4v3.4H9.4V3.2zM3.2 9.4h3.4v3.4H3.2V9.4zm6.2 0h3.4v3.4H9.4V9.4z"/></svg>
-              </span>
-              <span class="mb-status" title="ApexForm">
-                <svg viewBox="0 0 16 16" aria-hidden="true">
-                  <circle cx="8" cy="2.6" r="1.55"/>
-                  <path d="M5.15 6.05c.22-1.05 1.35-1.8 2.85-1.8s2.63.75 2.85 1.8l.28 1.25c.08.34-.16.6-.48.6H9.55v2.35l.92 3.55c.07.28-.13.5-.42.5h-.78a.42.42 0 0 1-.4-.3L8.4 11.05H7.6l-.47 2.35a.42.42 0 0 1-.4.3h-.78c-.29 0-.49-.22-.42-.5l.92-3.55V7.9H5.35c-.32 0-.56-.26-.48-.6l.28-1.25z"/>
-                </svg>
-              </span>
-              <span class="mb-clock">9:41</span>
-            </div>
-          </div>
-          <div class="hero-desk-body">
-            <div class="hero-app">
-              <div class="hero-app-bar">
-                <span class="hero-app-dot"></span>
-                <span class="hero-app-dot"></span>
-                <span class="hero-app-dot"></span>
-                <span class="hero-app-title">Notes</span>
-              </div>
-              <div class="hero-app-body">
-                <div class="hero-app-line w1"></div>
-                <div class="hero-app-line w2"></div>
-                <div class="hero-app-line w3"></div>
-                <div class="hero-app-line w4"></div>
-                <div class="hero-app-line w2"></div>
-                <div class="hero-app-line w3"></div>
-              </div>
-            </div>
-            <div class="hero-cue">Lift your chest and sit tall.</div>
-          </div>
+          <a class="text-link" href="#how">How it works</a>
         </div>
       </div>
     </div>
   </header>
 
-  <section class="loop" id="how">
-    <div class="wrap">
-      <div class="reveal">
-        <h2>How it works</h2>
-        <p class="lead">A quiet status item in your menu bar, a posture cue when you slouch, then a short Bio-Tax Focus Mode break when you’ve sat too long.</p>
-      </div>
-
-      <div class="loop-scene reveal" id="product-demo" aria-live="polite">
-        <div class="demo-stage" id="demo-stage" data-beat="quiet" role="img" aria-label="Animated ApexForm product demo on a Mac desktop">
-          <div class="demo-wallpaper" aria-hidden="true"></div>
-
-          <div class="demo-windows" aria-hidden="true">
-            <div class="win win-main">
-              <div class="win-bar">
-                <span class="win-dot"></span>
-                <span class="win-dot"></span>
-                <span class="win-dot"></span>
-                <span class="win-title">Notes</span>
-              </div>
-              <div class="win-body">
-                <div class="win-line accent"></div>
-                <div class="win-line a"></div>
-                <div class="win-line b"></div>
-                <div class="win-line c"></div>
-                <div class="win-line d gap"></div>
-                <div class="win-line e"></div>
-                <div class="win-line b"></div>
-                <div class="win-line a gap"></div>
-                <div class="win-line c"></div>
-                <div class="win-line d"></div>
-              </div>
-            </div>
-            <div class="win win-side">
-              <div class="win-bar">
-                <span class="win-dot"></span>
-                <span class="win-dot"></span>
-                <span class="win-dot"></span>
-              </div>
-              <div class="win-body">
-                <div class="win-line e"></div>
-                <div class="win-line b"></div>
-                <div class="win-line d"></div>
-                <div class="win-line a gap"></div>
-                <div class="win-line c"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="demo-menubar" aria-hidden="true">
-            <div class="demo-mb-left">
-              <span class="demo-mb-apple"></span>
-            </div>
-            <div class="demo-mb-right">
-              <span class="cc-icons">
-                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.2 7.2c2.4-2.6 5.4-3.9 6.8-3.9s4.4 1.3 6.8 3.9l-1.1 1.1C11.8 6.4 9.6 5.4 8 5.4S4.2 6.4 2.3 8.3L1.2 7.2zm2.9 2.9c1.5-1.6 3-2.4 3.9-2.4s2.4.8 3.9 2.4l-1.15 1.15C9.7 10 8.7 9.4 8 9.4s-1.7.6-2.75 1.85L4.1 10.1zm2.85 2.85L8 14.1l1.05-1.15C8.6 12.5 8.3 12.3 8 12.3s-.6.2-1.05.65z"/></svg>
-                <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="4.5" width="11" height="7" rx="1.4" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="13.2" y="6.4" width="1.3" height="3.2" rx="0.4"/><rect x="3" y="6" width="6.5" height="4" rx="0.6"/></svg>
-                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.2 3.2h3.4v3.4H3.2V3.2zm6.2 0h3.4v3.4H9.4V3.2zM3.2 9.4h3.4v3.4H3.2V9.4zm6.2 0h3.4v3.4H9.4V9.4z"/></svg>
-              </span>
-              <span class="status-item" id="status-item" title="ApexForm">
-                <svg viewBox="0 0 16 16" aria-hidden="true">
-                  <circle cx="8" cy="2.6" r="1.55"/>
-                  <path d="M5.15 6.05c.22-1.05 1.35-1.8 2.85-1.8s2.63.75 2.85 1.8l.28 1.25c.08.34-.16.6-.48.6H9.55v2.35l.92 3.55c.07.28-.13.5-.42.5h-.78a.42.42 0 0 1-.4-.3L8.4 11.05H7.6l-.47 2.35a.42.42 0 0 1-.4.3h-.78c-.29 0-.49-.22-.42-.5l.92-3.55V7.9H5.35c-.32 0-.56-.26-.48-.6l.28-1.25z"/>
-                </svg>
-              </span>
-              <span class="demo-clock">9:41</span>
-            </div>
-          </div>
-
-          <div class="cue-hud" id="cue-hud">Lift your chest and sit tall.</div>
-
-          <div class="focus-scrim" id="focus-scrim" aria-hidden="true">
-            <div class="focus-card" id="focus-card">
-              <div class="focus-kicker">Bio-Tax</div>
-              <div class="focus-instruction" id="focus-instruction">10 deep blinks</div>
-              <div class="focus-count" id="focus-count">0 / 10</div>
-              <div class="focus-track"><div class="focus-fill" id="progress-fill"></div></div>
-              <div class="focus-celebrate" id="focus-celebrate">Nice work!</div>
-            </div>
-          </div>
+  <section class="proof" aria-label="What ApexForm does">
+    <div class="wrap-wide">
+      <div class="proof-strip reveal">
+        <div class="proof-item">
+          <p class="label">Posture cues</p>
+          <p>A gentle nudge when you slouch — then quiet again.</p>
         </div>
-
-        <div class="loop-caption">
-          <p class="phase-hint">Autoplays · hover to pause · click a step to jump</p>
-          <ol class="phase-list" id="beat-list">
-            <li data-beat="quiet" class="is-active" tabindex="0" role="button">Quiet menu-bar status</li>
-            <li data-beat="cue" tabindex="0" role="button">Posture cue HUD</li>
-            <li data-beat="recover" tabindex="0" role="button">Status turns green</li>
-            <li data-beat="focus" tabindex="0" role="button">Bio-Tax Focus Mode</li>
-            <li data-beat="done" tabindex="0" role="button">Dismiss — back to work</li>
-          </ol>
+        <div class="proof-item">
+          <p class="label">Bio-Tax breaks</p>
+          <p>Short Focus Mode movement when you’ve sat too long.</p>
+        </div>
+        <div class="proof-item">
+          <p class="label">On-device</p>
+          <p>Camera and motion stay on your Mac. Nothing uploaded.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="pricing">
+  <section class="how" id="how">
     <div class="wrap">
-      <div class="reveal">
+      <div class="section-head reveal">
+        <h2>How it works</h2>
+        <p class="lead">Four beats. No accounts. No dashboard to babysit.</p>
+      </div>
+
+      <ol class="steps">
+        <li class="step reveal">
+          <span class="step-num" aria-hidden="true">01</span>
+          <div class="step-body">
+            <h3>Quiet in the menu bar</h3>
+            <p>ApexForm lives as a status item — out of the way until you need it.</p>
+            <div class="step-icon" aria-hidden="true">
+              <span class="status-glyph">
+                <svg viewBox="0 0 16 16"><circle cx="8" cy="2.6" r="1.55"/><path d="M5.15 6.05c.22-1.05 1.35-1.8 2.85-1.8s2.63.75 2.85 1.8l.28 1.25c.08.34-.16.6-.48.6H9.55v2.35l.92 3.55c.07.28-.13.5-.42.5h-.78a.42.42 0 0 1-.4-.3L8.4 11.05H7.6l-.47 2.35a.42.42 0 0 1-.4.3h-.78c-.29 0-.49-.22-.42-.5l.92-3.55V7.9H5.35c-.32 0-.56-.26-.48-.6l.28-1.25z"/></svg>
+              </span>
+              Status item
+            </div>
+          </div>
+        </li>
+        <li class="step reveal">
+          <span class="step-num" aria-hidden="true">02</span>
+          <div class="step-body">
+            <h3>You slouch — it notices</h3>
+            <p>A short posture cue appears. Lift your chest, sit tall, keep working.</p>
+          </div>
+        </li>
+        <li class="step reveal">
+          <span class="step-num" aria-hidden="true">03</span>
+          <div class="step-body">
+            <h3>You’ve sat too long</h3>
+            <p>Bio-Tax Focus Mode starts a brief movement break — blinks, squats, or twists depending on your plan.</p>
+          </div>
+        </li>
+        <li class="step reveal">
+          <span class="step-num" aria-hidden="true">04</span>
+          <div class="step-body">
+            <h3>Back to work</h3>
+            <p>Dismiss and the menu bar goes quiet again. No streak guilt. No cloud sync.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="pricing" id="pricing">
+    <div class="wrap">
+      <div class="section-head reveal">
         <h2>Free forever. Pro when you want more.</h2>
         <p class="lead">Every download starts with 10 days of full Pro. After that, Normal posture coaching and blink breaks stay free — no lockout, no subscription.</p>
       </div>
 
       <div class="plans reveal">
-        <div class="plan-col">
+        <div class="plan">
           <h3>Free</h3>
           <p class="price">$0 forever</p>
           <ul>
@@ -1176,7 +620,7 @@
             <li>Auto-updates</li>
           </ul>
         </div>
-        <div class="plan-col">
+        <div class="plan">
           <h3>Pro</h3>
           <p class="price">One-time unlock · purchase opens soon</p>
           <ul>
@@ -1193,7 +637,7 @@
     </div>
   </section>
 
-  <section class="privacy-strip" id="privacy">
+  <section class="privacy" id="privacy">
     <div class="wrap reveal">
       <h2>Private by design</h2>
       <p>Camera and AirPods motion stay <strong>on your Mac</strong>, in memory. <strong>No video is recorded, stored, or uploaded.</strong> No account, no ads. <a href="privacy.html">Full privacy policy</a>.</p>
@@ -1214,8 +658,8 @@
   <script>
     (function () {
       var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
       var reveals = document.querySelectorAll(".reveal");
+
       if (!reduceMotion && "IntersectionObserver" in window) {
         var io = new IntersectionObserver(function (entries) {
           entries.forEach(function (entry) {
@@ -1224,177 +668,10 @@
               io.unobserve(entry.target);
             }
           });
-        }, { threshold: 0.18, rootMargin: "0px 0px -40px 0px" });
+        }, { threshold: 0.14, rootMargin: "0px 0px -48px 0px" });
         reveals.forEach(function (el) { io.observe(el); });
       } else {
         reveals.forEach(function (el) { el.classList.add("is-in"); });
-      }
-
-      var stage = document.getElementById("demo-stage");
-      var beatList = document.getElementById("beat-list");
-      var progressFill = document.getElementById("progress-fill");
-      var focusCount = document.getElementById("focus-count");
-      var focusInstruction = document.getElementById("focus-instruction");
-      var demo = document.getElementById("product-demo");
-
-      var BEATS = ["quiet", "cue", "recover", "focus", "done"];
-      var HOLD = { quiet: 2400, cue: 2100, recover: 1600, focus: 0, done: 2200 };
-      var BLINK_TOTAL = 10;
-      var BLINK_MS = 230;
-
-      var currentIdx = 0;
-      var paused = false;
-      var inView = false;
-      var timers = [];
-
-      function clearTimers() {
-        timers.forEach(function (t) { clearTimeout(t); });
-        timers = [];
-      }
-
-      function later(ms, fn) {
-        var id = setTimeout(function () {
-          if (paused) return;
-          fn();
-        }, ms);
-        timers.push(id);
-      }
-
-      function setBeatUI(beat) {
-        stage.setAttribute("data-beat", beat);
-        currentIdx = BEATS.indexOf(beat);
-        var items = beatList.querySelectorAll("li");
-        var reached = true;
-        items.forEach(function (li) {
-          var b = li.getAttribute("data-beat");
-          li.classList.remove("is-active", "is-done");
-          if (b === beat) {
-            li.classList.add("is-active");
-            reached = false;
-          } else if (reached) {
-            li.classList.add("is-done");
-          }
-        });
-      }
-
-      function setProgress(n) {
-        focusCount.textContent = n + " / " + BLINK_TOTAL;
-        progressFill.style.width = Math.round((n / BLINK_TOTAL) * 100) + "%";
-        if (!reduceMotion && n > 0) {
-          focusCount.classList.remove("is-tick");
-          void focusCount.offsetWidth;
-          focusCount.classList.add("is-tick");
-        }
-      }
-
-      function resetFocus() {
-        focusInstruction.textContent = "10 deep blinks";
-        setProgress(0);
-        progressFill.style.width = "0%";
-        focusCount.classList.remove("is-tick");
-      }
-
-      function runFocusCount() {
-        setProgress(0);
-        var n = 0;
-        function tick() {
-          if (paused) return;
-          n += 1;
-          setProgress(n);
-          if (n < BLINK_TOTAL) {
-            later(BLINK_MS, tick);
-          } else {
-            later(380, function () { advanceFrom("focus"); });
-          }
-        }
-        later(360, tick);
-      }
-
-      function enterBeat(beat) {
-        clearTimers();
-        setBeatUI(beat);
-
-        if (beat === "quiet" || beat === "cue" || beat === "recover") {
-          resetFocus();
-        }
-        if (beat === "done") {
-          setProgress(BLINK_TOTAL);
-        }
-
-        if (reduceMotion) {
-          setBeatUI("done");
-          setProgress(BLINK_TOTAL);
-          return;
-        }
-
-        if (paused || !inView) return;
-
-        if (beat === "focus") {
-          runFocusCount();
-          return;
-        }
-
-        later(HOLD[beat], function () { advanceFrom(beat); });
-      }
-
-      function advanceFrom(beat) {
-        var idx = BEATS.indexOf(beat);
-        enterBeat(BEATS[(idx + 1) % BEATS.length]);
-      }
-
-      function jumpTo(beat) {
-        if (BEATS.indexOf(beat) < 0) return;
-        var keepPaused = paused;
-        paused = false;
-        enterBeat(beat);
-        if (keepPaused) {
-          paused = true;
-          clearTimers();
-        }
-      }
-
-      function pauseDemo() {
-        if (reduceMotion) return;
-        paused = true;
-        clearTimers();
-      }
-
-      function resumeDemo() {
-        if (reduceMotion) return;
-        paused = false;
-        if (!inView) return;
-        enterBeat(BEATS[currentIdx] || "quiet");
-      }
-
-      beatList.querySelectorAll("li").forEach(function (li) {
-        function go() { jumpTo(li.getAttribute("data-beat")); }
-        li.addEventListener("click", go);
-        li.addEventListener("keydown", function (e) {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            go();
-          }
-        });
-      });
-
-      demo.addEventListener("mouseenter", pauseDemo);
-      demo.addEventListener("mouseleave", resumeDemo);
-
-      if ("IntersectionObserver" in window) {
-        var dio = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            inView = entry.isIntersecting;
-            if (inView) {
-              if (!paused) enterBeat(BEATS[currentIdx] || "quiet");
-            } else {
-              clearTimers();
-            }
-          });
-        }, { threshold: 0.3 });
-        dio.observe(demo);
-      } else {
-        inView = true;
-        enterBeat("quiet");
       }
     })();
   </script>
