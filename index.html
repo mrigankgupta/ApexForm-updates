@@ -339,7 +339,7 @@
       transform: none;
     }
 
-    /* —— How it works: one continuous scene —— */
+    /* —— How it works: real product UI loop —— */
     .loop {
       background:
         linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.35) 8%, rgba(255, 255, 255, 0.45) 92%, transparent);
@@ -350,22 +350,26 @@
     .loop-scene {
       position: relative;
       display: grid;
-      grid-template-columns: 1fr minmax(200px, 280px);
+      grid-template-columns: 1fr minmax(200px, 260px);
       gap: 2rem;
       align-items: center;
-      min-height: 360px;
+      min-height: 380px;
       padding: 1.5rem 0 0.5rem;
     }
 
-    /* Interaction canvas for the product loop */
+    /* macOS desktop viewport — product chrome is the hero */
     .stage-frame {
+      --app-green: #66c782;
+      --app-amber: #f5ad45;
+      --app-crimson: #db4f52;
       position: relative;
-      height: 360px;
-      border-radius: 16px;
-      background:
-        radial-gradient(ellipse 55% 70% at 28% 55%, rgba(13, 122, 99, 0.10), transparent 62%),
-        linear-gradient(165deg, #f8fbfc 0%, #e6eef1 100%);
-      border: 1px solid var(--line);
+      height: 380px;
+      border-radius: 14px;
+      background: #1c2522;
+      border: 1px solid rgba(19, 32, 28, 0.28);
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.06) inset,
+        0 18px 40px rgba(19, 32, 28, 0.14);
       overflow: hidden;
     }
 
@@ -374,366 +378,306 @@
       top: 0;
       left: 0;
       right: 0;
-      z-index: 3;
+      z-index: 5;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 32px;
-      padding: 0 12px;
-      background: rgba(19, 32, 28, 0.92);
-      color: rgba(244, 248, 249, 0.72);
+      height: 28px;
+      padding: 0 11px;
+      background: rgba(12, 16, 14, 0.94);
+      color: rgba(244, 248, 249, 0.88);
       font-size: 11px;
       font-weight: 500;
+      letter-spacing: 0.01em;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
 
-    .stage-mb-left {
+    .stage-mb-left,
+    .stage-mb-right {
       display: flex;
-      gap: 10px;
-      opacity: 0.7;
+      align-items: center;
+      gap: 11px;
     }
 
-    .stage-cue {
+    .stage-mb-left { opacity: 0.78; }
+    .stage-mb-apple {
+      font-size: 13px;
+      line-height: 1;
+      opacity: 0.95;
+    }
+    .stage-mb-app { font-weight: 600; }
+    .stage-mb-clock {
+      font-variant-numeric: tabular-nums;
+      opacity: 0.85;
+      min-width: 2.4rem;
+      text-align: right;
+    }
+
+    /* Real status item — figure.stand glyph */
+    .status-item {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 3px 9px;
-      border-radius: 7px;
-      background: rgba(13, 122, 99, 0.22);
-      color: #9fe8d4;
-      font-weight: 600;
-      font-size: 11px;
-      transition: background 0.35s var(--ease), box-shadow 0.35s var(--ease), color 0.35s ease;
+      justify-content: center;
+      width: 22px;
+      height: 20px;
+      border-radius: 4px;
+      color: rgba(244, 248, 249, 0.92);
+      transition: color 0.35s ease, background 0.35s ease, transform 0.35s var(--ease);
     }
 
-    .stage-cue-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #4ade80;
-      transition: transform 0.35s var(--ease), background 0.35s ease;
+    .status-item svg {
+      width: 14px;
+      height: 14px;
+      display: block;
     }
 
-    .stage-frame[data-phase="slouch"] .stage-cue {
-      background: rgba(180, 83, 9, 0.28);
-      color: #fcd34d;
-    }
-    .stage-frame[data-phase="slouch"] .stage-cue-dot {
-      background: #f59e0b;
+    .stage-frame[data-phase="cue"] .status-item {
+      color: var(--app-amber);
+      background: rgba(245, 173, 69, 0.18);
+      animation: status-ping 0.9s var(--ease) 2;
     }
 
-    .stage-frame[data-phase="cue"] .stage-cue {
-      background: rgba(180, 83, 9, 0.38);
-      color: #fde68a;
-      animation: cue-pill-pulse 1.05s var(--ease) infinite;
-    }
-    .stage-frame[data-phase="cue"] .stage-cue-dot {
-      background: #fbbf24;
-      animation: cue-dot-pulse 1.05s var(--ease) infinite;
+    .stage-frame[data-phase="recover"] .status-item {
+      color: var(--app-green);
     }
 
-    @keyframes cue-pill-pulse {
-      0%, 100% { background: rgba(180, 83, 9, 0.28); box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); }
-      50% { background: rgba(180, 83, 9, 0.48); box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.12); }
-    }
-    @keyframes cue-dot-pulse {
-      0%, 100% { transform: scale(1); opacity: 0.85; }
-      50% { transform: scale(1.35); opacity: 1; }
+    .stage-frame[data-phase="biotax"] .status-item,
+    .stage-frame[data-phase="done"] .status-item {
+      color: rgba(244, 248, 249, 0.55);
     }
 
-    .desk-scene {
+    @keyframes status-ping {
+      0%, 100% { transform: scale(1); }
+      40% { transform: scale(1.12); }
+      70% { transform: scale(0.96); }
+    }
+
+    /* Ambient working desktop (not a cartoon person) */
+    .stage-desktop {
       position: absolute;
-      inset: 32px 0 0;
+      inset: 28px 0 0;
       z-index: 1;
+      background:
+        radial-gradient(ellipse 70% 55% at 70% 20%, rgba(13, 122, 99, 0.16), transparent 60%),
+        radial-gradient(ellipse 50% 40% at 15% 80%, rgba(232, 184, 109, 0.10), transparent 55%),
+        linear-gradient(165deg, #24302c 0%, #1a2421 100%);
+      transition: filter 0.55s var(--ease), opacity 0.55s ease;
     }
 
-    .silhouette-wrap {
+    .stage-frame[data-phase="biotax"] .stage-desktop,
+    .stage-frame[data-phase="done"] .stage-desktop {
+      filter: blur(10px) brightness(0.55);
+    }
+
+    .desk-window {
       position: absolute;
-      left: 3%;
-      bottom: 14%;
-      width: min(62%, 260px);
-      height: 82%;
-      transition: transform 0.7s var(--ease);
-      will-change: transform;
+      left: 8%;
+      top: 12%;
+      width: min(72%, 340px);
+      height: 72%;
+      border-radius: 10px;
+      background: rgba(244, 248, 249, 0.92);
+      border: 1px solid rgba(19, 32, 28, 0.12);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.22);
+      overflow: hidden;
+      transform: rotate(-0.4deg);
     }
 
-    .stage-frame[data-phase="biotax"] .silhouette-wrap,
-    .stage-frame[data-phase="done"] .silhouette-wrap {
-      transform: translateY(-10px);
+    .desk-titlebar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      height: 28px;
+      padding: 0 10px;
+      background: rgba(230, 238, 241, 0.95);
+      border-bottom: 1px solid rgba(19, 32, 28, 0.08);
     }
 
-    .silhouette {
-      width: 100%;
-      height: 100%;
-      overflow: visible;
+    .desk-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(19, 32, 28, 0.16);
+    }
+    .desk-dot:nth-child(1) { background: #ff5f57; }
+    .desk-dot:nth-child(2) { background: #febc2e; }
+    .desk-dot:nth-child(3) { background: #28c840; }
+
+    .desk-title {
+      margin-left: 6px;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--muted);
     }
 
-    .sil-shadow {
-      fill: rgba(19, 32, 28, 0.10);
+    .desk-body {
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
-    .sil-chair-base {
-      fill: rgba(19, 32, 28, 0.14);
+    .desk-line {
+      height: 7px;
+      border-radius: 4px;
+      background: rgba(19, 32, 28, 0.08);
     }
+    .desk-line.w1 { width: 88%; }
+    .desk-line.w2 { width: 72%; }
+    .desk-line.w3 { width: 94%; }
+    .desk-line.w4 { width: 61%; }
+    .desk-line.w5 { width: 80%; }
+    .desk-line.gap { margin-top: 6px; }
 
-    .sil-chair-seat {
-      fill: rgba(19, 32, 28, 0.18);
-    }
-
-    .sil-chair-back {
-      fill: rgba(19, 32, 28, 0.22);
-    }
-
-    .sil-desk {
-      fill: #c5b8a8;
-    }
-
-    .sil-desk-edge {
-      fill: #b3a492;
-    }
-
-    .sil-monitor {
-      fill: #1a2421;
-    }
-
-    .sil-screen {
-      fill: #24302c;
-      transition: fill 0.8s ease;
-    }
-
-    .sil-screen-glow {
-      fill: rgba(13, 122, 99, 0.22);
-      transition: fill 0.8s ease, opacity 0.8s ease;
-      opacity: 0.55;
-    }
-
-    .stage-frame[data-phase="slouch"] .sil-screen,
-    .stage-frame[data-phase="cue"] .sil-screen {
-      fill: #2a2418;
-    }
-    .stage-frame[data-phase="slouch"] .sil-screen-glow,
-    .stage-frame[data-phase="cue"] .sil-screen-glow {
-      fill: rgba(232, 184, 109, 0.35);
-      opacity: 0.7;
-    }
-    .stage-frame[data-phase="recover"] .sil-screen-glow,
-    .stage-frame[data-phase="biotax"] .sil-screen-glow,
-    .stage-frame[data-phase="done"] .sil-screen-glow {
-      fill: rgba(13, 122, 99, 0.38);
-      opacity: 0.85;
-    }
-
-    .sil-body {
-      fill: #3a4a44;
-      transition: fill 0.85s ease;
-    }
-
-    .sil-body-soft {
-      fill: #4a5c55;
-      transition: fill 0.85s ease;
-    }
-
-    .sil-upper {
-      transform-origin: 78px 128px;
-      transform: rotate(-2deg) translate(0, 0);
-      transition: transform 1.15s var(--ease);
-    }
-
-    .sil-head {
-      transform-origin: 78px 52px;
-      transform: rotate(-2deg);
-      transition: transform 1.2s var(--ease);
-    }
-
-    .sil-arm-l,
-    .sil-arm-r {
-      transform-origin: 78px 86px;
-      transition: transform 1.15s var(--ease);
-    }
-
-    /* Slouch + cue: warmer amber figure, forward fold */
-    .stage-frame[data-phase="slouch"] .sil-body,
-    .stage-frame[data-phase="cue"] .sil-body {
-      fill: #b45309;
-    }
-    .stage-frame[data-phase="slouch"] .sil-body-soft,
-    .stage-frame[data-phase="cue"] .sil-body-soft {
-      fill: #d97706;
-    }
-
-    .stage-frame[data-phase="slouch"] .sil-upper,
-    .stage-frame[data-phase="cue"] .sil-upper {
-      transform: rotate(18deg) translate(8px, 10px);
-    }
-    .stage-frame[data-phase="slouch"] .sil-head,
-    .stage-frame[data-phase="cue"] .sil-head {
-      transform: rotate(12deg);
-    }
-    .stage-frame[data-phase="slouch"] .sil-arm-r,
-    .stage-frame[data-phase="cue"] .sil-arm-r {
-      transform: rotate(6deg) translate(2px, 4px);
-    }
-
-    /* Tall / recover / biotax / done: brand green */
-    .stage-frame[data-phase="recover"] .sil-body,
-    .stage-frame[data-phase="biotax"] .sil-body,
-    .stage-frame[data-phase="done"] .sil-body {
-      fill: var(--accent);
-    }
-    .stage-frame[data-phase="recover"] .sil-body-soft,
-    .stage-frame[data-phase="biotax"] .sil-body-soft,
-    .stage-frame[data-phase="done"] .sil-body-soft {
-      fill: #14967a;
-    }
-
-    .stage-frame[data-phase="recover"] .sil-upper,
-    .stage-frame[data-phase="biotax"] .sil-upper,
-    .stage-frame[data-phase="done"] .sil-upper {
-      transform: rotate(-3deg) translate(0, -2px);
-    }
-    .stage-frame[data-phase="recover"] .sil-head,
-    .stage-frame[data-phase="biotax"] .sil-head,
-    .stage-frame[data-phase="done"] .sil-head {
-      transform: rotate(-4deg);
-    }
-
-    .cue-toast {
+    /* Chronic-slouch HUD — matches ScreenShakeEffect banner */
+    .cue-hud {
       position: absolute;
       top: 48px;
-      right: 6%;
-      z-index: 2;
-      padding: 0.5rem 0.8rem;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.94);
-      border: 1px solid var(--line);
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--ink-soft);
-      opacity: 0;
-      transform: translateY(-6px);
-      transition: opacity 0.55s var(--ease), transform 0.55s var(--ease);
-      max-width: 11rem;
-      pointer-events: none;
-    }
-
-    .stage-frame[data-phase="cue"] .cue-toast {
-      opacity: 1;
-      transform: none;
-      animation: cue-toast-breathe 1.05s var(--ease) infinite;
-    }
-
-    @keyframes cue-toast-breathe {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(180, 83, 9, 0); }
-      50% { box-shadow: 0 0 0 5px rgba(180, 83, 9, 0.08); }
-    }
-
-    /* Compact Bio-Tax bottom sheet — posture stays visible above */
-    .biotax-panel {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      left: 50%;
       z-index: 4;
-      transform: translateY(110%);
-      width: 100%;
-      padding: 0.65rem 0.9rem 0.75rem;
-      border-radius: 14px 14px 0 0;
-      background: rgba(19, 32, 28, 0.94);
-      color: #eef6f3;
+      padding: 14px 22px;
+      border-radius: 14px;
+      background: rgba(28, 32, 30, 0.82);
+      backdrop-filter: blur(18px) saturate(1.2);
+      -webkit-backdrop-filter: blur(18px) saturate(1.2);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      opacity: 0;
+      transform: translate(-50%, -8px);
       pointer-events: none;
-      transition: transform 0.55s var(--ease);
-      box-shadow: 0 -8px 28px rgba(19, 32, 28, 0.18);
+      transition: opacity 0.2s ease, transform 0.35s var(--ease);
     }
 
-    .stage-frame[data-phase="biotax"] .biotax-panel,
-    .stage-frame[data-phase="done"] .biotax-panel {
-      transform: translateY(0);
+    .stage-frame[data-phase="cue"] .cue-hud {
+      opacity: 1;
+      transform: translate(-50%, 0);
+      animation: hud-shake 0.45s var(--ease);
+    }
+
+    @keyframes hud-shake {
+      0%, 100% { transform: translate(-50%, 0); }
+      15% { transform: translate(calc(-50% - 8px), 0); }
+      30% { transform: translate(calc(-50% + 7px), 0); }
+      45% { transform: translate(calc(-50% - 6px), 0); }
+      60% { transform: translate(calc(-50% + 4px), 0); }
+      75% { transform: translate(calc(-50% - 2px), 0); }
+    }
+
+    /* Focus Mode Bio-Tax card — matches FocusModeView (mascot off) */
+    .focus-scrim {
+      position: absolute;
+      inset: 28px 0 0;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: rgba(10, 14, 12, 0.42);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.45s var(--ease);
+    }
+
+    .stage-frame[data-phase="biotax"] .focus-scrim,
+    .stage-frame[data-phase="done"] .focus-scrim {
+      opacity: 1;
       pointer-events: auto;
     }
 
-    .stage-frame[data-phase="done"] .biotax-panel {
-      transition-delay: 0s;
+    .focus-card {
+      width: min(100%, 300px);
+      padding: 1.5rem 1.35rem 1.35rem;
+      border-radius: 20px;
+      background: rgba(18, 24, 22, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 22px 48px rgba(0, 0, 0, 0.4);
+      text-align: center;
+      color: #fff;
+      transform: translateY(14px) scale(0.95);
+      opacity: 0;
+      transition: transform 0.5s var(--ease), opacity 0.45s var(--ease);
     }
 
-    .biotax-row {
-      display: flex;
-      align-items: center;
-      gap: 0.85rem;
-      position: relative;
-      z-index: 1;
+    .stage-frame[data-phase="biotax"] .focus-card,
+    .stage-frame[data-phase="done"] .focus-card {
+      transform: none;
+      opacity: 1;
     }
 
-    .biotax-copy {
-      flex: 0 0 auto;
-      min-width: 5.5rem;
-    }
-
-    .biotax-meter {
-      flex: 1 1 auto;
-      min-width: 0;
-    }
-
-    .biotax-panel .label {
+    .focus-kicker {
       font-size: 0.68rem;
       font-weight: 600;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: rgba(159, 232, 212, 0.85);
-      margin-bottom: 0.1rem;
+      color: rgba(159, 232, 212, 0.8);
+      margin-bottom: 0.45rem;
     }
 
-    .biotax-panel .title {
+    .focus-instruction {
       font-family: var(--font-display);
-      font-size: 0.95rem;
+      font-size: 1.15rem;
       font-weight: 600;
+      letter-spacing: -0.02em;
       line-height: 1.2;
-      transition: color 0.35s ease;
+      margin-bottom: 0.65rem;
+      transition: opacity 0.3s ease;
     }
 
-    .stage-frame[data-phase="done"] .biotax-panel .title {
-      color: #86efac;
+    .focus-count {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 8vw, 3.1rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 0.85rem;
+      transition: transform 0.25s var(--ease);
     }
 
-    .progress-track {
-      height: 5px;
-      border-radius: 3px;
+    .focus-count.is-tick {
+      transform: scale(1.04);
+    }
+
+    .focus-track {
+      height: 6px;
+      border-radius: 999px;
       background: rgba(255, 255, 255, 0.12);
       overflow: hidden;
     }
 
-    .progress-fill {
+    .focus-fill {
       height: 100%;
       width: 0%;
-      border-radius: 3px;
-      background: #4ade80;
-      transition: width 0.2s linear;
+      border-radius: inherit;
+      background: var(--app-green);
+      transition: width 0.18s linear;
       will-change: width;
     }
 
-    .progress-meta {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 0.35rem;
-      font-size: 0.72rem;
-      color: rgba(238, 246, 243, 0.65);
+    .focus-celebrate {
+      display: none;
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--app-green);
     }
 
-    .blink-flash {
-      position: absolute;
-      inset: 0;
-      border-radius: 14px 14px 0 0;
-      pointer-events: none;
-      background: rgba(74, 222, 128, 0.14);
-      opacity: 0;
+    .stage-frame[data-phase="done"] .focus-instruction,
+    .stage-frame[data-phase="done"] .focus-count,
+    .stage-frame[data-phase="done"] .focus-track {
+      display: none;
     }
 
-    .stage-frame[data-phase="biotax"] .blink-flash.is-on {
-      animation: blink-flash 0.22s var(--ease);
-    }
-
-    @keyframes blink-flash {
-      0% { opacity: 0; }
-      40% { opacity: 1; }
-      100% { opacity: 0; }
+    .stage-frame[data-phase="done"] .focus-celebrate {
+      display: block;
+      padding: 0.6rem 0 0.35rem;
     }
 
     .loop-caption {
@@ -914,28 +858,19 @@
       html { scroll-behavior: auto; }
       .apex-pill,
       .apex-dot,
-      .stage-cue,
-      .stage-cue-dot,
-      .cue-toast,
-      .blink-flash { animation: none !important; }
+      .status-item,
+      .cue-hud { animation: none !important; }
       .reveal {
         opacity: 1;
         transform: none;
         transition: none;
       }
-      .sil-upper,
-      .sil-head,
-      .sil-arm-l,
-      .sil-arm-r,
-      .sil-body,
-      .sil-body-soft,
-      .sil-screen,
-      .sil-screen-glow,
-      .cue-toast,
-      .biotax-panel,
-      .progress-fill,
-      .stage-cue,
-      .silhouette-wrap,
+      .cue-hud,
+      .focus-scrim,
+      .focus-card,
+      .focus-fill,
+      .status-item,
+      .stage-desktop,
       .btn { transition: none !important; }
     }
 
@@ -978,11 +913,17 @@
         min-height: 0;
       }
 
-      .stage-frame { height: 320px; }
-      .silhouette-wrap { width: min(58%, 210px); left: 4%; bottom: 16%; }
-      .biotax-row { gap: 0.65rem; }
-      .biotax-copy { min-width: 4.8rem; }
-      .biotax-panel .title { font-size: 0.9rem; }
+      .stage-frame { height: 340px; }
+      .desk-window { width: min(78%, 300px); left: 6%; }
+      .cue-hud {
+        font-size: 0.88rem;
+        padding: 12px 16px;
+        white-space: normal;
+        text-align: center;
+        max-width: calc(100% - 2rem);
+      }
+      .focus-card { width: min(100%, 260px); padding: 1.15rem 1rem; }
+      .focus-count { font-size: 2.35rem; }
 
       .plans {
         grid-template-columns: 1fr;
@@ -1055,90 +996,61 @@
     <div class="wrap">
       <div class="reveal">
         <h2>How it works</h2>
-        <p class="lead">One quiet loop in your menu bar: notice a slouch, cue a reset, then clear a short Bio-Tax break when you’ve sat too long.</p>
+        <p class="lead">The real product loop: a quiet menu-bar status item, a posture cue when you slouch, then a short Bio-Tax Focus Mode break when you’ve sat too long.</p>
       </div>
 
       <div class="loop-scene reveal" id="loop-demo" aria-live="polite">
-        <div class="stage-frame" id="stage" data-phase="idle">
+        <div class="stage-frame" id="stage" data-phase="idle" role="img" aria-label="Animated ApexForm product demo">
           <div class="stage-menubar" aria-hidden="true">
             <div class="stage-mb-left">
-              <span>File</span>
+              <span class="stage-mb-apple"></span>
+              <span class="stage-mb-app">Notes</span>
               <span>Edit</span>
               <span>View</span>
             </div>
-            <div class="stage-cue" id="stage-cue">
-              <span class="stage-cue-dot"></span>
-              ApexForm
+            <div class="stage-mb-right">
+              <span class="status-item" id="status-item" title="ApexForm">
+                <!-- figure.stand — MenuBarIconModel.systemImageName -->
+                <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                  <circle cx="8" cy="2.35" r="1.55"/>
+                  <path d="M5.55 5.2c.2-.85 1.05-1.45 2.45-1.45s2.25.6 2.45 1.45l.55 2.15c.08.3-.14.6-.45.6H9.7v2.55l.95 3.55c.08.28-.12.55-.42.55h-.85a.5.5 0 0 1-.48-.36L8.35 11.4H7.65l-.55 2.84a.5.5 0 0 1-.48.36h-.85c-.3 0-.5-.27-.42-.55l.95-3.55V7.95H5.45c-.31 0-.53-.3-.45-.6L5.55 5.2z"/>
+                </svg>
+              </span>
+              <span class="stage-mb-clock">9:41</span>
             </div>
           </div>
 
-          <div class="desk-scene">
-            <div class="silhouette-wrap">
-              <svg class="silhouette" viewBox="0 0 200 220" role="img" aria-label="Animated desk posture silhouette">
-                <!-- Soft ground contact -->
-                <ellipse class="sil-shadow" cx="88" cy="206" rx="58" ry="7" />
-
-                <!-- Office chair -->
-                <g aria-hidden="true">
-                  <path class="sil-chair-base" d="M62 192 L48 202 H56 L70 194 L88 202 H96 L88 192 L106 202 H114 L98 190 L112 202 H120 L100 186 H76 Z" />
-                  <rect class="sil-chair-base" x="84" y="148" width="7" height="40" rx="2.5" />
-                  <path class="sil-chair-seat" d="M48 128 C48 120 56 114 66 114 H112 C122 114 130 120 130 128 V142 H48 Z" />
-                  <path class="sil-chair-back" d="M50 72 C50 64 58 58 68 58 H86 C96 58 104 64 104 72 V118 H50 Z" />
-                </g>
-
-                <!-- Desk + monitor -->
-                <g aria-hidden="true">
-                  <rect class="sil-desk" x="118" y="136" width="76" height="10" rx="2" />
-                  <rect class="sil-desk-edge" x="118" y="144" width="76" height="3" rx="1" />
-                  <rect class="sil-monitor" x="138" y="78" width="42" height="50" rx="3.5" />
-                  <rect class="sil-screen" x="142" y="83" width="34" height="38" rx="2" />
-                  <rect class="sil-screen-glow" x="146" y="90" width="26" height="18" rx="1.5" />
-                  <rect class="sil-desk-edge" x="154" y="128" width="10" height="9" rx="1.5" />
-                </g>
-
-                <!-- Filled seated figure (brand-tinted via CSS) -->
-                <g class="sil-figure">
-                  <!-- Legs stay planted -->
-                  <path class="sil-body" d="M58 128 C56 136 54 142 52 148 H118 C114 138 110 132 108 128 Z" />
-                  <path class="sil-body-soft" d="M54 148 L44 198 H56 L64 152 Z" />
-                  <path class="sil-body-soft" d="M108 148 L118 198 H130 L120 152 Z" />
-
-                  <g class="sil-upper" id="sil-upper">
-                    <!-- Torso mass -->
-                    <path class="sil-body" d="M60 72 C58 92 56 110 54 128 H102 C100 110 98 92 96 72 C92 66 84 64 78 64 C72 64 64 66 60 72 Z" />
-                    <!-- Shoulder mass -->
-                    <ellipse class="sil-body-soft" cx="78" cy="78" rx="24" ry="10" />
-
-                    <!-- Arms -->
-                    <path class="sil-arm-l sil-body-soft" d="M56 80 C46 94 40 112 38 128 L50 130 C52 116 56 100 64 88 Z" />
-                    <path class="sil-arm-r sil-body" d="M100 82 C116 96 134 116 146 132 L136 138 C126 122 112 104 98 92 Z" />
-
-                    <g class="sil-head" id="sil-head">
-                      <ellipse class="sil-body" cx="78" cy="48" rx="18" ry="20" />
-                      <path class="sil-body-soft" d="M70 64 C72 70 74 74 78 76 C82 74 84 70 86 64 Z" />
-                    </g>
-                  </g>
-                </g>
-              </svg>
+          <div class="stage-desktop" aria-hidden="true">
+            <div class="desk-window">
+              <div class="desk-titlebar">
+                <span class="desk-dot"></span>
+                <span class="desk-dot"></span>
+                <span class="desk-dot"></span>
+                <span class="desk-title">Draft — weekly notes</span>
+              </div>
+              <div class="desk-body">
+                <div class="desk-line w1"></div>
+                <div class="desk-line w2"></div>
+                <div class="desk-line w3"></div>
+                <div class="desk-line w4 gap"></div>
+                <div class="desk-line w5"></div>
+                <div class="desk-line w2"></div>
+                <div class="desk-line w1 gap"></div>
+                <div class="desk-line w3"></div>
+                <div class="desk-line w4"></div>
+              </div>
             </div>
           </div>
 
-          <div class="cue-toast" id="cue-toast">Sit a little taller</div>
+          <div class="cue-hud" id="cue-hud">Lift your chest and sit tall.</div>
 
-          <div class="biotax-panel" id="biotax-panel">
-            <div class="blink-flash" id="blink-flash"></div>
-            <div class="biotax-row">
-              <div class="biotax-copy">
-                <div class="label">Bio-Tax</div>
-                <div class="title" id="biotax-title">Blink reset</div>
-              </div>
-              <div class="biotax-meter">
-                <div class="progress-meta">
-                  <span id="progress-count">0 / 10 blinks</span>
-                  <span id="progress-status">Waiting…</span>
-                </div>
-                <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
-              </div>
+          <div class="focus-scrim" id="focus-scrim" aria-hidden="true">
+            <div class="focus-card" id="focus-card">
+              <div class="focus-kicker">Bio-Tax</div>
+              <div class="focus-instruction" id="focus-instruction">10 deep blinks</div>
+              <div class="focus-count" id="focus-count">0 / 10</div>
+              <div class="focus-track"><div class="focus-fill" id="progress-fill"></div></div>
+              <div class="focus-celebrate" id="focus-celebrate">Nice work!</div>
             </div>
           </div>
         </div>
@@ -1146,12 +1058,11 @@
         <div class="loop-caption">
           <p class="phase-hint">Autoplays · hover to pause · click a step to jump</p>
           <ol class="phase-list" id="phase-list">
-            <li data-phase="idle" class="is-active" tabindex="0" role="button">Working — menu bar stays quiet</li>
-            <li data-phase="slouch" tabindex="0" role="button">Slouch detected</li>
-            <li data-phase="cue" tabindex="0" role="button">Soft posture cue</li>
+            <li data-phase="idle" class="is-active" tabindex="0" role="button">Quiet in the menu bar</li>
+            <li data-phase="cue" tabindex="0" role="button">Posture cue ping</li>
             <li data-phase="recover" tabindex="0" role="button">You sit tall again</li>
-            <li data-phase="biotax" tabindex="0" role="button">Bio-Tax break clears</li>
-            <li data-phase="done" tabindex="0" role="button">Back to flow</li>
+            <li data-phase="biotax" tabindex="0" role="button">Bio-Tax Focus Mode</li>
+            <li data-phase="done" tabindex="0" role="button">Dismiss — back to flow</li>
           </ol>
         </div>
       </div>
@@ -1233,27 +1144,23 @@
         reveals.forEach(function (el) { el.classList.add("is-in"); });
       }
 
-      /* Product loop demo */
+      /* Product loop demo — menu bar → cue HUD → Focus Mode */
       var stage = document.getElementById("stage");
       var phaseList = document.getElementById("phase-list");
       var progressFill = document.getElementById("progress-fill");
-      var progressCount = document.getElementById("progress-count");
-      var progressStatus = document.getElementById("progress-status");
-      var biotaxTitle = document.getElementById("biotax-title");
-      var blinkFlash = document.getElementById("blink-flash");
+      var focusCount = document.getElementById("focus-count");
+      var focusInstruction = document.getElementById("focus-instruction");
       var demo = document.getElementById("loop-demo");
 
-      var PHASES = ["idle", "slouch", "cue", "recover", "biotax", "done"];
-      /* Holds tuned so CSS posture transforms blend into one continuous loop */
-      var HOLD = { idle: 2000, slouch: 1500, cue: 1700, recover: 1600, biotax: 0, done: 2200 };
+      var PHASES = ["idle", "cue", "recover", "biotax", "done"];
+      var HOLD = { idle: 2200, cue: 2000, recover: 1500, biotax: 0, done: 2000 };
       var BLINK_TOTAL = 10;
-      var BLINK_MS = 220;
+      var BLINK_MS = 240;
 
       var currentIdx = 0;
       var paused = false;
       var inView = false;
       var timers = [];
-      var blinkN = 0;
 
       function clearTimers() {
         timers.forEach(function (t) { clearTimeout(t); });
@@ -1285,67 +1192,56 @@
         });
       }
 
-      function setProgress(n, status) {
-        blinkN = n;
-        progressCount.textContent = n + " / " + BLINK_TOTAL + " blinks";
-        progressStatus.textContent = status;
+      function setProgress(n) {
+        focusCount.textContent = n + " / " + BLINK_TOTAL;
         progressFill.style.width = Math.round((n / BLINK_TOTAL) * 100) + "%";
-      }
-
-      function flashBlink() {
-        if (!blinkFlash || reduceMotion) return;
-        blinkFlash.classList.remove("is-on");
-        void blinkFlash.offsetWidth;
-        blinkFlash.classList.add("is-on");
+        if (!reduceMotion && n > 0) {
+          focusCount.classList.remove("is-tick");
+          void focusCount.offsetWidth;
+          focusCount.classList.add("is-tick");
+        }
       }
 
       function resetBiotax() {
-        biotaxTitle.textContent = "Blink reset";
-        setProgress(0, "Waiting…");
+        focusInstruction.textContent = "10 deep blinks";
+        setProgress(0);
         progressFill.style.width = "0%";
-        if (blinkFlash) blinkFlash.classList.remove("is-on");
+        focusCount.classList.remove("is-tick");
       }
 
       function runBiotaxCount() {
-        setProgress(0, "Counting…");
-        biotaxTitle.textContent = "Blink reset";
+        setProgress(0);
         var n = 0;
         function tick() {
           if (paused) return;
           n += 1;
-          setProgress(n, n >= BLINK_TOTAL ? "Cleared" : "Counting…");
-          flashBlink();
+          setProgress(n);
           if (n < BLINK_TOTAL) {
             later(BLINK_MS, tick);
           } else {
-            later(450, function () {
-              biotaxTitle.textContent = "Break cleared";
+            later(400, function () {
               advanceFrom("biotax");
             });
           }
         }
-        later(320, tick);
+        later(380, tick);
       }
 
       function enterPhase(phase) {
         clearTimers();
         setPhaseUI(phase);
 
-        if (phase === "idle" || phase === "slouch" || phase === "cue" || phase === "recover") {
+        if (phase === "idle" || phase === "cue" || phase === "recover") {
           resetBiotax();
         }
 
         if (phase === "done") {
-          biotaxTitle.textContent = "Break cleared";
-          setProgress(BLINK_TOTAL, "Cleared");
-          progressFill.style.width = "100%";
+          setProgress(BLINK_TOTAL);
         }
 
         if (reduceMotion) {
           setPhaseUI("done");
-          biotaxTitle.textContent = "Break cleared";
-          setProgress(BLINK_TOTAL, "Cleared");
-          progressFill.style.width = "100%";
+          setProgress(BLINK_TOTAL);
           return;
         }
 
@@ -1391,7 +1287,6 @@
         enterPhase(PHASES[currentIdx] || "idle");
       }
 
-      /* Step click / keyboard jump */
       phaseList.querySelectorAll("li").forEach(function (li) {
         function go() {
           jumpTo(li.getAttribute("data-phase"));
@@ -1408,7 +1303,6 @@
       demo.addEventListener("mouseenter", pauseDemo);
       demo.addEventListener("mouseleave", resumeDemo);
 
-      /* Start / pause with visibility */
       if ("IntersectionObserver" in window) {
         var dio = new IntersectionObserver(function (entries) {
           entries.forEach(function (entry) {
