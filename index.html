@@ -245,173 +245,362 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Abstract product signal — layered vignette, not a fake desktop */
-    .signal {
+    /* Hero product demo — Mac utility shot, autoplay loop */
+    .demo {
       position: relative;
-      display: grid;
-      gap: 0.7rem;
-      padding: 1.1rem 1rem 1.15rem;
-      max-width: 22.5rem;
+      width: 100%;
+      max-width: 26rem;
       margin-left: auto;
-      border-radius: 24px;
-      background:
-        linear-gradient(160deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.18) 55%, rgba(11, 107, 86, 0.06));
-      border: 1px solid rgba(7, 17, 14, 0.07);
-      box-shadow:
-        0 1px 0 rgba(255, 255, 255, 0.7) inset,
-        0 28px 64px rgba(7, 17, 14, 0.08);
+      --demo-dur: 8.5s;
     }
 
-    .signal-card {
-      background: rgba(255, 255, 255, 0.72);
-      border: 1px solid rgba(7, 17, 14, 0.06);
-      border-radius: 14px;
-      box-shadow: 0 10px 28px rgba(7, 17, 14, 0.05);
+    .demo-stage {
+      position: relative;
+      border-radius: 18px;
       overflow: hidden;
+      isolation: isolate;
+      aspect-ratio: 5 / 4.15;
+      background: #0d1714;
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.14) inset,
+        0 28px 70px rgba(7, 17, 14, 0.22),
+        0 8px 24px rgba(7, 17, 14, 0.12);
+      border: 1px solid rgba(7, 17, 14, 0.18);
     }
 
-    .signal-bar {
+    .demo-desktop {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      background:
+        radial-gradient(ellipse 70% 55% at 18% 88%, rgba(20, 160, 124, 0.22), transparent 58%),
+        radial-gradient(ellipse 55% 48% at 86% 18%, rgba(11, 107, 86, 0.28), transparent 55%),
+        linear-gradient(165deg, #1a2c26 0%, #0f1a16 48%, #16241f 100%);
+    }
+
+    .demo-wallpaper {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.55;
+      background:
+        radial-gradient(circle at 30% 40%, rgba(247, 251, 249, 0.07), transparent 28%),
+        radial-gradient(circle at 72% 62%, rgba(20, 160, 124, 0.12), transparent 32%);
+    }
+
+    .demo-menubar {
+      position: relative;
+      z-index: 4;
+      height: 28px;
+      flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1rem;
-      padding: 0.85rem 1.05rem;
+      padding: 0 0.7rem 0 0.85rem;
+      background: rgba(8, 14, 12, 0.55);
+      backdrop-filter: blur(18px) saturate(1.2);
+      -webkit-backdrop-filter: blur(18px) saturate(1.2);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      color: rgba(247, 251, 249, 0.82);
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      user-select: none;
     }
 
-    .signal-bar .left {
+    .demo-menubar .left {
       display: flex;
       align-items: center;
-      gap: 0.65rem;
-      min-width: 0;
+      gap: 0.45rem;
+      opacity: 0.55;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
     }
-
-    .status-dot {
-      width: 28px;
-      height: 28px;
-      border-radius: 8px;
-      background: rgba(11, 107, 86, 0.12);
-      display: grid;
-      place-items: center;
-      flex-shrink: 0;
+    .demo-menubar .left svg {
+      width: 11px;
+      height: 11px;
+      fill: currentColor;
     }
-    .status-dot svg {
-      width: 14px;
-      height: 14px;
-      fill: var(--leaf);
-      color: var(--leaf);
-      animation: status-breathe 5s var(--ease) infinite;
-    }
-
-    .signal-bar .title {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 0.92rem;
-      letter-spacing: -0.02em;
-      color: var(--ink);
-    }
-    .signal-bar .meta {
-      font-size: 0.75rem;
-      color: var(--muted-soft);
-      font-weight: 500;
-    }
-
-    .live-pill {
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--accent-deep);
-      background: rgba(11, 107, 86, 0.1);
-      border-radius: 999px;
-      padding: 0.28rem 0.55rem;
-      white-space: nowrap;
-    }
-
-    .cue-card {
-      padding: 1.05rem 1.15rem 1.15rem;
-      animation: cue-in 7.5s var(--ease) infinite;
-    }
-    .cue-kicker {
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.45rem;
-    }
-    .cue-card h3 {
-      font-family: var(--font-display);
-      font-size: 1.15rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      color: var(--ink);
-      margin-bottom: 0.35rem;
-    }
-    .cue-card p {
-      font-size: 0.88rem;
-      color: var(--muted);
-      line-height: 1.45;
-      max-width: 28ch;
-    }
-
-    @keyframes cue-in {
-      0%, 12% { opacity: 0.55; transform: translateY(4px); }
-      22%, 62% { opacity: 1; transform: translateY(0); }
-      78%, 100% { opacity: 0.55; transform: translateY(2px); }
-    }
-
-    .tax-card {
-      padding: 1rem 1.1rem 1.15rem;
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 0.95rem;
+    .demo-menubar .right {
+      display: flex;
       align-items: center;
+      gap: 0.55rem;
+    }
+    .demo-menubar .clock {
+      font-variant-numeric: tabular-nums;
+      opacity: 0.78;
+      letter-spacing: 0.01em;
     }
 
-    .ring {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      background:
-        conic-gradient(from -90deg, var(--leaf) 0 68%, rgba(11, 107, 86, 0.12) 68% 100%);
+    .demo-status {
       display: grid;
       place-items: center;
-      animation: ring-spin 9s linear infinite;
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      color: #66c782;
+      animation: status-beat var(--demo-dur) var(--ease) infinite;
+    }
+    .demo-status svg {
+      width: 13px;
+      height: 13px;
+      fill: currentColor;
+    }
+
+    @keyframes status-beat {
+      0%, 14% { color: #66c782; opacity: 0.9; }
+      18%, 34% { color: #e8c547; opacity: 1; }
+      38%, 82% { color: #66c782; opacity: 1; filter: drop-shadow(0 0 5px rgba(102, 199, 130, 0.55)); }
+      88%, 100% { color: #66c782; opacity: 0.88; filter: none; }
+    }
+
+    .demo-workspace {
+      position: relative;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .demo-quiet {
+      position: absolute;
+      left: 50%;
+      top: 52%;
+      translate: -50% -50%;
+      text-align: center;
+      color: rgba(247, 251, 249, 0.38);
+      animation: quiet-beat var(--demo-dur) var(--ease) infinite;
+      pointer-events: none;
+    }
+    .demo-quiet .pulse {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 0.85rem;
+      border-radius: 50%;
+      border: 1.5px solid rgba(102, 199, 130, 0.28);
+      display: grid;
+      place-items: center;
       position: relative;
     }
-    .ring::before {
+    .demo-quiet .pulse::before {
       content: "";
-      width: 38px;
-      height: 38px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
-      background: var(--surface-solid);
-      box-shadow: inset 0 0 0 1px rgba(7, 17, 14, 0.05);
+      background: #66c782;
+      box-shadow: 0 0 18px rgba(102, 199, 130, 0.55);
     }
-    .ring span {
+    .demo-quiet .pulse::after {
+      content: "";
       position: absolute;
-      font-family: var(--font-display);
+      inset: -8px;
+      border-radius: 50%;
+      border: 1px solid rgba(102, 199, 130, 0.18);
+      animation: quiet-ring 3.2s var(--ease) infinite;
+    }
+    .demo-quiet p {
       font-size: 0.72rem;
-      font-weight: 700;
-      color: var(--accent-deep);
-      letter-spacing: -0.02em;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
     }
 
-    @keyframes ring-spin {
-      to { transform: rotate(360deg); }
+    @keyframes quiet-ring {
+      0% { transform: scale(0.92); opacity: 0.7; }
+      100% { transform: scale(1.35); opacity: 0; }
+    }
+    @keyframes quiet-beat {
+      0%, 12% { opacity: 1; transform: scale(1); }
+      16%, 86% { opacity: 0; transform: scale(0.96); }
+      93%, 100% { opacity: 1; transform: scale(1); }
     }
 
-    .tax-copy .label {
+    /* Posture cue HUD — matches ScreenShakeEffect banner */
+    .demo-cue {
+      position: absolute;
+      left: 50%;
+      top: 14%;
+      translate: -50% 0;
+      z-index: 5;
+      padding: 0.72rem 1.35rem;
+      border-radius: 14px;
+      background: rgba(28, 32, 30, 0.72);
+      backdrop-filter: blur(22px) saturate(1.35);
+      -webkit-backdrop-filter: blur(22px) saturate(1.35);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow:
+        0 10px 36px rgba(0, 0, 0, 0.35),
+        0 1px 0 rgba(255, 255, 255, 0.08) inset;
+      color: #fff;
+      font-size: 0.92rem;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      white-space: nowrap;
+      opacity: 0;
+      animation: cue-beat var(--demo-dur) var(--ease) infinite;
+      pointer-events: none;
+    }
+
+    @keyframes cue-beat {
+      0%, 14% { opacity: 0; transform: translateY(-10px) scale(0.96); }
+      18% { opacity: 1; transform: translateY(0) scale(1); }
+      20% { transform: translateX(-6px); }
+      22% { transform: translateX(6px); }
+      24% { transform: translateX(-4px); }
+      26% { transform: translateX(3px); }
+      28%, 34% { opacity: 1; transform: translateX(0) scale(1); }
+      38%, 100% { opacity: 0; transform: translateY(-6px) scale(0.98); }
+    }
+
+    /* Bio-Tax Focus Mode — matches FocusModeView */
+    .demo-focus {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.85rem;
+      padding: 1.5rem 1.25rem 1.75rem;
+      background:
+        radial-gradient(ellipse 80% 70% at 50% 45%, rgba(8, 18, 14, 0.55), rgba(4, 10, 8, 0.82));
+      backdrop-filter: blur(28px) saturate(1.1);
+      -webkit-backdrop-filter: blur(28px) saturate(1.1);
+      opacity: 0;
+      animation: focus-beat var(--demo-dur) var(--ease) infinite;
+      pointer-events: none;
+    }
+
+    @keyframes focus-beat {
+      0%, 36% { opacity: 0; }
+      42%, 90% { opacity: 1; }
+      95%, 100% { opacity: 0; }
+    }
+
+    .demo-focus .focus-title {
       font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 0.95rem;
+      font-size: 1.05rem;
+      font-weight: 600;
       letter-spacing: -0.02em;
-      color: var(--ink);
-      margin-bottom: 0.2rem;
+      color: rgba(255, 255, 255, 0.95);
+      animation: focus-title-beat var(--demo-dur) var(--ease) infinite;
     }
-    .tax-copy p {
-      font-size: 0.82rem;
-      color: var(--muted);
-      line-height: 1.4;
+    .demo-focus .focus-count {
+      font-family: var(--font-display);
+      font-size: clamp(2.6rem, 8vw, 3.35rem);
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      line-height: 1;
+      color: #fff;
+      font-variant-numeric: tabular-nums;
+      animation: focus-count-beat var(--demo-dur) steps(1, end) infinite;
+    }
+    .demo-focus .focus-count::before {
+      content: "0";
+      animation: focus-digit var(--demo-dur) steps(1, end) infinite;
+    }
+    .demo-focus .focus-count::after {
+      content: " / 5";
+      font-weight: 700;
+      opacity: 0.9;
+    }
+
+    @keyframes focus-digit {
+      0%, 44% { content: "0"; }
+      48% { content: "1"; }
+      54% { content: "2"; }
+      60% { content: "3"; }
+      66% { content: "4"; }
+      72%, 100% { content: "5"; }
+    }
+    @keyframes focus-title-beat {
+      0%, 70% { opacity: 1; transform: translateY(0); }
+      74%, 92% { opacity: 0; transform: translateY(-8px); }
+      95%, 100% { opacity: 0; }
+    }
+    @keyframes focus-count-beat {
+      0%, 70% { opacity: 1; transform: scale(1); }
+      74%, 92% { opacity: 0; transform: scale(0.92); }
+      95%, 100% { opacity: 0; }
+    }
+
+    .demo-focus .focus-bar {
+      width: min(220px, 68%);
+      height: 5px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      overflow: hidden;
+      margin-top: 0.15rem;
+      animation: focus-bar-vis var(--demo-dur) var(--ease) infinite;
+    }
+    .demo-focus .focus-bar > i {
+      display: block;
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #3db86a, #66c782);
+      box-shadow: 0 0 12px rgba(102, 199, 130, 0.45);
+      animation: focus-fill var(--demo-dur) var(--ease) infinite;
+    }
+
+    @keyframes focus-fill {
+      0%, 44% { width: 0%; }
+      48% { width: 20%; }
+      54% { width: 40%; }
+      60% { width: 60%; }
+      66% { width: 80%; }
+      72%, 88% { width: 100%; }
+      92%, 100% { width: 100%; }
+    }
+    @keyframes focus-bar-vis {
+      0%, 70% { opacity: 1; }
+      74%, 100% { opacity: 0; }
+    }
+
+    .demo-focus .focus-done {
+      position: absolute;
+      left: 50%;
+      top: 48%;
+      translate: -50% -50%;
+      font-family: var(--font-display);
+      font-size: 1.55rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: #fff;
+      opacity: 0;
+      animation: focus-done-beat var(--demo-dur) var(--ease) infinite;
+    }
+
+    @keyframes focus-done-beat {
+      0%, 72% { opacity: 0; transform: scale(0.9); }
+      76%, 88% { opacity: 1; transform: scale(1); }
+      93%, 100% { opacity: 0; transform: scale(1.04); }
+    }
+
+    .demo-caption {
+      margin-top: 0.75rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted-soft);
+      text-align: center;
+    }
+
+    .demo:hover .demo-status,
+    .demo:hover .demo-quiet,
+    .demo:hover .demo-quiet .pulse::after,
+    .demo:hover .demo-cue,
+    .demo:hover .demo-focus,
+    .demo:hover .demo-focus .focus-title,
+    .demo:hover .demo-focus .focus-count,
+    .demo:hover .demo-focus .focus-count::before,
+    .demo:hover .demo-focus .focus-bar,
+    .demo:hover .demo-focus .focus-bar > i,
+    .demo:hover .demo-focus .focus-done {
+      animation-play-state: paused;
     }
 
     .proof {
@@ -743,9 +932,17 @@
       html { scroll-behavior: auto; }
       .atmosphere::before,
       .brand span,
-      .status-dot svg,
-      .cue-card,
-      .ring,
+      .demo-status,
+      .demo-quiet,
+      .demo-quiet .pulse::after,
+      .demo-cue,
+      .demo-focus,
+      .demo-focus .focus-title,
+      .demo-focus .focus-count,
+      .demo-focus .focus-count::before,
+      .demo-focus .focus-bar,
+      .demo-focus .focus-bar > i,
+      .demo-focus .focus-done,
       .viz-pulse circle:last-child,
       .viz-toast rect,
       .viz-ring circle:last-child,
@@ -761,6 +958,18 @@
         transition: none;
       }
       .btn, .beat { transition: none; }
+      /* Static product shot: Focus Mode mid-progress */
+      .demo-quiet { opacity: 0; }
+      .demo-cue { opacity: 0; }
+      .demo-focus { opacity: 1; }
+      .demo-focus .focus-title { opacity: 1; }
+      .demo-focus .focus-count { opacity: 1; }
+      .demo-focus .focus-count::before { content: "3"; }
+      .demo-focus .focus-bar { opacity: 1; }
+      .demo-focus .focus-bar > i { width: 60%; }
+      .demo-focus .focus-done { opacity: 0; }
+      .demo-status { color: #66c782; opacity: 1; }
+      .demo-caption::after { content: none; }
     }
 
     @media (max-width: 900px) {
@@ -768,10 +977,11 @@
         grid-template-columns: 1fr;
         gap: 2.25rem;
       }
-      .signal {
+      .demo {
         margin: 0;
         max-width: none;
       }
+      .demo-stage { aspect-ratio: 16 / 11; }
       .hero { min-height: auto; padding: 1.75rem 0 3.5rem; }
       .beats { grid-template-columns: 1fr; }
       .beat,
@@ -837,35 +1047,35 @@
           <p class="cta-note rise rise-d4">macOS 14+ · Public beta · No account required</p>
         </div>
 
-        <aside class="signal rise rise-d3" aria-hidden="true">
-          <div class="signal-card">
-            <div class="signal-bar">
-              <div class="left">
-                <span class="status-dot">
-                  <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3.1"/><circle cx="8" cy="8" r="6.1" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.35"/></svg>
-                </span>
-                <div>
-                  <p class="title">ApexForm</p>
-                  <p class="meta">Menu bar · watching</p>
+        <aside class="demo rise rise-d3" aria-label="Autoplaying product demo">
+          <div class="demo-stage">
+            <div class="demo-desktop">
+              <div class="demo-wallpaper" aria-hidden="true"></div>
+              <div class="demo-menubar" aria-hidden="true">
+                <div class="left"></div>
+                <div class="right">
+                  <span class="demo-status" title="ApexForm">
+                    <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3.1"/><circle cx="8" cy="8" r="6.1" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/></svg>
+                  </span>
+                  <span class="clock">Mon 9:41</span>
                 </div>
               </div>
-              <span class="live-pill">Live</span>
+              <div class="demo-workspace">
+                <div class="demo-quiet" aria-hidden="true">
+                  <div class="pulse"></div>
+                  <p>Watching quietly</p>
+                </div>
+                <div class="demo-cue" aria-hidden="true">Lift your chest and sit tall.</div>
+                <div class="demo-focus" aria-hidden="true">
+                  <p class="focus-title">5 deep blinks</p>
+                  <p class="focus-count"></p>
+                  <div class="focus-bar"><i></i></div>
+                  <p class="focus-done">Nice work!</p>
+                </div>
+              </div>
             </div>
           </div>
-
-          <div class="signal-card cue-card">
-            <p class="cue-kicker">Posture cue</p>
-            <h3>Sit tall for a moment</h3>
-            <p>A short nudge when you slouch — then quiet again.</p>
-          </div>
-
-          <div class="signal-card tax-card">
-            <div class="ring" aria-hidden="true"><span>12s</span></div>
-            <div class="tax-copy">
-              <p class="label">Bio-Tax break</p>
-              <p>Focus Mode movement when you’ve sat too long.</p>
-            </div>
-          </div>
+          <p class="demo-caption">Product loop · hover to pause</p>
         </aside>
       </div>
     </div>
