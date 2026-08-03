@@ -18,15 +18,16 @@
       --ink-soft: #1c2f28;
       --muted: #4f635a;
       --muted-soft: #6a7d74;
-      --line: rgba(7, 17, 14, 0.09);
-      --line-strong: rgba(7, 17, 14, 0.14);
+      --line: rgba(7, 17, 14, 0.1);
+      --line-strong: rgba(7, 17, 14, 0.16);
       --accent: #0b6b56;
       --accent-deep: #04503f;
       --leaf: #14a07c;
-      --page: #edf3ef;
-      --page-deep: #d5e2db;
-      --surface: rgba(255, 255, 255, 0.62);
-      --surface-solid: #f7fbf9;
+      --page: #e8f0eb;
+      --page-deep: #d2e0d8;
+      --surface: #f4f9f6;
+      --desk: #f7fbf9;
+      --desk-ink: #0e1c17;
       --font-display: "Syne", "DM Sans", system-ui, sans-serif;
       --font-body: "DM Sans", system-ui, -apple-system, sans-serif;
       --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -42,7 +43,7 @@
       background: var(--page);
       line-height: 1.55;
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
+      overflow-x: clip;
     }
 
     .atmosphere {
@@ -52,24 +53,23 @@
       pointer-events: none;
       overflow: hidden;
       background:
-        radial-gradient(ellipse 88% 52% at 28% -8%, rgba(11, 107, 86, 0.2), transparent 56%),
-        radial-gradient(ellipse 42% 34% at 92% 6%, rgba(20, 160, 124, 0.16), transparent 52%),
-        radial-gradient(ellipse 36% 30% at 4% 62%, rgba(190, 210, 200, 0.4), transparent 58%),
-        radial-gradient(ellipse 55% 36% at 78% 92%, rgba(4, 80, 63, 0.1), transparent 50%),
-        linear-gradient(168deg, #f8fcfa 0%, var(--page) 46%, var(--page-deep) 100%);
+        radial-gradient(ellipse 90% 55% at 50% -12%, rgba(11, 107, 86, 0.22), transparent 58%),
+        radial-gradient(ellipse 45% 38% at 96% 18%, rgba(20, 160, 124, 0.14), transparent 55%),
+        radial-gradient(ellipse 40% 32% at 4% 70%, rgba(180, 205, 194, 0.45), transparent 60%),
+        linear-gradient(180deg, #f5faf7 0%, var(--page) 42%, var(--page-deep) 100%);
     }
 
     .atmosphere::before {
       content: "";
       position: absolute;
-      width: 58vmax;
-      height: 58vmax;
-      top: -24vmax;
-      left: 30%;
+      width: 70vmax;
+      height: 70vmax;
+      top: -32vmax;
+      left: 50%;
       translate: -50% 0;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(11, 107, 86, 0.26) 0%, rgba(11, 107, 86, 0.06) 42%, transparent 68%);
-      animation: orb-drift 24s var(--ease) infinite alternate;
+      background: radial-gradient(circle, rgba(11, 107, 86, 0.2) 0%, rgba(11, 107, 86, 0.05) 40%, transparent 68%);
+      animation: orb-drift 22s var(--ease) infinite alternate;
       will-change: transform;
     }
 
@@ -77,28 +77,28 @@
       content: "";
       position: absolute;
       inset: 0;
-      opacity: 0.28;
+      opacity: 0.22;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
       background-size: 180px 180px;
       mix-blend-mode: multiply;
     }
 
     @keyframes orb-drift {
-      from { transform: translate3d(-2%, 0, 0) scale(1); }
-      to   { transform: translate3d(5%, 6%, 0) scale(1.12); }
+      from { transform: translate3d(-3%, 0, 0) scale(1); }
+      to   { transform: translate3d(4%, 5%, 0) scale(1.1); }
     }
 
     a { color: var(--accent-deep); text-decoration: none; transition: color 0.2s ease; }
     a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
 
     .wrap {
-      width: min(920px, calc(100% - 2.75rem));
+      width: min(920px, calc(100% - 2.5rem));
       margin: 0 auto;
       position: relative;
       z-index: 1;
     }
     .wrap-wide {
-      width: min(1120px, calc(100% - 2.75rem));
+      width: min(1180px, calc(100% - 2.5rem));
       margin: 0 auto;
       position: relative;
       z-index: 1;
@@ -107,38 +107,38 @@
     .topnav {
       display: flex;
       justify-content: flex-end;
-      gap: 1.65rem;
-      padding: 1.35rem 0 0;
+      gap: 1.5rem;
+      padding: 1.2rem 0 0;
       font-size: 0.875rem;
       font-weight: 500;
     }
     .topnav a { color: var(--muted-soft); text-decoration: none; }
     .topnav a:hover { color: var(--ink); }
 
+    /* —— Hero: one composition —— */
     .hero {
       position: relative;
       z-index: 1;
-      min-height: min(92vh, 860px);
+      padding: 0.85rem 0 2.75rem;
+      min-height: min(100svh, 900px);
       display: flex;
-      align-items: center;
-      padding: 2rem 0 3.5rem;
+      flex-direction: column;
+      justify-content: center;
     }
 
-    .hero-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
-      gap: clamp(2rem, 5vw, 4.5rem);
-      align-items: center;
+    .hero-intro {
+      max-width: 40rem;
+      margin-bottom: 1.35rem;
     }
 
     .brand {
       font-family: var(--font-display);
       font-weight: 800;
-      font-size: clamp(4rem, 9.5vw, 6.6rem);
-      letter-spacing: -0.06em;
-      line-height: 0.86;
+      font-size: clamp(4rem, 9.5vw, 6.4rem);
+      letter-spacing: -0.065em;
+      line-height: 0.84;
       color: var(--ink);
-      margin-bottom: 1.85rem;
+      margin-bottom: 1rem;
     }
     .brand span {
       color: var(--accent);
@@ -153,36 +153,34 @@
     .hero h1 {
       font-family: var(--font-display);
       font-weight: 600;
-      font-size: clamp(1.7rem, 3.2vw, 2.45rem);
-      letter-spacing: -0.038em;
-      line-height: 1.12;
+      font-size: clamp(1.4rem, 2.4vw, 1.95rem);
+      letter-spacing: -0.035em;
+      line-height: 1.15;
       color: var(--ink-soft);
-      max-width: 13ch;
+      max-width: 16ch;
     }
 
     .hero .sub {
-      margin-top: 1.35rem;
-      font-size: 1.06rem;
-      font-weight: 400;
+      margin-top: 0.75rem;
+      font-size: 1.05rem;
       color: var(--muted);
       max-width: 28rem;
-      line-height: 1.62;
+      line-height: 1.48;
     }
 
     .cta-row {
-      margin-top: 2.35rem;
+      margin-top: 1.35rem;
       display: flex;
       flex-wrap: wrap;
-      gap: 1rem 1.35rem;
+      gap: 0.75rem 1.05rem;
       align-items: center;
     }
 
     .cta-note {
-      margin-top: 0.95rem;
-      font-size: 0.84rem;
+      margin-top: 0.7rem;
+      font-size: 0.82rem;
       font-weight: 500;
       color: var(--muted-soft);
-      letter-spacing: -0.01em;
     }
 
     .btn {
@@ -193,8 +191,8 @@
       font-size: 0.98rem;
       font-weight: 700;
       letter-spacing: -0.01em;
-      border-radius: 999px;
-      padding: 1.02rem 1.85rem;
+      border-radius: 12px;
+      padding: 0.95rem 1.55rem;
       border: none;
       text-decoration: none;
       transition: background 0.25s var(--ease), transform 0.25s var(--ease), box-shadow 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease);
@@ -205,29 +203,23 @@
     .btn-primary {
       background: var(--accent-deep);
       color: #f3faf7;
-      box-shadow:
-        0 1px 0 rgba(255, 255, 255, 0.12) inset,
-        0 12px 34px rgba(4, 80, 63, 0.28);
+      box-shadow: 0 14px 34px rgba(4, 80, 63, 0.24);
     }
     .btn-primary:hover {
       background: var(--ink);
       color: #fff;
-      box-shadow:
-        0 1px 0 rgba(255, 255, 255, 0.1) inset,
-        0 14px 38px rgba(7, 17, 14, 0.22);
     }
 
     .btn-ghost {
-      background: rgba(255, 255, 255, 0.55);
+      background: transparent;
       color: var(--ink);
-      border: 1px solid rgba(7, 17, 14, 0.18);
-      padding: 0.98rem 1.45rem;
+      border: 1px solid rgba(7, 17, 14, 0.2);
+      padding: 0.92rem 1.35rem;
       font-weight: 600;
-      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset;
     }
     .btn-ghost:hover {
-      border-color: rgba(7, 17, 14, 0.32);
-      background: rgba(255, 255, 255, 0.82);
+      border-color: rgba(7, 17, 14, 0.36);
+      background: rgba(255, 255, 255, 0.45);
       color: var(--ink);
     }
 
@@ -237,160 +229,178 @@
       animation: rise-in 0.9s var(--ease-out) forwards;
     }
     .rise-d1 { animation-delay: 0.08s; }
-    .rise-d2 { animation-delay: 0.2s; }
-    .rise-d3 { animation-delay: 0.34s; }
-    .rise-d4 { animation-delay: 0.48s; }
+    .rise-d2 { animation-delay: 0.18s; }
+    .rise-d3 { animation-delay: 0.3s; }
+    .rise-d4 { animation-delay: 0.42s; }
 
     @keyframes rise-in {
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* —— Shared Mac product stage —— */
-    .stage {
+    /* —— Full-bleed product plane —— */
+    .plane {
       position: relative;
+      width: 100%;
       border-radius: 18px;
       overflow: hidden;
       isolation: isolate;
-      background: #0d1714;
-      box-shadow:
-        0 1px 0 rgba(255, 255, 255, 0.14) inset,
-        0 28px 70px rgba(7, 17, 14, 0.22),
-        0 8px 24px rgba(7, 17, 14, 0.12);
-      border: 1px solid rgba(7, 17, 14, 0.18);
+      background: var(--desk);
+      border: 1px solid rgba(7, 17, 14, 0.12);
+      box-shadow: 0 28px 80px rgba(7, 17, 14, 0.12);
+      --plane-dur: 10s;
     }
 
-    .stage-desk {
+    .hero-stage {
+      width: 100%;
+      position: relative;
+    }
+
+    .hero-plane {
+      width: 100%;
+      min-height: clamp(280px, 42vh, 460px);
+      aspect-ratio: auto;
+      height: clamp(280px, 42vh, 460px);
+      max-height: 460px;
+      border-radius: 0;
+      border-left: none;
+      border-right: none;
+      box-shadow: 0 24px 60px rgba(7, 17, 14, 0.1);
+    }
+
+    .hero-stage .plane-controls {
+      width: min(1180px, calc(100% - 2.5rem));
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .plane-desk {
       position: absolute;
       inset: 0;
       display: flex;
       flex-direction: column;
       background:
-        radial-gradient(ellipse 70% 55% at 18% 88%, rgba(20, 160, 124, 0.22), transparent 58%),
-        radial-gradient(ellipse 55% 48% at 86% 18%, rgba(11, 107, 86, 0.28), transparent 55%),
-        linear-gradient(165deg, #1a2c26 0%, #0f1a16 48%, #16241f 100%);
+        radial-gradient(ellipse 55% 50% at 78% 88%, rgba(20, 160, 124, 0.12), transparent 60%),
+        radial-gradient(ellipse 40% 40% at 12% 70%, rgba(11, 107, 86, 0.08), transparent 55%),
+        linear-gradient(165deg, #f8fcfa 0%, #eef5f1 48%, #e4eee9 100%);
     }
 
-    .stage-wallpaper {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0.55;
-      background:
-        radial-gradient(circle at 30% 40%, rgba(247, 251, 249, 0.07), transparent 28%),
-        radial-gradient(circle at 72% 62%, rgba(20, 160, 124, 0.12), transparent 32%);
-    }
-
-    .stage-menubar {
+    .plane-menubar {
       position: relative;
-      z-index: 4;
-      height: 28px;
+      z-index: 6;
+      height: 32px;
       flex-shrink: 0;
       display: flex;
       align-items: center;
-      justify-content: flex-end;
-      padding: 0 0.7rem 0 0.85rem;
-      background: rgba(8, 14, 12, 0.55);
-      backdrop-filter: blur(18px) saturate(1.2);
-      -webkit-backdrop-filter: blur(18px) saturate(1.2);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      color: rgba(247, 251, 249, 0.82);
-      font-size: 0.62rem;
-      font-weight: 500;
-      gap: 0.55rem;
+      justify-content: space-between;
+      padding: 0 0.95rem;
+      background: rgba(246, 250, 248, 0.72);
+      backdrop-filter: blur(18px) saturate(1.25);
+      -webkit-backdrop-filter: blur(18px) saturate(1.25);
+      border-bottom: 1px solid rgba(7, 17, 14, 0.08);
+      color: var(--desk-ink);
+      font-size: 0.7rem;
+      font-weight: 550;
       user-select: none;
     }
 
-    .stage-clock {
+    .plane-menubar-left {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      opacity: 0.45;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    .plane-menubar-left i {
+      display: block;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.55;
+    }
+
+    .plane-menubar-right {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .plane-clock {
       font-variant-numeric: tabular-nums;
-      opacity: 0.78;
+      opacity: 0.72;
       letter-spacing: 0.01em;
     }
 
-    .stage-status {
+    .plane-status {
       display: grid;
       place-items: center;
-      width: 18px;
-      height: 18px;
-      border-radius: 4px;
-      color: #66c782;
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+      color: #1f9a62;
+      transition: color 0.35s var(--ease), filter 0.35s var(--ease);
     }
-    .stage-status svg {
-      width: 13px;
-      height: 13px;
+    .plane-status svg {
+      width: 14px;
+      height: 14px;
       fill: currentColor;
     }
 
-    .stage-work {
+    .plane-work {
       position: relative;
       flex: 1;
       min-height: 0;
       overflow: hidden;
-    }
-
-    .ui-quiet {
-      position: absolute;
-      left: 50%;
-      top: 52%;
-      translate: -50% -50%;
-      text-align: center;
-      color: rgba(247, 251, 249, 0.38);
-      pointer-events: none;
-    }
-    .ui-quiet .pulse {
-      width: 56px;
-      height: 56px;
-      margin: 0 auto 0.85rem;
-      border-radius: 50%;
-      border: 1.5px solid rgba(102, 199, 130, 0.28);
       display: grid;
       place-items: center;
-      position: relative;
-    }
-    .ui-quiet .pulse::before {
-      content: "";
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #66c782;
-      box-shadow: 0 0 18px rgba(102, 199, 130, 0.55);
-    }
-    .ui-quiet .pulse::after {
-      content: "";
-      position: absolute;
-      inset: -8px;
-      border-radius: 50%;
-      border: 1px solid rgba(102, 199, 130, 0.18);
-      animation: quiet-ring 3.2s var(--ease) infinite;
-    }
-    .ui-quiet p {
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+      padding: 1.5rem;
     }
 
-    @keyframes quiet-ring {
-      0% { transform: scale(0.92); opacity: 0.7; }
-      100% { transform: scale(1.35); opacity: 0; }
+    /* Subtle work surface — not fake OS chrome */
+    .work-sheet {
+      width: min(520px, 72%);
+      height: min(280px, 78%);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(7, 17, 14, 0.08);
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.9) inset,
+        0 18px 40px rgba(7, 17, 14, 0.08);
+      padding: 1.35rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      pointer-events: none;
     }
+    .work-sheet .line {
+      height: 8px;
+      border-radius: 4px;
+      background: rgba(7, 17, 14, 0.07);
+    }
+    .work-sheet .line.w1 { width: 42%; height: 11px; background: rgba(7, 17, 14, 0.12); }
+    .work-sheet .line.w2 { width: 88%; }
+    .work-sheet .line.w3 { width: 76%; }
+    .work-sheet .line.w4 { width: 92%; }
+    .work-sheet .line.w5 { width: 64%; }
+    .work-sheet .line.w6 { width: 81%; }
+    .work-sheet .gap { flex: 1; }
 
     .ui-cue {
       position: absolute;
+      top: 1.15rem;
       left: 50%;
-      top: 16%;
       translate: -50% 0;
       z-index: 5;
-      padding: 0.72rem 1.35rem;
+      padding: 0.78rem 1.4rem;
       border-radius: 14px;
-      background: rgba(28, 32, 30, 0.72);
-      backdrop-filter: blur(22px) saturate(1.35);
-      -webkit-backdrop-filter: blur(22px) saturate(1.35);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      box-shadow:
-        0 10px 36px rgba(0, 0, 0, 0.35),
-        0 1px 0 rgba(255, 255, 255, 0.08) inset;
+      background: rgba(14, 28, 23, 0.88);
+      backdrop-filter: blur(20px) saturate(1.2);
+      -webkit-backdrop-filter: blur(20px) saturate(1.2);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 16px 40px rgba(7, 17, 14, 0.28);
       color: #fff;
-      font-size: 0.92rem;
+      font-size: 1rem;
       font-weight: 600;
       letter-spacing: -0.015em;
       white-space: nowrap;
@@ -400,30 +410,30 @@
     .ui-focus {
       position: absolute;
       inset: 0;
-      z-index: 3;
+      z-index: 4;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 0.85rem;
-      padding: 1.5rem 1.25rem 1.75rem;
+      gap: 0.75rem;
+      padding: 1.5rem;
       background:
-        radial-gradient(ellipse 80% 70% at 50% 45%, rgba(8, 18, 14, 0.55), rgba(4, 10, 8, 0.82));
-      backdrop-filter: blur(28px) saturate(1.1);
-      -webkit-backdrop-filter: blur(28px) saturate(1.1);
+        radial-gradient(ellipse 70% 60% at 50% 42%, rgba(8, 22, 17, 0.55), rgba(4, 12, 9, 0.78));
+      backdrop-filter: blur(26px) saturate(1.05);
+      -webkit-backdrop-filter: blur(26px) saturate(1.05);
       pointer-events: none;
     }
 
     .ui-focus .focus-title {
       font-family: var(--font-display);
-      font-size: 1.05rem;
+      font-size: 1.15rem;
       font-weight: 600;
       letter-spacing: -0.02em;
       color: rgba(255, 255, 255, 0.95);
     }
     .ui-focus .focus-count {
       font-family: var(--font-display);
-      font-size: clamp(2.4rem, 7vw, 3.2rem);
+      font-size: clamp(3rem, 8vw, 4.5rem);
       font-weight: 800;
       letter-spacing: -0.05em;
       line-height: 1;
@@ -434,217 +444,142 @@
     .ui-focus .focus-count::after {
       content: " / 5";
       font-weight: 700;
-      opacity: 0.9;
+      opacity: 0.88;
     }
     .ui-focus .focus-bar {
-      width: min(200px, 68%);
-      height: 5px;
+      width: min(240px, 55%);
+      height: 6px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.16);
       overflow: hidden;
-      margin-top: 0.15rem;
+      margin-top: 0.2rem;
     }
     .ui-focus .focus-bar > i {
       display: block;
       height: 100%;
       width: 60%;
       border-radius: inherit;
-      background: linear-gradient(90deg, #3db86a, #66c782);
-      box-shadow: 0 0 12px rgba(102, 199, 130, 0.45);
+      background: linear-gradient(90deg, #2fa866, #66c782);
     }
 
-    /* —— Hero demo (autoplay + manual phases) —— */
-    .demo {
-      position: relative;
-      width: 100%;
-      max-width: 27rem;
-      margin-left: auto;
-      --demo-dur: 9s;
+    /* Autoplay loop on hero plane */
+    .plane[data-phase="auto"] .plane-status {
+      animation: status-beat var(--plane-dur) var(--ease) infinite;
     }
-
-    .demo .stage { aspect-ratio: 5 / 4.15; }
-
-    .demo[data-phase="auto"] .stage-status {
-      animation: status-beat var(--demo-dur) var(--ease) infinite;
-    }
-    .demo[data-phase="auto"] .ui-quiet {
-      animation: quiet-beat var(--demo-dur) var(--ease) infinite;
-    }
-    .demo[data-phase="auto"] .ui-cue {
+    .plane[data-phase="auto"] .ui-cue {
       opacity: 0;
-      animation: cue-beat var(--demo-dur) var(--ease) infinite;
+      animation: cue-beat var(--plane-dur) var(--ease) infinite;
     }
-    .demo[data-phase="auto"] .ui-focus {
+    .plane[data-phase="auto"] .ui-focus {
       opacity: 0;
-      animation: focus-beat var(--demo-dur) var(--ease) infinite;
+      animation: focus-beat var(--plane-dur) var(--ease) infinite;
     }
-    .demo[data-phase="auto"] .ui-focus .focus-count::before {
-      content: "0";
-      animation: focus-digit var(--demo-dur) steps(1, end) infinite;
+    .plane[data-phase="auto"] .ui-focus .focus-count::before {
+      animation: focus-digit var(--plane-dur) steps(1, end) infinite;
     }
-    .demo[data-phase="auto"] .ui-focus .focus-bar > i {
+    .plane[data-phase="auto"] .ui-focus .focus-bar > i {
       width: 0%;
-      animation: focus-fill var(--demo-dur) var(--ease) infinite;
+      animation: focus-fill var(--plane-dur) var(--ease) infinite;
+    }
+    .plane[data-phase="auto"] .work-sheet {
+      animation: sheet-dim var(--plane-dur) var(--ease) infinite;
     }
 
     @keyframes status-beat {
-      0%, 18% { color: #66c782; opacity: 0.9; }
-      22%, 40% { color: #e8c547; opacity: 1; }
-      46%, 100% { color: #66c782; opacity: 1; filter: drop-shadow(0 0 5px rgba(102, 199, 130, 0.45)); }
-    }
-    @keyframes quiet-beat {
-      0%, 16% { opacity: 1; transform: scale(1); }
-      22%, 92% { opacity: 0; transform: scale(0.96); }
-      96%, 100% { opacity: 1; transform: scale(1); }
+      0%, 18% { color: #1f9a62; }
+      22%, 42% { color: #c9a227; }
+      48%, 100% { color: #1f9a62; }
     }
     @keyframes cue-beat {
-      0%, 18% { opacity: 0; transform: translateY(-10px) scale(0.96); }
-      22% { opacity: 1; transform: translateY(0) scale(1); }
-      24% { transform: translateX(-5px); }
-      26% { transform: translateX(5px); }
-      28% { transform: translateX(-3px); }
-      30%, 40% { opacity: 1; transform: translateX(0) scale(1); }
-      46%, 100% { opacity: 0; transform: translateY(-6px) scale(0.98); }
+      0%, 18% { opacity: 0; transform: translateY(-12px) scale(0.97); }
+      23% { opacity: 1; transform: translateY(0) scale(1); }
+      25% { transform: translateX(-4px); }
+      27% { transform: translateX(4px); }
+      29% { transform: translateX(-2px); }
+      31%, 42% { opacity: 1; transform: translateX(0); }
+      48%, 100% { opacity: 0; transform: translateY(-8px); }
     }
     @keyframes focus-beat {
-      0%, 42% { opacity: 0; }
-      48%, 90% { opacity: 1; }
+      0%, 44% { opacity: 0; }
+      50%, 90% { opacity: 1; }
       96%, 100% { opacity: 0; }
     }
     @keyframes focus-digit {
-      0%, 50% { content: "0"; }
-      54% { content: "1"; }
-      60% { content: "2"; }
-      66% { content: "3"; }
-      72% { content: "4"; }
-      78%, 100% { content: "5"; }
+      0%, 52% { content: "0"; }
+      56% { content: "1"; }
+      62% { content: "2"; }
+      68% { content: "3"; }
+      74% { content: "4"; }
+      80%, 100% { content: "5"; }
     }
     @keyframes focus-fill {
-      0%, 50% { width: 0%; }
-      54% { width: 20%; }
-      60% { width: 40%; }
-      66% { width: 60%; }
-      72% { width: 80%; }
-      78%, 100% { width: 100%; }
+      0%, 52% { width: 0%; }
+      56% { width: 20%; }
+      62% { width: 40%; }
+      68% { width: 60%; }
+      74% { width: 80%; }
+      80%, 100% { width: 100%; }
+    }
+    @keyframes sheet-dim {
+      0%, 44% { opacity: 1; filter: none; }
+      50%, 90% { opacity: 0.35; filter: blur(2px); }
+      96%, 100% { opacity: 1; filter: none; }
     }
 
-    /* Manual phase freezes */
-    .demo[data-phase="quiet"] .ui-quiet { opacity: 1; }
-    .demo[data-phase="quiet"] .ui-cue,
-    .demo[data-phase="quiet"] .ui-focus { opacity: 0; }
-    .demo[data-phase="quiet"] .stage-status { color: #66c782; }
+    .plane[data-phase="quiet"] .ui-cue,
+    .plane[data-phase="quiet"] .ui-focus { opacity: 0; }
+    .plane[data-phase="quiet"] .plane-status { color: #1f9a62; }
 
-    .demo[data-phase="cue"] .ui-quiet { opacity: 0; }
-    .demo[data-phase="cue"] .ui-cue { opacity: 1; transform: none; }
-    .demo[data-phase="cue"] .ui-focus { opacity: 0; }
-    .demo[data-phase="cue"] .stage-status { color: #e8c547; }
+    .plane[data-phase="cue"] .ui-cue { opacity: 1; transform: none; }
+    .plane[data-phase="cue"] .ui-focus { opacity: 0; }
+    .plane[data-phase="cue"] .plane-status { color: #c9a227; }
 
-    .demo[data-phase="break"] .ui-quiet,
-    .demo[data-phase="break"] .ui-cue { opacity: 0; }
-    .demo[data-phase="break"] .ui-focus { opacity: 1; }
-    .demo[data-phase="break"] .ui-focus .focus-count::before { content: "3"; }
-    .demo[data-phase="break"] .ui-focus .focus-bar > i { width: 60%; }
-    .demo[data-phase="break"] .stage-status { color: #66c782; filter: drop-shadow(0 0 5px rgba(102, 199, 130, 0.45)); }
+    .plane[data-phase="break"] .ui-cue { opacity: 0; }
+    .plane[data-phase="break"] .ui-focus { opacity: 1; }
+    .plane[data-phase="break"] .ui-focus .focus-count::before { content: "3"; }
+    .plane[data-phase="break"] .ui-focus .focus-bar > i { width: 60%; }
+    .plane[data-phase="break"] .plane-status { color: #1f9a62; }
+    .plane[data-phase="break"] .work-sheet { opacity: 0.35; filter: blur(2px); }
 
-    .demo-phases {
-      margin-top: 0.95rem;
+    .plane-controls {
+      margin-top: 1rem;
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
-      gap: 0.35rem;
-      padding: 0.28rem;
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.42);
-      border: 1px solid var(--line);
-      width: fit-content;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .demo-phases button {
-      appearance: none;
-      border: none;
-      background: transparent;
-      font-family: var(--font-body);
-      font-size: 0.78rem;
-      font-weight: 650;
-      letter-spacing: -0.01em;
-      color: var(--muted);
-      padding: 0.48rem 0.85rem;
-      border-radius: 9px;
-      cursor: pointer;
-      transition: background 0.2s var(--ease), color 0.2s var(--ease);
-    }
-    .demo-phases button:hover { color: var(--ink); }
-    .demo-phases button.is-on {
-      background: rgba(11, 107, 86, 0.12);
-      color: var(--accent-deep);
-    }
-    .demo-phases button:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px;
-    }
-
-    .demo-caption {
-      margin-top: 0.65rem;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--muted-soft);
-      text-align: center;
-    }
-
-    .proof {
+      gap: 0.35rem 1.35rem;
       position: relative;
       z-index: 1;
-      padding: 0.25rem 0 4.75rem;
     }
 
-    .proof-strip {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      border-top: 1px solid var(--line-strong);
-      border-bottom: 1px solid var(--line-strong);
+    .plane-controls button {
+      appearance: none;
+      border: none;
+      background: none;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 650;
+      letter-spacing: -0.015em;
+      color: var(--muted-soft);
+      padding: 0.35rem 0;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
     }
-
-    .proof-item {
-      padding: 2rem 1.6rem 2rem 0;
-      position: relative;
+    .plane-controls button:hover { color: var(--ink); }
+    .plane-controls button.is-on {
+      color: var(--accent-deep);
+      border-bottom-color: var(--leaf);
     }
-    .proof-item + .proof-item {
-      padding-left: 1.75rem;
-      border-left: 1px solid var(--line);
-    }
-
-    .proof-item .mark {
-      width: 1.65rem;
-      height: 3px;
-      border-radius: 2px;
-      background: var(--leaf);
-      margin-bottom: 1.05rem;
-      opacity: 0.9;
-    }
-
-    .proof-item .label {
-      font-family: var(--font-display);
-      font-size: 1.22rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      color: var(--ink);
-      margin-bottom: 0.45rem;
-    }
-    .proof-item p {
-      font-size: 0.95rem;
-      color: var(--muted);
-      line-height: 1.5;
-      max-width: 24ch;
+    .plane-controls button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
     }
 
     section { position: relative; z-index: 1; }
 
     .section-head {
-      text-align: center;
-      margin-bottom: 2.85rem;
+      margin-bottom: 2.75rem;
+      max-width: 34rem;
     }
     .section-kicker {
       display: inline-block;
@@ -653,115 +588,89 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.7rem;
     }
     .section-head h2 {
       font-family: var(--font-display);
       font-weight: 700;
-      font-size: clamp(2rem, 3.8vw, 2.85rem);
+      font-size: clamp(2.1rem, 4vw, 3.1rem);
       letter-spacing: -0.045em;
-      line-height: 1.08;
+      line-height: 1.05;
       color: var(--ink);
-      margin-bottom: 0.85rem;
+      margin-bottom: 0.75rem;
     }
     .section-head .lead {
       font-size: 1.08rem;
       color: var(--muted);
-      max-width: 34rem;
-      line-height: 1.55;
-      margin: 0 auto;
+      line-height: 1.5;
     }
 
-    /* —— How it works: 3 product-UI panels —— */
-    .how { padding: 0.5rem 0 5.75rem; }
+    /* —— How it works: stacked full-width bands —— */
+    .how { padding: 1.5rem 0 5.5rem; }
 
-    .loop {
+    .band {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.15rem;
+      grid-template-columns: minmax(0, 1.55fr) minmax(220px, 0.7fr);
+      gap: clamp(1.5rem, 4vw, 3.25rem);
+      align-items: center;
+      margin-bottom: clamp(2.5rem, 5vw, 4rem);
+    }
+    .band:last-child { margin-bottom: 0; }
+    .band-flip {
+      grid-template-columns: minmax(220px, 0.7fr) minmax(0, 1.55fr);
+    }
+    .band-flip .band-copy { order: -1; }
+
+    .band-plane {
+      min-height: 0;
+      aspect-ratio: 16 / 9;
+      border-left: 1px solid rgba(7, 17, 14, 0.12);
+      border-right: 1px solid rgba(7, 17, 14, 0.12);
+      border-radius: 18px;
+      width: 100%;
+      margin-left: 0;
     }
 
-    .loop-step {
-      display: flex;
-      flex-direction: column;
-      border-radius: 22px;
-      background: rgba(255, 255, 255, 0.48);
-      border: 1px solid var(--line);
-      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.65) inset;
-      overflow: hidden;
-      transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), border-color 0.35s var(--ease);
+    .band-plane .plane-menubar { height: 28px; font-size: 0.64rem; }
+    .band-plane .ui-cue {
+      font-size: 0.92rem;
+      padding: 0.65rem 1.15rem;
+      top: 1rem;
     }
-    .loop-step:hover {
-      transform: translateY(-3px);
-      border-color: rgba(11, 107, 86, 0.22);
-      box-shadow:
-        0 1px 0 rgba(255, 255, 255, 0.7) inset,
-        0 18px 40px rgba(4, 80, 63, 0.1);
+    .band-plane .ui-focus .focus-title { font-size: 1rem; }
+    .band-plane .ui-focus .focus-count { font-size: clamp(2.4rem, 5vw, 3.4rem); }
+    .band-plane .work-sheet {
+      width: min(420px, 70%);
+      height: min(220px, 72%);
+      padding: 1.1rem 1.2rem;
     }
 
-    .loop-stage {
-      position: relative;
-      aspect-ratio: 5 / 4.05;
-      border-radius: 0;
-      box-shadow: none;
-      border: none;
-      border-bottom: 1px solid rgba(7, 17, 14, 0.12);
+    /* Static per-band states */
+    .band[data-shot="quiet"] .ui-cue,
+    .band[data-shot="quiet"] .ui-focus { display: none; }
+    .band[data-shot="quiet"] .plane-status {
+      animation: status-breathe 4.5s var(--ease) infinite;
     }
 
-    .loop-stage .stage-menubar { height: 24px; font-size: 0.58rem; }
-    .loop-stage .stage-status { width: 15px; height: 15px; }
-    .loop-stage .stage-status svg { width: 11px; height: 11px; }
-
-    .loop-stage .ui-quiet .pulse {
-      width: 44px;
-      height: 44px;
-      margin-bottom: 0.65rem;
-    }
-    .loop-stage .ui-quiet p { font-size: 0.62rem; }
-
-    .loop-stage .ui-cue {
-      top: 14%;
-      padding: 0.55rem 0.95rem;
-      font-size: 0.78rem;
-      border-radius: 11px;
-    }
-
-    .loop-stage .ui-focus { gap: 0.55rem; padding: 1rem; }
-    .loop-stage .ui-focus .focus-title { font-size: 0.88rem; }
-    .loop-stage .ui-focus .focus-count { font-size: 2.15rem; }
-    .loop-stage .ui-focus .focus-bar { width: min(150px, 62%); }
-
-    /* Static states per step */
-    .loop-step[data-shot="quiet"] .ui-quiet { opacity: 1; }
-    .loop-step[data-shot="quiet"] .ui-cue,
-    .loop-step[data-shot="quiet"] .ui-focus { display: none; }
-    .loop-step[data-shot="quiet"] .stage-status {
-      animation: status-breathe 4.8s var(--ease) infinite;
-    }
-
-    .loop-step[data-shot="cue"] .ui-quiet { display: none; }
-    .loop-step[data-shot="cue"] .ui-cue {
+    .band[data-shot="cue"] .ui-focus { display: none; }
+    .band[data-shot="cue"] .ui-cue {
       opacity: 1;
-      animation: cue-nudge 4.5s var(--ease) infinite;
+      animation: cue-nudge 4.2s var(--ease) infinite;
     }
-    .loop-step[data-shot="cue"] .ui-focus { display: none; }
-    .loop-step[data-shot="cue"] .stage-status { color: #e8c547; }
+    .band[data-shot="cue"] .plane-status { color: #c9a227; }
 
-    .loop-step[data-shot="break"] .ui-quiet,
-    .loop-step[data-shot="break"] .ui-cue { display: none; }
-    .loop-step[data-shot="break"] .ui-focus { opacity: 1; }
-    .loop-step[data-shot="break"] .ui-focus .focus-count::before { content: "3"; }
-    .loop-step[data-shot="break"] .ui-focus .focus-bar > i {
+    .band[data-shot="break"] .ui-cue { display: none; }
+    .band[data-shot="break"] .ui-focus { opacity: 1; }
+    .band[data-shot="break"] .ui-focus .focus-count::before { content: "3"; }
+    .band[data-shot="break"] .ui-focus .focus-bar > i {
       animation: break-bar 5s var(--ease) infinite;
     }
-    .loop-step[data-shot="break"] .stage-status {
-      color: #66c782;
-      filter: drop-shadow(0 0 4px rgba(102, 199, 130, 0.5));
-    }
+    .band[data-shot="break"] .work-sheet { opacity: 0.35; filter: blur(2px); }
+    .band[data-shot="break"] .plane-status { color: #1f9a62; }
 
     @keyframes status-breathe {
       0%, 100% { opacity: 0.85; }
-      50% { opacity: 1; filter: drop-shadow(0 0 5px rgba(102, 199, 130, 0.55)); }
+      50% { opacity: 1; filter: drop-shadow(0 0 4px rgba(31, 154, 98, 0.45)); }
     }
     @keyframes cue-nudge {
       0%, 100% { transform: translateY(0); }
@@ -776,47 +685,32 @@
       80%, 100% { width: 72%; }
     }
 
-    .loop-copy {
-      padding: 1.35rem 1.35rem 1.5rem;
-      flex: 1;
-    }
-
-    .loop-num {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 2rem;
-      height: 1.45rem;
-      padding: 0 0.5rem;
-      margin-bottom: 0.75rem;
-      border-radius: 999px;
-      background: rgba(11, 107, 86, 0.1);
-      color: var(--accent-deep);
+    .band-num {
+      display: block;
       font-family: var(--font-display);
-      font-size: 0.72rem;
+      font-size: 0.78rem;
       font-weight: 800;
-      letter-spacing: 0.04em;
-      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 0.7rem;
     }
-
-    .loop-copy h3 {
+    .band-copy h3 {
       font-family: var(--font-display);
       font-weight: 700;
-      font-size: 1.28rem;
-      letter-spacing: -0.03em;
+      font-size: clamp(1.45rem, 2.4vw, 1.85rem);
+      letter-spacing: -0.035em;
       color: var(--ink);
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.45rem;
     }
-    .loop-copy p {
-      font-size: 0.95rem;
+    .band-copy p {
+      font-size: 1.02rem;
       color: var(--muted);
-      line-height: 1.48;
-      max-width: 28ch;
+      line-height: 1.5;
+      max-width: 26ch;
     }
 
-    .pricing { padding: 1.25rem 0 4.5rem; }
-    .pricing .section-head { text-align: left; }
-    .pricing .section-head .lead { margin: 0; }
+    .pricing { padding: 1rem 0 4.5rem; }
+    .pricing .section-head { max-width: 40rem; }
 
     .plans {
       display: grid;
@@ -826,19 +720,17 @@
     }
 
     .plan {
-      border-radius: 20px;
+      border-radius: 18px;
       padding: 1.85rem 1.7rem 1.9rem;
       border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.38);
+      background: rgba(255, 255, 255, 0.4);
     }
 
     .plan-pro {
       background:
-        linear-gradient(165deg, rgba(11, 107, 86, 0.1), rgba(255, 255, 255, 0.55) 42%, rgba(255, 255, 255, 0.42));
+        linear-gradient(165deg, rgba(11, 107, 86, 0.1), rgba(255, 255, 255, 0.55) 42%, rgba(255, 255, 255, 0.4));
       border-color: rgba(11, 107, 86, 0.22);
-      box-shadow:
-        0 1px 0 rgba(255, 255, 255, 0.55) inset,
-        0 22px 50px rgba(4, 80, 63, 0.08);
+      box-shadow: 0 22px 50px rgba(4, 80, 63, 0.08);
       position: relative;
     }
 
@@ -853,7 +745,7 @@
       color: var(--accent-deep);
       background: rgba(255, 255, 255, 0.72);
       border: 1px solid rgba(11, 107, 86, 0.16);
-      border-radius: 999px;
+      border-radius: 8px;
       padding: 0.28rem 0.55rem;
     }
 
@@ -869,7 +761,6 @@
       color: var(--muted);
       margin-bottom: 1.35rem;
       font-weight: 600;
-      letter-spacing: -0.01em;
     }
     .plan-pro .price { color: var(--accent-deep); }
 
@@ -908,12 +799,13 @@
       max-width: 42rem;
     }
 
-    .privacy { padding: 3.75rem 0 1rem; }
+    .privacy { padding: 3.5rem 0 1rem; }
     .privacy-panel {
-      border-radius: 18px;
-      padding: 1.85rem 1.75rem;
-      background: rgba(255, 255, 255, 0.42);
-      border: 1px solid var(--line);
+      padding: 0;
+      border: none;
+      background: none;
+      border-top: 1px solid var(--line-strong);
+      padding-top: 2.25rem;
     }
     .privacy h2 {
       font-family: var(--font-display);
@@ -934,7 +826,7 @@
       position: relative;
       z-index: 1;
       padding: 3rem 0 3.5rem;
-      margin-top: 2.25rem;
+      margin-top: 2rem;
       border-top: 1px solid var(--line);
     }
     footer .links {
@@ -958,24 +850,22 @@
       opacity: 1;
       transform: translateY(0);
     }
-    .reveal-d1 { transition-delay: 0.06s; }
-    .reveal-d2 { transition-delay: 0.14s; }
-    .reveal-d3 { transition-delay: 0.22s; }
+    .reveal-d1 { transition-delay: 0.08s; }
+    .reveal-d2 { transition-delay: 0.16s; }
 
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .atmosphere::before,
       .brand span,
-      .ui-quiet .pulse::after,
-      .demo[data-phase="auto"] .stage-status,
-      .demo[data-phase="auto"] .ui-quiet,
-      .demo[data-phase="auto"] .ui-cue,
-      .demo[data-phase="auto"] .ui-focus,
-      .demo[data-phase="auto"] .ui-focus .focus-count::before,
-      .demo[data-phase="auto"] .ui-focus .focus-bar > i,
-      .loop-step[data-shot="quiet"] .stage-status,
-      .loop-step[data-shot="cue"] .ui-cue,
-      .loop-step[data-shot="break"] .ui-focus .focus-bar > i { animation: none !important; }
+      .plane[data-phase="auto"] .plane-status,
+      .plane[data-phase="auto"] .ui-cue,
+      .plane[data-phase="auto"] .ui-focus,
+      .plane[data-phase="auto"] .ui-focus .focus-count::before,
+      .plane[data-phase="auto"] .ui-focus .focus-bar > i,
+      .plane[data-phase="auto"] .work-sheet,
+      .band[data-shot="quiet"] .plane-status,
+      .band[data-shot="cue"] .ui-cue,
+      .band[data-shot="break"] .ui-focus .focus-bar > i { animation: none !important; }
       .rise {
         opacity: 1;
         transform: none;
@@ -986,61 +876,52 @@
         transform: none;
         transition: none;
       }
-      .btn, .loop-step { transition: none; }
-      .demo { --force-static: 1; }
-      .demo[data-phase="auto"] .ui-quiet { opacity: 0; }
-      .demo[data-phase="auto"] .ui-cue { opacity: 0; }
-      .demo[data-phase="auto"] .ui-focus { opacity: 1; }
-      .demo[data-phase="auto"] .ui-focus .focus-count::before { content: "3"; }
-      .demo[data-phase="auto"] .ui-focus .focus-bar > i { width: 60%; }
-    }
-
-    @media (max-width: 980px) {
-      .loop { grid-template-columns: 1fr; gap: 1rem; }
-      .loop-stage { aspect-ratio: 16 / 10; }
-      .loop-copy p { max-width: none; }
+      .btn { transition: none; }
+      .plane[data-phase="auto"] .ui-cue { opacity: 0; }
+      .plane[data-phase="auto"] .ui-focus { opacity: 1; }
+      .plane[data-phase="auto"] .ui-focus .focus-count::before { content: "3"; }
+      .plane[data-phase="auto"] .ui-focus .focus-bar > i { width: 60%; }
+      .plane[data-phase="auto"] .work-sheet { opacity: 0.35; filter: blur(2px); }
     }
 
     @media (max-width: 900px) {
-      .hero-layout {
+      .band,
+      .band-flip {
         grid-template-columns: 1fr;
-        gap: 2.25rem;
+        gap: 1.15rem;
       }
-      .demo {
-        margin: 0;
-        max-width: none;
+      .band-flip .band-copy { order: 0; }
+      .band-copy p { max-width: none; }
+      .band-plane { aspect-ratio: 16 / 10; }
+      .hero { min-height: auto; padding: 1rem 0 2.25rem; }
+      .hero-plane {
+        height: clamp(260px, 48vh, 360px);
+        max-height: 360px;
       }
-      .demo .stage { aspect-ratio: 16 / 11; }
-      .hero { min-height: auto; padding: 1.75rem 0 3rem; }
       .plans { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 780px) {
-      .proof-strip { grid-template-columns: 1fr; }
-      .proof-item { padding: 1.55rem 0; }
-      .proof-item + .proof-item {
-        padding-left: 0;
-        border-left: none;
-        border-top: 1px solid var(--line);
-      }
-      .proof-item p { max-width: none; }
+      .ui-cue { font-size: 0.88rem; white-space: normal; text-align: center; max-width: 90%; }
     }
 
     @media (max-width: 480px) {
-      .wrap, .wrap-wide { width: calc(100% - 1.75rem); }
-      .brand { font-size: clamp(3.35rem, 15vw, 4.35rem); margin-bottom: 1.15rem; }
+      .wrap, .wrap-wide { width: calc(100% - 1.5rem); }
+      .brand {
+        font-size: min(12vw, 3.1rem);
+        margin-bottom: 0.85rem;
+        max-width: 100%;
+        overflow: hidden;
+      }
       .hero h1 { max-width: none; }
-      .cta-row { flex-direction: column; align-items: stretch; gap: 0.75rem; }
+      .hero-intro { margin-bottom: 1.15rem; }
+      .cta-row { flex-direction: column; align-items: stretch; gap: 0.7rem; }
       .btn { width: 100%; }
-      .demo-phases { width: 100%; }
-      .demo-phases button { flex: 1; padding: 0.5rem 0.4rem; font-size: 0.74rem; }
-      .proof { padding-bottom: 3.25rem; }
+      .plane-controls { gap: 0.25rem 1rem; }
+      .plane-controls button { font-size: 0.84rem; }
       .how, .pricing { padding-bottom: 3.25rem; }
-      .loop-copy { padding: 1.15rem 1.15rem 1.3rem; }
       .plan { padding: 1.5rem 1.25rem; }
       .plan-badge { position: static; display: inline-flex; margin-bottom: 0.75rem; }
-      .privacy-panel { padding: 1.4rem 1.2rem; }
-      .ui-cue { font-size: 0.82rem; padding: 0.6rem 1rem; }
+      .work-sheet { width: min(280px, 78%); height: min(160px, 70%); }
+      .hero-plane { height: 280px; max-height: 280px; }
+      .hero-stage .plane-controls { width: calc(100% - 1.5rem); }
     }
   </style>
 </head>
@@ -1056,177 +937,178 @@
 
   <header class="hero">
     <div class="wrap-wide">
-      <div class="hero-layout">
-        <div class="hero-copy">
-          <p class="brand rise">Apex<span>Form</span></p>
-          <h1 class="rise rise-d1">Stay upright. Keep moving.</h1>
-          <p class="sub rise rise-d2">Menu-bar coach for Mac. Quiet until you slouch — then a short cue. Sat too long? A Bio-Tax break. On-device. Private. Free forever after a soft 10-day Pro trial.</p>
-          <div class="cta-row rise rise-d3">
-            <a class="btn btn-primary" href="https://github.com/mrigankgupta/ApexForm-updates/releases/latest">Download for Mac</a>
-            <a class="btn btn-ghost" href="#how">How it works</a>
-          </div>
-          <p class="cta-note rise rise-d4">macOS 14+ · Public beta · No account required</p>
+      <div class="hero-intro">
+        <p class="brand rise">Apex<span>Form</span></p>
+        <h1 class="rise rise-d1">Stay upright. Keep moving.</h1>
+        <p class="sub rise rise-d2">Menu-bar coach for Mac. A quiet cue when you slouch. A Bio-Tax break when you’ve sat too long.</p>
+        <div class="cta-row rise rise-d3">
+          <a class="btn btn-primary" href="https://github.com/mrigankgupta/ApexForm-updates/releases/latest">Download for Mac</a>
+          <a class="btn btn-ghost" href="#how">How it works</a>
         </div>
+        <p class="cta-note rise rise-d4">On-device · Private · Free forever after a soft 10-day Pro trial · macOS 14+</p>
+      </div>
+    </div>
 
-        <aside class="demo rise rise-d3" data-phase="auto" aria-label="Interactive product loop demo">
-          <div class="stage">
-            <div class="stage-desk">
-              <div class="stage-wallpaper" aria-hidden="true"></div>
-              <div class="stage-menubar" aria-hidden="true">
-                <span class="stage-status" title="ApexForm">
-                  <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3.1"/><circle cx="8" cy="8" r="6.1" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/></svg>
-                </span>
-                <span class="stage-clock">Mon 9:41</span>
-              </div>
-              <div class="stage-work">
-                <div class="ui-quiet" aria-hidden="true">
-                  <div class="pulse"></div>
-                  <p>Watching quietly</p>
-                </div>
-                <div class="ui-cue" aria-hidden="true">Lift your chest and sit tall.</div>
-                <div class="ui-focus" aria-hidden="true">
-                  <p class="focus-title">5 deep blinks</p>
-                  <p class="focus-count"></p>
-                  <div class="focus-bar"><i></i></div>
-                </div>
-              </div>
+    <div class="hero-stage rise rise-d4">
+      <div class="plane hero-plane" data-phase="auto" id="hero-plane" aria-label="ApexForm product loop">
+        <div class="plane-desk">
+          <div class="plane-menubar" aria-hidden="true">
+            <div class="plane-menubar-left"><i></i> Focus</div>
+            <div class="plane-menubar-right">
+              <span class="plane-status" title="ApexForm">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3.1"/><circle cx="8" cy="8" r="6.1" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/></svg>
+              </span>
+              <span class="plane-clock">Mon 9:41</span>
             </div>
           </div>
-          <div class="demo-phases" role="group" aria-label="Preview product states">
-            <button type="button" data-phase="quiet">Quiet</button>
-            <button type="button" data-phase="cue">Cue</button>
-            <button type="button" data-phase="break">Break</button>
+          <div class="plane-work">
+            <div class="work-sheet" aria-hidden="true">
+              <div class="line w1"></div>
+              <div class="gap"></div>
+              <div class="line w2"></div>
+              <div class="line w3"></div>
+              <div class="line w4"></div>
+              <div class="line w5"></div>
+              <div class="line w6"></div>
+            </div>
+            <div class="ui-cue" aria-hidden="true">Lift your chest and sit tall.</div>
+            <div class="ui-focus" aria-hidden="true">
+              <p class="focus-title">5 deep blinks</p>
+              <p class="focus-count"></p>
+              <div class="focus-bar"><i></i></div>
+            </div>
           </div>
-          <p class="demo-caption">Tap a phase · autoplays the loop</p>
-        </aside>
+        </div>
+      </div>
+      <div class="plane-controls" role="group" aria-label="Preview product states">
+        <button type="button" data-phase="quiet">Quiet</button>
+        <button type="button" data-phase="cue">Cue</button>
+        <button type="button" data-phase="break">Break</button>
       </div>
     </div>
   </header>
-
-  <section class="proof" aria-label="What ApexForm does">
-    <div class="wrap-wide">
-      <div class="proof-strip">
-        <div class="proof-item reveal">
-          <div class="mark" aria-hidden="true"></div>
-          <p class="label">Posture cues</p>
-          <p>A gentle nudge when you slouch — then quiet again.</p>
-        </div>
-        <div class="proof-item reveal reveal-d1">
-          <div class="mark" aria-hidden="true"></div>
-          <p class="label">Bio-Tax breaks</p>
-          <p>Short Focus Mode movement when you’ve sat too long.</p>
-        </div>
-        <div class="proof-item reveal reveal-d2">
-          <div class="mark" aria-hidden="true"></div>
-          <p class="label">On-device</p>
-          <p>Camera and motion stay on your Mac. Nothing uploaded.</p>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <section class="how" id="how">
     <div class="wrap-wide">
       <div class="section-head reveal">
         <p class="section-kicker">How it works</p>
         <h2>Watch. Cue. Break.</h2>
-        <p class="lead">Three moments. Almost no reading required — the product does the talking.</p>
+        <p class="lead">Three moments from the real product — almost no reading required.</p>
       </div>
 
-      <div class="loop">
-        <article class="loop-step reveal" data-shot="quiet">
-          <div class="stage loop-stage" aria-hidden="true">
-            <div class="stage-desk">
-              <div class="stage-wallpaper"></div>
-              <div class="stage-menubar">
-                <span class="stage-status">
+      <article class="band reveal" data-shot="quiet">
+        <div class="plane band-plane" aria-hidden="true">
+          <div class="plane-desk">
+            <div class="plane-menubar">
+              <div class="plane-menubar-left"><i></i> Focus</div>
+              <div class="plane-menubar-right">
+                <span class="plane-status">
                   <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="3.1"/><circle cx="8" cy="8" r="6.1" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/></svg>
                 </span>
-                <span class="stage-clock">9:41</span>
+                <span class="plane-clock">9:41</span>
               </div>
-              <div class="stage-work">
-                <div class="ui-quiet">
-                  <div class="pulse"></div>
-                  <p>Watching quietly</p>
-                </div>
-                <div class="ui-cue">Lift your chest and sit tall.</div>
-                <div class="ui-focus">
-                  <p class="focus-title">5 deep blinks</p>
-                  <p class="focus-count"></p>
-                  <div class="focus-bar"><i></i></div>
-                </div>
+            </div>
+            <div class="plane-work">
+              <div class="work-sheet">
+                <div class="line w1"></div>
+                <div class="gap"></div>
+                <div class="line w2"></div>
+                <div class="line w3"></div>
+                <div class="line w4"></div>
+                <div class="line w5"></div>
+                <div class="line w6"></div>
+              </div>
+              <div class="ui-cue">Lift your chest and sit tall.</div>
+              <div class="ui-focus">
+                <p class="focus-title">5 deep blinks</p>
+                <p class="focus-count"></p>
+                <div class="focus-bar"><i></i></div>
               </div>
             </div>
           </div>
-          <div class="loop-copy">
-            <span class="loop-num">01</span>
-            <h3>Watches quietly</h3>
-            <p>Lives in the menu bar. Out of the way until you need it.</p>
-          </div>
-        </article>
+        </div>
+        <div class="band-copy">
+          <span class="band-num">01</span>
+          <h3>Watches quietly</h3>
+          <p>Lives in the menu bar. Out of the way until you need it.</p>
+        </div>
+      </article>
 
-        <article class="loop-step reveal reveal-d1" data-shot="cue">
-          <div class="stage loop-stage" aria-hidden="true">
-            <div class="stage-desk">
-              <div class="stage-wallpaper"></div>
-              <div class="stage-menubar">
-                <span class="stage-status">
+      <article class="band band-flip reveal reveal-d1" data-shot="cue">
+        <div class="plane band-plane" aria-hidden="true">
+          <div class="plane-desk">
+            <div class="plane-menubar">
+              <div class="plane-menubar-left"><i></i> Focus</div>
+              <div class="plane-menubar-right">
+                <span class="plane-status">
                   <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="3.1"/><circle cx="8" cy="8" r="6.1" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/></svg>
                 </span>
-                <span class="stage-clock">9:41</span>
+                <span class="plane-clock">9:41</span>
               </div>
-              <div class="stage-work">
-                <div class="ui-quiet">
-                  <div class="pulse"></div>
-                  <p>Watching quietly</p>
-                </div>
-                <div class="ui-cue">Lift your chest and sit tall.</div>
-                <div class="ui-focus">
-                  <p class="focus-title">5 deep blinks</p>
-                  <p class="focus-count"></p>
-                  <div class="focus-bar"><i></i></div>
-                </div>
+            </div>
+            <div class="plane-work">
+              <div class="work-sheet">
+                <div class="line w1"></div>
+                <div class="gap"></div>
+                <div class="line w2"></div>
+                <div class="line w3"></div>
+                <div class="line w4"></div>
+                <div class="line w5"></div>
+                <div class="line w6"></div>
+              </div>
+              <div class="ui-cue">Lift your chest and sit tall.</div>
+              <div class="ui-focus">
+                <p class="focus-title">5 deep blinks</p>
+                <p class="focus-count"></p>
+                <div class="focus-bar"><i></i></div>
               </div>
             </div>
           </div>
-          <div class="loop-copy">
-            <span class="loop-num">02</span>
-            <h3>Cue when you slouch</h3>
-            <p>A short posture cue. Sit tall. Keep working.</p>
-          </div>
-        </article>
+        </div>
+        <div class="band-copy">
+          <span class="band-num">02</span>
+          <h3>Cue when you slouch</h3>
+          <p>A short posture cue. Sit tall. Keep working.</p>
+        </div>
+      </article>
 
-        <article class="loop-step reveal reveal-d2" data-shot="break">
-          <div class="stage loop-stage" aria-hidden="true">
-            <div class="stage-desk">
-              <div class="stage-wallpaper"></div>
-              <div class="stage-menubar">
-                <span class="stage-status">
+      <article class="band reveal reveal-d2" data-shot="break">
+        <div class="plane band-plane" aria-hidden="true">
+          <div class="plane-desk">
+            <div class="plane-menubar">
+              <div class="plane-menubar-left"><i></i> Focus</div>
+              <div class="plane-menubar-right">
+                <span class="plane-status">
                   <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="3.1"/><circle cx="8" cy="8" r="6.1" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/></svg>
                 </span>
-                <span class="stage-clock">9:41</span>
+                <span class="plane-clock">9:41</span>
               </div>
-              <div class="stage-work">
-                <div class="ui-quiet">
-                  <div class="pulse"></div>
-                  <p>Watching quietly</p>
-                </div>
-                <div class="ui-cue">Lift your chest and sit tall.</div>
-                <div class="ui-focus">
-                  <p class="focus-title">5 deep blinks</p>
-                  <p class="focus-count"></p>
-                  <div class="focus-bar"><i></i></div>
-                </div>
+            </div>
+            <div class="plane-work">
+              <div class="work-sheet">
+                <div class="line w1"></div>
+                <div class="gap"></div>
+                <div class="line w2"></div>
+                <div class="line w3"></div>
+                <div class="line w4"></div>
+                <div class="line w5"></div>
+                <div class="line w6"></div>
+              </div>
+              <div class="ui-cue">Lift your chest and sit tall.</div>
+              <div class="ui-focus">
+                <p class="focus-title">5 deep blinks</p>
+                <p class="focus-count"></p>
+                <div class="focus-bar"><i></i></div>
               </div>
             </div>
           </div>
-          <div class="loop-copy">
-            <span class="loop-num">03</span>
-            <h3>Break when you’ve sat</h3>
-            <p>Bio-Tax Focus Mode — blinks, squats, or twists. Then quiet.</p>
-          </div>
-        </article>
-      </div>
+        </div>
+        <div class="band-copy">
+          <span class="band-num">03</span>
+          <h3>Break when you’ve sat</h3>
+          <p>Bio-Tax Focus Mode — blinks, squats, or twists. Then quiet.</p>
+        </div>
+      </article>
     </div>
   </section>
 
@@ -1314,13 +1196,13 @@
         reveals.forEach(function (el) { el.classList.add("is-in"); });
       }
 
-      var demo = document.querySelector(".demo");
-      var phaseBtns = document.querySelectorAll(".demo-phases button");
+      var plane = document.getElementById("hero-plane");
+      var phaseBtns = document.querySelectorAll(".plane-controls button");
       var resumeTimer = null;
 
       function setPhase(phase, sticky) {
-        if (!demo) return;
-        demo.setAttribute("data-phase", phase);
+        if (!plane) return;
+        plane.setAttribute("data-phase", phase);
         phaseBtns.forEach(function (btn) {
           btn.classList.toggle("is-on", btn.getAttribute("data-phase") === phase && phase !== "auto");
         });
@@ -1330,7 +1212,7 @@
         }
         if (sticky && !reduceMotion) {
           resumeTimer = setTimeout(function () {
-            demo.setAttribute("data-phase", "auto");
+            plane.setAttribute("data-phase", "auto");
             phaseBtns.forEach(function (btn) { btn.classList.remove("is-on"); });
           }, 7000);
         }
