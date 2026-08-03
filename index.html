@@ -121,12 +121,12 @@
       min-height: min(92vh, 860px);
       display: flex;
       align-items: center;
-      padding: 2rem 0 4.5rem;
+      padding: 2rem 0 3.5rem;
     }
 
     .hero-layout {
       display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.9fr);
+      grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
       gap: clamp(2rem, 5vw, 4.5rem);
       align-items: center;
     }
@@ -157,7 +157,7 @@
       letter-spacing: -0.038em;
       line-height: 1.12;
       color: var(--ink-soft);
-      max-width: 12ch;
+      max-width: 13ch;
     }
 
     .hero .sub {
@@ -165,7 +165,7 @@
       font-size: 1.06rem;
       font-weight: 400;
       color: var(--muted);
-      max-width: 29rem;
+      max-width: 28rem;
       line-height: 1.62;
     }
 
@@ -245,21 +245,12 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Hero product demo — Mac utility shot, autoplay loop */
-    .demo {
-      position: relative;
-      width: 100%;
-      max-width: 26rem;
-      margin-left: auto;
-      --demo-dur: 8.5s;
-    }
-
-    .demo-stage {
+    /* —— Shared Mac product stage —— */
+    .stage {
       position: relative;
       border-radius: 18px;
       overflow: hidden;
       isolation: isolate;
-      aspect-ratio: 5 / 4.15;
       background: #0d1714;
       box-shadow:
         0 1px 0 rgba(255, 255, 255, 0.14) inset,
@@ -268,7 +259,7 @@
       border: 1px solid rgba(7, 17, 14, 0.18);
     }
 
-    .demo-desktop {
+    .stage-desk {
       position: absolute;
       inset: 0;
       display: flex;
@@ -279,7 +270,7 @@
         linear-gradient(165deg, #1a2c26 0%, #0f1a16 48%, #16241f 100%);
     }
 
-    .demo-wallpaper {
+    .stage-wallpaper {
       position: absolute;
       inset: 0;
       pointer-events: none;
@@ -289,14 +280,14 @@
         radial-gradient(circle at 72% 62%, rgba(20, 160, 124, 0.12), transparent 32%);
     }
 
-    .demo-menubar {
+    .stage-menubar {
       position: relative;
       z-index: 4;
       height: 28px;
       flex-shrink: 0;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
       padding: 0 0.7rem 0 0.85rem;
       background: rgba(8, 14, 12, 0.55);
       backdrop-filter: blur(18px) saturate(1.2);
@@ -305,75 +296,47 @@
       color: rgba(247, 251, 249, 0.82);
       font-size: 0.62rem;
       font-weight: 500;
-      letter-spacing: -0.01em;
+      gap: 0.55rem;
       user-select: none;
     }
 
-    .demo-menubar .left {
-      display: flex;
-      align-items: center;
-      gap: 0.45rem;
-      opacity: 0.55;
-      font-size: 0.6rem;
-      font-weight: 600;
-      letter-spacing: 0.01em;
-    }
-    .demo-menubar .left svg {
-      width: 11px;
-      height: 11px;
-      fill: currentColor;
-    }
-    .demo-menubar .right {
-      display: flex;
-      align-items: center;
-      gap: 0.55rem;
-    }
-    .demo-menubar .clock {
+    .stage-clock {
       font-variant-numeric: tabular-nums;
       opacity: 0.78;
       letter-spacing: 0.01em;
     }
 
-    .demo-status {
+    .stage-status {
       display: grid;
       place-items: center;
       width: 18px;
       height: 18px;
       border-radius: 4px;
       color: #66c782;
-      animation: status-beat var(--demo-dur) var(--ease) infinite;
     }
-    .demo-status svg {
+    .stage-status svg {
       width: 13px;
       height: 13px;
       fill: currentColor;
     }
 
-    @keyframes status-beat {
-      0%, 14% { color: #66c782; opacity: 0.9; }
-      18%, 34% { color: #e8c547; opacity: 1; }
-      38%, 82% { color: #66c782; opacity: 1; filter: drop-shadow(0 0 5px rgba(102, 199, 130, 0.55)); }
-      88%, 100% { color: #66c782; opacity: 0.88; filter: none; }
-    }
-
-    .demo-workspace {
+    .stage-work {
       position: relative;
       flex: 1;
       min-height: 0;
       overflow: hidden;
     }
 
-    .demo-quiet {
+    .ui-quiet {
       position: absolute;
       left: 50%;
       top: 52%;
       translate: -50% -50%;
       text-align: center;
       color: rgba(247, 251, 249, 0.38);
-      animation: quiet-beat var(--demo-dur) var(--ease) infinite;
       pointer-events: none;
     }
-    .demo-quiet .pulse {
+    .ui-quiet .pulse {
       width: 56px;
       height: 56px;
       margin: 0 auto 0.85rem;
@@ -383,7 +346,7 @@
       place-items: center;
       position: relative;
     }
-    .demo-quiet .pulse::before {
+    .ui-quiet .pulse::before {
       content: "";
       width: 10px;
       height: 10px;
@@ -391,7 +354,7 @@
       background: #66c782;
       box-shadow: 0 0 18px rgba(102, 199, 130, 0.55);
     }
-    .demo-quiet .pulse::after {
+    .ui-quiet .pulse::after {
       content: "";
       position: absolute;
       inset: -8px;
@@ -399,7 +362,7 @@
       border: 1px solid rgba(102, 199, 130, 0.18);
       animation: quiet-ring 3.2s var(--ease) infinite;
     }
-    .demo-quiet p {
+    .ui-quiet p {
       font-size: 0.72rem;
       font-weight: 600;
       letter-spacing: 0.06em;
@@ -410,17 +373,11 @@
       0% { transform: scale(0.92); opacity: 0.7; }
       100% { transform: scale(1.35); opacity: 0; }
     }
-    @keyframes quiet-beat {
-      0%, 12% { opacity: 1; transform: scale(1); }
-      16%, 86% { opacity: 0; transform: scale(0.96); }
-      93%, 100% { opacity: 1; transform: scale(1); }
-    }
 
-    /* Posture cue HUD — matches ScreenShakeEffect banner */
-    .demo-cue {
+    .ui-cue {
       position: absolute;
       left: 50%;
-      top: 14%;
+      top: 16%;
       translate: -50% 0;
       z-index: 5;
       padding: 0.72rem 1.35rem;
@@ -437,24 +394,10 @@
       font-weight: 600;
       letter-spacing: -0.015em;
       white-space: nowrap;
-      opacity: 0;
-      animation: cue-beat var(--demo-dur) var(--ease) infinite;
       pointer-events: none;
     }
 
-    @keyframes cue-beat {
-      0%, 14% { opacity: 0; transform: translateY(-10px) scale(0.96); }
-      18% { opacity: 1; transform: translateY(0) scale(1); }
-      20% { transform: translateX(-6px); }
-      22% { transform: translateX(6px); }
-      24% { transform: translateX(-4px); }
-      26% { transform: translateX(3px); }
-      28%, 34% { opacity: 1; transform: translateX(0) scale(1); }
-      38%, 100% { opacity: 0; transform: translateY(-6px) scale(0.98); }
-    }
-
-    /* Bio-Tax Focus Mode — matches FocusModeView */
-    .demo-focus {
+    .ui-focus {
       position: absolute;
       inset: 0;
       z-index: 3;
@@ -468,119 +411,181 @@
         radial-gradient(ellipse 80% 70% at 50% 45%, rgba(8, 18, 14, 0.55), rgba(4, 10, 8, 0.82));
       backdrop-filter: blur(28px) saturate(1.1);
       -webkit-backdrop-filter: blur(28px) saturate(1.1);
-      opacity: 0;
-      animation: focus-beat var(--demo-dur) var(--ease) infinite;
       pointer-events: none;
     }
 
-    @keyframes focus-beat {
-      0%, 36% { opacity: 0; }
-      42%, 90% { opacity: 1; }
-      95%, 100% { opacity: 0; }
-    }
-
-    .demo-focus .focus-title {
+    .ui-focus .focus-title {
       font-family: var(--font-display);
       font-size: 1.05rem;
       font-weight: 600;
       letter-spacing: -0.02em;
       color: rgba(255, 255, 255, 0.95);
-      animation: focus-title-beat var(--demo-dur) var(--ease) infinite;
     }
-    .demo-focus .focus-count {
+    .ui-focus .focus-count {
       font-family: var(--font-display);
-      font-size: clamp(2.6rem, 8vw, 3.35rem);
+      font-size: clamp(2.4rem, 7vw, 3.2rem);
       font-weight: 800;
       letter-spacing: -0.05em;
       line-height: 1;
       color: #fff;
       font-variant-numeric: tabular-nums;
-      animation: focus-count-beat var(--demo-dur) steps(1, end) infinite;
     }
-    .demo-focus .focus-count::before {
-      content: "0";
-      animation: focus-digit var(--demo-dur) steps(1, end) infinite;
-    }
-    .demo-focus .focus-count::after {
+    .ui-focus .focus-count::before { content: "0"; }
+    .ui-focus .focus-count::after {
       content: " / 5";
       font-weight: 700;
       opacity: 0.9;
     }
-
-    @keyframes focus-digit {
-      0%, 44% { content: "0"; }
-      48% { content: "1"; }
-      54% { content: "2"; }
-      60% { content: "3"; }
-      66% { content: "4"; }
-      72%, 100% { content: "5"; }
-    }
-    @keyframes focus-title-beat {
-      0%, 70% { opacity: 1; transform: translateY(0); }
-      74%, 92% { opacity: 0; transform: translateY(-8px); }
-      95%, 100% { opacity: 0; }
-    }
-    @keyframes focus-count-beat {
-      0%, 70% { opacity: 1; transform: scale(1); }
-      74%, 92% { opacity: 0; transform: scale(0.92); }
-      95%, 100% { opacity: 0; }
-    }
-
-    .demo-focus .focus-bar {
-      width: min(220px, 68%);
+    .ui-focus .focus-bar {
+      width: min(200px, 68%);
       height: 5px;
       border-radius: 999px;
       background: rgba(255, 255, 255, 0.14);
       overflow: hidden;
       margin-top: 0.15rem;
-      animation: focus-bar-vis var(--demo-dur) var(--ease) infinite;
     }
-    .demo-focus .focus-bar > i {
+    .ui-focus .focus-bar > i {
       display: block;
       height: 100%;
-      width: 0%;
+      width: 60%;
       border-radius: inherit;
       background: linear-gradient(90deg, #3db86a, #66c782);
       box-shadow: 0 0 12px rgba(102, 199, 130, 0.45);
+    }
+
+    /* —— Hero demo (autoplay + manual phases) —— */
+    .demo {
+      position: relative;
+      width: 100%;
+      max-width: 27rem;
+      margin-left: auto;
+      --demo-dur: 9s;
+    }
+
+    .demo .stage { aspect-ratio: 5 / 4.15; }
+
+    .demo[data-phase="auto"] .stage-status {
+      animation: status-beat var(--demo-dur) var(--ease) infinite;
+    }
+    .demo[data-phase="auto"] .ui-quiet {
+      animation: quiet-beat var(--demo-dur) var(--ease) infinite;
+    }
+    .demo[data-phase="auto"] .ui-cue {
+      opacity: 0;
+      animation: cue-beat var(--demo-dur) var(--ease) infinite;
+    }
+    .demo[data-phase="auto"] .ui-focus {
+      opacity: 0;
+      animation: focus-beat var(--demo-dur) var(--ease) infinite;
+    }
+    .demo[data-phase="auto"] .ui-focus .focus-count::before {
+      content: "0";
+      animation: focus-digit var(--demo-dur) steps(1, end) infinite;
+    }
+    .demo[data-phase="auto"] .ui-focus .focus-bar > i {
+      width: 0%;
       animation: focus-fill var(--demo-dur) var(--ease) infinite;
     }
 
+    @keyframes status-beat {
+      0%, 18% { color: #66c782; opacity: 0.9; }
+      22%, 40% { color: #e8c547; opacity: 1; }
+      46%, 100% { color: #66c782; opacity: 1; filter: drop-shadow(0 0 5px rgba(102, 199, 130, 0.45)); }
+    }
+    @keyframes quiet-beat {
+      0%, 16% { opacity: 1; transform: scale(1); }
+      22%, 92% { opacity: 0; transform: scale(0.96); }
+      96%, 100% { opacity: 1; transform: scale(1); }
+    }
+    @keyframes cue-beat {
+      0%, 18% { opacity: 0; transform: translateY(-10px) scale(0.96); }
+      22% { opacity: 1; transform: translateY(0) scale(1); }
+      24% { transform: translateX(-5px); }
+      26% { transform: translateX(5px); }
+      28% { transform: translateX(-3px); }
+      30%, 40% { opacity: 1; transform: translateX(0) scale(1); }
+      46%, 100% { opacity: 0; transform: translateY(-6px) scale(0.98); }
+    }
+    @keyframes focus-beat {
+      0%, 42% { opacity: 0; }
+      48%, 90% { opacity: 1; }
+      96%, 100% { opacity: 0; }
+    }
+    @keyframes focus-digit {
+      0%, 50% { content: "0"; }
+      54% { content: "1"; }
+      60% { content: "2"; }
+      66% { content: "3"; }
+      72% { content: "4"; }
+      78%, 100% { content: "5"; }
+    }
     @keyframes focus-fill {
-      0%, 44% { width: 0%; }
-      48% { width: 20%; }
-      54% { width: 40%; }
-      60% { width: 60%; }
-      66% { width: 80%; }
-      72%, 88% { width: 100%; }
-      92%, 100% { width: 100%; }
-    }
-    @keyframes focus-bar-vis {
-      0%, 70% { opacity: 1; }
-      74%, 100% { opacity: 0; }
+      0%, 50% { width: 0%; }
+      54% { width: 20%; }
+      60% { width: 40%; }
+      66% { width: 60%; }
+      72% { width: 80%; }
+      78%, 100% { width: 100%; }
     }
 
-    .demo-focus .focus-done {
-      position: absolute;
-      left: 50%;
-      top: 48%;
-      translate: -50% -50%;
-      font-family: var(--font-display);
-      font-size: 1.55rem;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      color: #fff;
-      opacity: 0;
-      animation: focus-done-beat var(--demo-dur) var(--ease) infinite;
+    /* Manual phase freezes */
+    .demo[data-phase="quiet"] .ui-quiet { opacity: 1; }
+    .demo[data-phase="quiet"] .ui-cue,
+    .demo[data-phase="quiet"] .ui-focus { opacity: 0; }
+    .demo[data-phase="quiet"] .stage-status { color: #66c782; }
+
+    .demo[data-phase="cue"] .ui-quiet { opacity: 0; }
+    .demo[data-phase="cue"] .ui-cue { opacity: 1; transform: none; }
+    .demo[data-phase="cue"] .ui-focus { opacity: 0; }
+    .demo[data-phase="cue"] .stage-status { color: #e8c547; }
+
+    .demo[data-phase="break"] .ui-quiet,
+    .demo[data-phase="break"] .ui-cue { opacity: 0; }
+    .demo[data-phase="break"] .ui-focus { opacity: 1; }
+    .demo[data-phase="break"] .ui-focus .focus-count::before { content: "3"; }
+    .demo[data-phase="break"] .ui-focus .focus-bar > i { width: 60%; }
+    .demo[data-phase="break"] .stage-status { color: #66c782; filter: drop-shadow(0 0 5px rgba(102, 199, 130, 0.45)); }
+
+    .demo-phases {
+      margin-top: 0.95rem;
+      display: flex;
+      justify-content: center;
+      gap: 0.35rem;
+      padding: 0.28rem;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.42);
+      border: 1px solid var(--line);
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
     }
 
-    @keyframes focus-done-beat {
-      0%, 72% { opacity: 0; transform: scale(0.9); }
-      76%, 88% { opacity: 1; transform: scale(1); }
-      93%, 100% { opacity: 0; transform: scale(1.04); }
+    .demo-phases button {
+      appearance: none;
+      border: none;
+      background: transparent;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 650;
+      letter-spacing: -0.01em;
+      color: var(--muted);
+      padding: 0.48rem 0.85rem;
+      border-radius: 9px;
+      cursor: pointer;
+      transition: background 0.2s var(--ease), color 0.2s var(--ease);
+    }
+    .demo-phases button:hover { color: var(--ink); }
+    .demo-phases button.is-on {
+      background: rgba(11, 107, 86, 0.12);
+      color: var(--accent-deep);
+    }
+    .demo-phases button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
     }
 
     .demo-caption {
-      margin-top: 0.75rem;
+      margin-top: 0.65rem;
       font-size: 0.72rem;
       font-weight: 600;
       letter-spacing: 0.04em;
@@ -589,24 +594,10 @@
       text-align: center;
     }
 
-    .demo:hover .demo-status,
-    .demo:hover .demo-quiet,
-    .demo:hover .demo-quiet .pulse::after,
-    .demo:hover .demo-cue,
-    .demo:hover .demo-focus,
-    .demo:hover .demo-focus .focus-title,
-    .demo:hover .demo-focus .focus-count,
-    .demo:hover .demo-focus .focus-count::before,
-    .demo:hover .demo-focus .focus-bar,
-    .demo:hover .demo-focus .focus-bar > i,
-    .demo:hover .demo-focus .focus-done {
-      animation-play-state: paused;
-    }
-
     .proof {
       position: relative;
       z-index: 1;
-      padding: 0.25rem 0 5.5rem;
+      padding: 0.25rem 0 4.75rem;
     }
 
     .proof-strip {
@@ -617,7 +608,7 @@
     }
 
     .proof-item {
-      padding: 2.25rem 1.6rem 2.25rem 0;
+      padding: 2rem 1.6rem 2rem 0;
       position: relative;
     }
     .proof-item + .proof-item {
@@ -636,14 +627,14 @@
 
     .proof-item .label {
       font-family: var(--font-display);
-      font-size: 1.28rem;
+      font-size: 1.22rem;
       font-weight: 700;
       letter-spacing: -0.03em;
       color: var(--ink);
-      margin-bottom: 0.55rem;
+      margin-bottom: 0.45rem;
     }
     .proof-item p {
-      font-size: 0.96rem;
+      font-size: 0.95rem;
       color: var(--muted);
       line-height: 1.5;
       max-width: 24ch;
@@ -651,7 +642,10 @@
 
     section { position: relative; z-index: 1; }
 
-    .section-head { margin-bottom: 3.15rem; }
+    .section-head {
+      text-align: center;
+      margin-bottom: 2.85rem;
+    }
     .section-kicker {
       display: inline-block;
       font-size: 0.72rem;
@@ -668,118 +662,161 @@
       letter-spacing: -0.045em;
       line-height: 1.08;
       color: var(--ink);
-      margin-bottom: 0.9rem;
+      margin-bottom: 0.85rem;
     }
     .section-head .lead {
       font-size: 1.08rem;
       color: var(--muted);
-      max-width: 36rem;
+      max-width: 34rem;
       line-height: 1.55;
+      margin: 0 auto;
     }
 
-    .how { padding: 1.25rem 0 5.75rem; }
+    /* —— How it works: 3 product-UI panels —— */
+    .how { padding: 0.5rem 0 5.75rem; }
 
-    .beats {
+    .loop {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0;
-      border-top: 1px solid var(--line-strong);
-      border-bottom: 1px solid var(--line-strong);
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.15rem;
     }
 
-    .beat {
-      padding: 1.85rem 1.65rem 1.9rem 0;
-      border-bottom: 1px solid var(--line);
-      transition: background 0.3s var(--ease);
-    }
-    .beat:nth-child(odd) { padding-right: 1.85rem; }
-    .beat:nth-child(even) {
-      padding-left: 1.85rem;
-      border-left: 1px solid var(--line);
-    }
-    .beat:nth-last-child(-n+2) { border-bottom: none; }
-    .beat:hover { background: rgba(255, 255, 255, 0.28); }
-
-    .beat-top {
+    .loop-step {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: 1.25rem;
+      flex-direction: column;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.48);
+      border: 1px solid var(--line);
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.65) inset;
+      overflow: hidden;
+      transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), border-color 0.35s var(--ease);
+    }
+    .loop-step:hover {
+      transform: translateY(-3px);
+      border-color: rgba(11, 107, 86, 0.22);
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.7) inset,
+        0 18px 40px rgba(4, 80, 63, 0.1);
     }
 
-    .beat-num {
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: 1.85rem;
-      letter-spacing: -0.04em;
-      line-height: 1;
-      color: var(--accent);
-      font-variant-numeric: tabular-nums;
-      opacity: 0.92;
+    .loop-stage {
+      position: relative;
+      aspect-ratio: 5 / 4.05;
+      border-radius: 0;
+      box-shadow: none;
+      border: none;
+      border-bottom: 1px solid rgba(7, 17, 14, 0.12);
     }
 
-    .beat-viz {
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      background: rgba(11, 107, 86, 0.09);
-      display: grid;
-      place-items: center;
-      color: var(--accent);
-    }
-    .beat-viz svg { width: 24px; height: 24px; }
+    .loop-stage .stage-menubar { height: 24px; font-size: 0.58rem; }
+    .loop-stage .stage-status { width: 15px; height: 15px; }
+    .loop-stage .stage-status svg { width: 11px; height: 11px; }
 
-    .beat h3 {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 1.38rem;
-      letter-spacing: -0.03em;
-      color: var(--ink);
-      margin-bottom: 0.5rem;
+    .loop-stage .ui-quiet .pulse {
+      width: 44px;
+      height: 44px;
+      margin-bottom: 0.65rem;
     }
-    .beat p {
-      font-size: 1rem;
-      color: var(--muted);
-      line-height: 1.52;
-      max-width: 34ch;
+    .loop-stage .ui-quiet p { font-size: 0.62rem; }
+
+    .loop-stage .ui-cue {
+      top: 14%;
+      padding: 0.55rem 0.95rem;
+      font-size: 0.78rem;
+      border-radius: 11px;
     }
 
-    .viz-pulse circle:last-child {
+    .loop-stage .ui-focus { gap: 0.55rem; padding: 1rem; }
+    .loop-stage .ui-focus .focus-title { font-size: 0.88rem; }
+    .loop-stage .ui-focus .focus-count { font-size: 2.15rem; }
+    .loop-stage .ui-focus .focus-bar { width: min(150px, 62%); }
+
+    /* Static states per step */
+    .loop-step[data-shot="quiet"] .ui-quiet { opacity: 1; }
+    .loop-step[data-shot="quiet"] .ui-cue,
+    .loop-step[data-shot="quiet"] .ui-focus { display: none; }
+    .loop-step[data-shot="quiet"] .stage-status {
       animation: status-breathe 4.8s var(--ease) infinite;
-      transform-origin: center;
     }
-    .viz-toast rect {
-      animation: toast-nudge 5.5s var(--ease) infinite;
+
+    .loop-step[data-shot="cue"] .ui-quiet { display: none; }
+    .loop-step[data-shot="cue"] .ui-cue {
+      opacity: 1;
+      animation: cue-nudge 4.5s var(--ease) infinite;
     }
-    .viz-ring circle:last-child {
-      stroke-dasharray: 52;
-      stroke-dashoffset: 16;
-      animation: dash-crawl 6s var(--ease) infinite;
+    .loop-step[data-shot="cue"] .ui-focus { display: none; }
+    .loop-step[data-shot="cue"] .stage-status { color: #e8c547; }
+
+    .loop-step[data-shot="break"] .ui-quiet,
+    .loop-step[data-shot="break"] .ui-cue { display: none; }
+    .loop-step[data-shot="break"] .ui-focus { opacity: 1; }
+    .loop-step[data-shot="break"] .ui-focus .focus-count::before { content: "3"; }
+    .loop-step[data-shot="break"] .ui-focus .focus-bar > i {
+      animation: break-bar 5s var(--ease) infinite;
     }
-    .viz-quiet circle {
-      animation: quiet-fade 6s var(--ease) infinite;
+    .loop-step[data-shot="break"] .stage-status {
+      color: #66c782;
+      filter: drop-shadow(0 0 4px rgba(102, 199, 130, 0.5));
     }
 
     @keyframes status-breathe {
-      0%, 100% { fill: var(--leaf); opacity: 1; }
-      40% { fill: #c9a227; opacity: 0.75; }
-      70% { fill: var(--leaf); opacity: 1; }
+      0%, 100% { opacity: 0.85; }
+      50% { opacity: 1; filter: drop-shadow(0 0 5px rgba(102, 199, 130, 0.55)); }
     }
-    @keyframes toast-nudge {
-      0%, 100% { transform: translateY(0); opacity: 0.85; }
-      40% { transform: translateY(-2px); opacity: 1; }
+    @keyframes cue-nudge {
+      0%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-3px); }
+      55% { transform: translateX(-2px); }
+      70% { transform: translateX(2px); }
+      85% { transform: translateX(0); }
     }
-    @keyframes dash-crawl {
-      0%, 100% { stroke-dashoffset: 28; }
-      50% { stroke-dashoffset: 8; }
+    @keyframes break-bar {
+      0%, 20% { width: 40%; }
+      50% { width: 60%; }
+      80%, 100% { width: 72%; }
     }
-    @keyframes quiet-fade {
-      0%, 100% { opacity: 0.35; }
-      50% { opacity: 0.9; }
+
+    .loop-copy {
+      padding: 1.35rem 1.35rem 1.5rem;
+      flex: 1;
+    }
+
+    .loop-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 2rem;
+      height: 1.45rem;
+      padding: 0 0.5rem;
+      margin-bottom: 0.75rem;
+      border-radius: 999px;
+      background: rgba(11, 107, 86, 0.1);
+      color: var(--accent-deep);
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .loop-copy h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.28rem;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: 0.4rem;
+    }
+    .loop-copy p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.48;
+      max-width: 28ch;
     }
 
     .pricing { padding: 1.25rem 0 4.5rem; }
+    .pricing .section-head { text-align: left; }
+    .pricing .section-head .lead { margin: 0; }
 
     .plans {
       display: grid;
@@ -861,9 +898,7 @@
       opacity: 0.85;
     }
 
-    .plan-cta {
-      margin-top: 1.55rem;
-    }
+    .plan-cta { margin-top: 1.55rem; }
     .plan-cta .btn { width: 100%; }
 
     .plan-note {
@@ -926,27 +961,21 @@
     .reveal-d1 { transition-delay: 0.06s; }
     .reveal-d2 { transition-delay: 0.14s; }
     .reveal-d3 { transition-delay: 0.22s; }
-    .reveal-d4 { transition-delay: 0.3s; }
 
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .atmosphere::before,
       .brand span,
-      .demo-status,
-      .demo-quiet,
-      .demo-quiet .pulse::after,
-      .demo-cue,
-      .demo-focus,
-      .demo-focus .focus-title,
-      .demo-focus .focus-count,
-      .demo-focus .focus-count::before,
-      .demo-focus .focus-bar,
-      .demo-focus .focus-bar > i,
-      .demo-focus .focus-done,
-      .viz-pulse circle:last-child,
-      .viz-toast rect,
-      .viz-ring circle:last-child,
-      .viz-quiet circle { animation: none !important; }
+      .ui-quiet .pulse::after,
+      .demo[data-phase="auto"] .stage-status,
+      .demo[data-phase="auto"] .ui-quiet,
+      .demo[data-phase="auto"] .ui-cue,
+      .demo[data-phase="auto"] .ui-focus,
+      .demo[data-phase="auto"] .ui-focus .focus-count::before,
+      .demo[data-phase="auto"] .ui-focus .focus-bar > i,
+      .loop-step[data-shot="quiet"] .stage-status,
+      .loop-step[data-shot="cue"] .ui-cue,
+      .loop-step[data-shot="break"] .ui-focus .focus-bar > i { animation: none !important; }
       .rise {
         opacity: 1;
         transform: none;
@@ -957,19 +986,19 @@
         transform: none;
         transition: none;
       }
-      .btn, .beat { transition: none; }
-      /* Static product shot: Focus Mode mid-progress */
-      .demo-quiet { opacity: 0; }
-      .demo-cue { opacity: 0; }
-      .demo-focus { opacity: 1; }
-      .demo-focus .focus-title { opacity: 1; }
-      .demo-focus .focus-count { opacity: 1; }
-      .demo-focus .focus-count::before { content: "3"; }
-      .demo-focus .focus-bar { opacity: 1; }
-      .demo-focus .focus-bar > i { width: 60%; }
-      .demo-focus .focus-done { opacity: 0; }
-      .demo-status { color: #66c782; opacity: 1; }
-      .demo-caption::after { content: none; }
+      .btn, .loop-step { transition: none; }
+      .demo { --force-static: 1; }
+      .demo[data-phase="auto"] .ui-quiet { opacity: 0; }
+      .demo[data-phase="auto"] .ui-cue { opacity: 0; }
+      .demo[data-phase="auto"] .ui-focus { opacity: 1; }
+      .demo[data-phase="auto"] .ui-focus .focus-count::before { content: "3"; }
+      .demo[data-phase="auto"] .ui-focus .focus-bar > i { width: 60%; }
+    }
+
+    @media (max-width: 980px) {
+      .loop { grid-template-columns: 1fr; gap: 1rem; }
+      .loop-stage { aspect-ratio: 16 / 10; }
+      .loop-copy p { max-width: none; }
     }
 
     @media (max-width: 900px) {
@@ -981,18 +1010,8 @@
         margin: 0;
         max-width: none;
       }
-      .demo-stage { aspect-ratio: 16 / 11; }
-      .hero { min-height: auto; padding: 1.75rem 0 3.5rem; }
-      .beats { grid-template-columns: 1fr; }
-      .beat,
-      .beat:nth-child(odd),
-      .beat:nth-child(even) {
-        padding: 1.55rem 0;
-        border-left: none;
-      }
-      .beat + .beat { border-top: 1px solid var(--line); }
-      .beat:nth-last-child(-n+2) { border-bottom: 1px solid var(--line); }
-      .beat:last-child { border-bottom: none; }
+      .demo .stage { aspect-ratio: 16 / 11; }
+      .hero { min-height: auto; padding: 1.75rem 0 3rem; }
       .plans { grid-template-columns: 1fr; }
     }
 
@@ -1013,13 +1032,15 @@
       .hero h1 { max-width: none; }
       .cta-row { flex-direction: column; align-items: stretch; gap: 0.75rem; }
       .btn { width: 100%; }
-      .proof { padding-bottom: 3.5rem; }
+      .demo-phases { width: 100%; }
+      .demo-phases button { flex: 1; padding: 0.5rem 0.4rem; font-size: 0.74rem; }
+      .proof { padding-bottom: 3.25rem; }
       .how, .pricing { padding-bottom: 3.25rem; }
-      .beat { padding: 1.4rem 0; }
-      .beat-num { font-size: 1.55rem; }
+      .loop-copy { padding: 1.15rem 1.15rem 1.3rem; }
       .plan { padding: 1.5rem 1.25rem; }
       .plan-badge { position: static; display: inline-flex; margin-bottom: 0.75rem; }
       .privacy-panel { padding: 1.4rem 1.2rem; }
+      .ui-cue { font-size: 0.82rem; padding: 0.6rem 1rem; }
     }
   </style>
 </head>
@@ -1039,7 +1060,7 @@
         <div class="hero-copy">
           <p class="brand rise">Apex<span>Form</span></p>
           <h1 class="rise rise-d1">Stay upright. Keep moving.</h1>
-          <p class="sub rise rise-d2">A quiet macOS menu-bar coach — posture cues when you slouch, short Bio-Tax breaks when you’ve sat too long. On-device. Private. Free forever after a soft 10-day Pro trial.</p>
+          <p class="sub rise rise-d2">Menu-bar coach for Mac. Quiet until you slouch — then a short cue. Sat too long? A Bio-Tax break. On-device. Private. Free forever after a soft 10-day Pro trial.</p>
           <div class="cta-row rise rise-d3">
             <a class="btn btn-primary" href="https://github.com/mrigankgupta/ApexForm-updates/releases/latest">Download for Mac</a>
             <a class="btn btn-ghost" href="#how">How it works</a>
@@ -1047,35 +1068,36 @@
           <p class="cta-note rise rise-d4">macOS 14+ · Public beta · No account required</p>
         </div>
 
-        <aside class="demo rise rise-d3" aria-label="Autoplaying product demo">
-          <div class="demo-stage">
-            <div class="demo-desktop">
-              <div class="demo-wallpaper" aria-hidden="true"></div>
-              <div class="demo-menubar" aria-hidden="true">
-                <div class="left"></div>
-                <div class="right">
-                  <span class="demo-status" title="ApexForm">
-                    <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3.1"/><circle cx="8" cy="8" r="6.1" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/></svg>
-                  </span>
-                  <span class="clock">Mon 9:41</span>
-                </div>
+        <aside class="demo rise rise-d3" data-phase="auto" aria-label="Interactive product loop demo">
+          <div class="stage">
+            <div class="stage-desk">
+              <div class="stage-wallpaper" aria-hidden="true"></div>
+              <div class="stage-menubar" aria-hidden="true">
+                <span class="stage-status" title="ApexForm">
+                  <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3.1"/><circle cx="8" cy="8" r="6.1" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/></svg>
+                </span>
+                <span class="stage-clock">Mon 9:41</span>
               </div>
-              <div class="demo-workspace">
-                <div class="demo-quiet" aria-hidden="true">
+              <div class="stage-work">
+                <div class="ui-quiet" aria-hidden="true">
                   <div class="pulse"></div>
                   <p>Watching quietly</p>
                 </div>
-                <div class="demo-cue" aria-hidden="true">Lift your chest and sit tall.</div>
-                <div class="demo-focus" aria-hidden="true">
+                <div class="ui-cue" aria-hidden="true">Lift your chest and sit tall.</div>
+                <div class="ui-focus" aria-hidden="true">
                   <p class="focus-title">5 deep blinks</p>
                   <p class="focus-count"></p>
                   <div class="focus-bar"><i></i></div>
-                  <p class="focus-done">Nice work!</p>
                 </div>
               </div>
             </div>
           </div>
-          <p class="demo-caption">Product loop · hover to pause</p>
+          <div class="demo-phases" role="group" aria-label="Preview product states">
+            <button type="button" data-phase="quiet">Quiet</button>
+            <button type="button" data-phase="cue">Cue</button>
+            <button type="button" data-phase="break">Break</button>
+          </div>
+          <p class="demo-caption">Tap a phase · autoplays the loop</p>
         </aside>
       </div>
     </div>
@@ -1107,65 +1129,102 @@
     <div class="wrap-wide">
       <div class="section-head reveal">
         <p class="section-kicker">How it works</p>
-        <h2>Four beats. Then quiet.</h2>
-        <p class="lead">No accounts. No dashboard to babysit. ApexForm lives in the menu bar and only speaks when it should.</p>
+        <h2>Watch. Cue. Break.</h2>
+        <p class="lead">Three moments. Almost no reading required — the product does the talking.</p>
       </div>
 
-      <div class="beats">
-        <article class="beat reveal">
-          <div class="beat-top">
-            <span class="beat-num">01</span>
-            <span class="beat-viz viz-pulse" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-opacity="0.25" stroke-width="1.5"/>
-                <circle cx="12" cy="12" r="3.2" fill="currentColor"/>
-              </svg>
-            </span>
+      <div class="loop">
+        <article class="loop-step reveal" data-shot="quiet">
+          <div class="stage loop-stage" aria-hidden="true">
+            <div class="stage-desk">
+              <div class="stage-wallpaper"></div>
+              <div class="stage-menubar">
+                <span class="stage-status">
+                  <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="3.1"/><circle cx="8" cy="8" r="6.1" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/></svg>
+                </span>
+                <span class="stage-clock">9:41</span>
+              </div>
+              <div class="stage-work">
+                <div class="ui-quiet">
+                  <div class="pulse"></div>
+                  <p>Watching quietly</p>
+                </div>
+                <div class="ui-cue">Lift your chest and sit tall.</div>
+                <div class="ui-focus">
+                  <p class="focus-title">5 deep blinks</p>
+                  <p class="focus-count"></p>
+                  <div class="focus-bar"><i></i></div>
+                </div>
+              </div>
+            </div>
           </div>
-          <h3>Quiet in the menu bar</h3>
-          <p>ApexForm lives as a status item — out of the way until you need it.</p>
+          <div class="loop-copy">
+            <span class="loop-num">01</span>
+            <h3>Watches quietly</h3>
+            <p>Lives in the menu bar. Out of the way until you need it.</p>
+          </div>
         </article>
 
-        <article class="beat reveal reveal-d1">
-          <div class="beat-top">
-            <span class="beat-num">02</span>
-            <span class="beat-viz viz-toast" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none">
-                <rect x="4" y="7" width="16" height="10" rx="3" stroke="currentColor" stroke-width="1.6"/>
-                <path d="M8 12h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-              </svg>
-            </span>
+        <article class="loop-step reveal reveal-d1" data-shot="cue">
+          <div class="stage loop-stage" aria-hidden="true">
+            <div class="stage-desk">
+              <div class="stage-wallpaper"></div>
+              <div class="stage-menubar">
+                <span class="stage-status">
+                  <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="3.1"/><circle cx="8" cy="8" r="6.1" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/></svg>
+                </span>
+                <span class="stage-clock">9:41</span>
+              </div>
+              <div class="stage-work">
+                <div class="ui-quiet">
+                  <div class="pulse"></div>
+                  <p>Watching quietly</p>
+                </div>
+                <div class="ui-cue">Lift your chest and sit tall.</div>
+                <div class="ui-focus">
+                  <p class="focus-title">5 deep blinks</p>
+                  <p class="focus-count"></p>
+                  <div class="focus-bar"><i></i></div>
+                </div>
+              </div>
+            </div>
           </div>
-          <h3>You slouch — it notices</h3>
-          <p>A short posture cue appears. Lift your chest, sit tall, keep working.</p>
+          <div class="loop-copy">
+            <span class="loop-num">02</span>
+            <h3>Cue when you slouch</h3>
+            <p>A short posture cue. Sit tall. Keep working.</p>
+          </div>
         </article>
 
-        <article class="beat reveal reveal-d2">
-          <div class="beat-top">
-            <span class="beat-num">03</span>
-            <span class="beat-viz viz-ring" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="8.2" stroke="currentColor" stroke-opacity="0.22" stroke-width="1.6"/>
-                <circle cx="12" cy="12" r="8.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-              </svg>
-            </span>
+        <article class="loop-step reveal reveal-d2" data-shot="break">
+          <div class="stage loop-stage" aria-hidden="true">
+            <div class="stage-desk">
+              <div class="stage-wallpaper"></div>
+              <div class="stage-menubar">
+                <span class="stage-status">
+                  <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="3.1"/><circle cx="8" cy="8" r="6.1" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/></svg>
+                </span>
+                <span class="stage-clock">9:41</span>
+              </div>
+              <div class="stage-work">
+                <div class="ui-quiet">
+                  <div class="pulse"></div>
+                  <p>Watching quietly</p>
+                </div>
+                <div class="ui-cue">Lift your chest and sit tall.</div>
+                <div class="ui-focus">
+                  <p class="focus-title">5 deep blinks</p>
+                  <p class="focus-count"></p>
+                  <div class="focus-bar"><i></i></div>
+                </div>
+              </div>
+            </div>
           </div>
-          <h3>You’ve sat too long</h3>
-          <p>Bio-Tax Focus Mode starts a brief movement break — blinks, squats, or twists depending on your plan.</p>
-        </article>
-
-        <article class="beat reveal reveal-d3">
-          <div class="beat-top">
-            <span class="beat-num">04</span>
-            <span class="beat-viz viz-quiet" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none">
-                <path d="M6 12h12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" opacity="0.45"/>
-                <circle cx="12" cy="12" r="2.4" fill="currentColor"/>
-              </svg>
-            </span>
+          <div class="loop-copy">
+            <span class="loop-num">03</span>
+            <h3>Break when you’ve sat</h3>
+            <p>Bio-Tax Focus Mode — blinks, squats, or twists. Then quiet.</p>
           </div>
-          <h3>Back to work</h3>
-          <p>Dismiss and the menu bar goes quiet again. No streak guilt. No cloud sync.</p>
         </article>
       </div>
     </div>
@@ -1253,6 +1312,38 @@
         reveals.forEach(function (el) { io.observe(el); });
       } else {
         reveals.forEach(function (el) { el.classList.add("is-in"); });
+      }
+
+      var demo = document.querySelector(".demo");
+      var phaseBtns = document.querySelectorAll(".demo-phases button");
+      var resumeTimer = null;
+
+      function setPhase(phase, sticky) {
+        if (!demo) return;
+        demo.setAttribute("data-phase", phase);
+        phaseBtns.forEach(function (btn) {
+          btn.classList.toggle("is-on", btn.getAttribute("data-phase") === phase && phase !== "auto");
+        });
+        if (resumeTimer) {
+          clearTimeout(resumeTimer);
+          resumeTimer = null;
+        }
+        if (sticky && !reduceMotion) {
+          resumeTimer = setTimeout(function () {
+            demo.setAttribute("data-phase", "auto");
+            phaseBtns.forEach(function (btn) { btn.classList.remove("is-on"); });
+          }, 7000);
+        }
+      }
+
+      phaseBtns.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          setPhase(btn.getAttribute("data-phase"), true);
+        });
+      });
+
+      if (reduceMotion) {
+        setPhase("break", false);
       }
     })();
   </script>
