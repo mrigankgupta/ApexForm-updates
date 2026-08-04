@@ -3,42 +3,49 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ApexForm — posture &amp; movement coach for Mac</title>
-  <meta name="description" content="ApexForm is a Mac menu-bar coach that keeps you upright and moving — posture cues when you slouch, short Bio-Tax breaks when you've sat too long. On-device, private, free forever.">
-  <meta property="og:title" content="ApexForm — posture &amp; movement coach for Mac">
-  <meta property="og:description" content="Posture cues when you slouch, short movement breaks when you've sat too long. On-device and private. Free forever, one-time Pro unlock.">
+  <title>ApexForm — the Mac menu-bar coach that taxes your slouch</title>
+  <meta name="description" content="ApexForm watches your posture through the webcam with on-device Apple Vision. Slouch and you get a gentle cue. Ignore it and it charges a Bio-Tax — a short full-screen movement break. Private, free forever, macOS 14+.">
+  <meta property="og:title" content="ApexForm — the Mac menu-bar coach that taxes your slouch">
+  <meta property="og:description" content="A gentle cue when you slouch. A Bio-Tax break when you ignore it. On-device, private, free forever.">
   <meta property="og:type" content="website">
-  <meta http-equiv="Cache-Control" content="no-cache">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --ink: #07110e;
-      --ink-soft: #1c2f28;
-      --muted: #4f635a;
-      --muted-soft: #6a7d74;
-      --line: rgba(7, 17, 14, 0.1);
-      --line-strong: rgba(7, 17, 14, 0.16);
-      --accent: #0b6b56;
-      --accent-deep: #04503f;
-      --leaf: #14a07c;
-      --page: #e8f0eb;
-      --page-deep: #d2e0d8;
-      --surface: #f4f9f6;
-      --desk: #f7fbf9;
-      --desk-ink: #0e1c17;
-      --font-display: "Syne", "DM Sans", system-ui, sans-serif;
-      --font-body: "DM Sans", system-ui, -apple-system, sans-serif;
+      --ink: #0c1712;
+      --ink-2: #24352d;
+      --muted: #55685e;
+      --faint: #7d8d84;
+      --line: rgba(12, 23, 18, 0.09);
+      --line-2: rgba(12, 23, 18, 0.15);
+      --green: #0b6b56;
+      --green-deep: #06503f;
+      --leaf: #17a97e;
+      --leaf-soft: #e2f3ec;
+      --amber: #b45309;
+      --amber-soft: #fdf0e0;
+      --page: #f4f8f5;
+      --page-2: #eaf2ec;
+      --card: #ffffff;
+      --dark: #0b1712;
+      --dark-2: #10201a;
+      --dark-line: rgba(255, 255, 255, 0.1);
+      --display: "Syne", "DM Sans", system-ui, sans-serif;
+      --body: "DM Sans", system-ui, -apple-system, sans-serif;
+      --r-lg: 22px;
+      --r-md: 14px;
+      --r-sm: 9px;
+      --shadow-1: 0 1px 2px rgba(12, 23, 18, 0.05), 0 10px 30px -12px rgba(12, 23, 18, 0.14);
+      --shadow-2: 0 2px 6px rgba(12, 23, 18, 0.06), 0 24px 60px -20px rgba(12, 23, 18, 0.24);
       --ease: cubic-bezier(0.22, 1, 0.36, 1);
-      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: var(--font-body);
+      font-family: var(--body);
       color: var(--ink);
       background: var(--page);
       line-height: 1.55;
@@ -46,1142 +53,1764 @@
       overflow-x: clip;
     }
 
-    .atmosphere {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      overflow: hidden;
-      background:
-        radial-gradient(ellipse 90% 55% at 50% -12%, rgba(11, 107, 86, 0.22), transparent 58%),
-        radial-gradient(ellipse 45% 38% at 96% 18%, rgba(20, 160, 124, 0.14), transparent 55%),
-        radial-gradient(ellipse 40% 32% at 4% 70%, rgba(180, 205, 194, 0.45), transparent 60%),
-        linear-gradient(180deg, #f5faf7 0%, var(--page) 42%, var(--page-deep) 100%);
-    }
+    a { color: var(--green-deep); text-decoration: none; }
+    ul { list-style: none; }
+    button { font: inherit; cursor: pointer; }
 
-    .atmosphere::before {
-      content: "";
-      position: absolute;
-      width: 70vmax;
-      height: 70vmax;
-      top: -32vmax;
-      left: 50%;
-      translate: -50% 0;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(11, 107, 86, 0.2) 0%, rgba(11, 107, 86, 0.05) 40%, transparent 68%);
-      animation: orb-drift 22s var(--ease) infinite alternate;
-      will-change: transform;
-    }
-
-    .atmosphere::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      opacity: 0.22;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
-      background-size: 180px 180px;
-      mix-blend-mode: multiply;
-    }
-
-    @keyframes orb-drift {
-      from { transform: translate3d(-3%, 0, 0) scale(1); }
-      to   { transform: translate3d(4%, 5%, 0) scale(1.1); }
-    }
-
-    a { color: var(--accent-deep); text-decoration: none; transition: color 0.2s ease; }
-    a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
-
-    .wrap {
-      width: min(920px, calc(100% - 2.5rem));
+    .container {
+      width: min(1120px, calc(100% - 2.75rem));
       margin: 0 auto;
-      position: relative;
-      z-index: 1;
     }
-    .wrap-wide {
-      width: min(1180px, calc(100% - 2.5rem));
+    .container-narrow {
+      width: min(760px, calc(100% - 2.75rem));
       margin: 0 auto;
-      position: relative;
-      z-index: 1;
     }
 
-    .topnav {
+    /* ————— Header ————— */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(244, 248, 245, 0.86);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.25s ease;
+    }
+    .site-header.is-stuck { border-bottom-color: var(--line); }
+    .header-inner {
       display: flex;
-      justify-content: flex-end;
-      gap: 1.5rem;
-      padding: 1.2rem 0 0;
-      font-size: 0.875rem;
-      font-weight: 500;
-    }
-    .topnav a { color: var(--muted-soft); text-decoration: none; }
-    .topnav a:hover { color: var(--ink); }
-
-    /* —— Hero: one composition —— */
-    .hero {
-      position: relative;
-      z-index: 1;
-      padding: 0.85rem 0 2.75rem;
-      min-height: min(100svh, 900px);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .hero-intro {
-      max-width: 40rem;
-      margin-bottom: 1.35rem;
-    }
-
-    .brand {
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: clamp(4rem, 9.5vw, 6.4rem);
-      letter-spacing: -0.065em;
-      line-height: 0.84;
-      color: var(--ink);
-      margin-bottom: 1rem;
-    }
-    .brand span {
-      color: var(--accent);
-      animation: form-glow 8s var(--ease) infinite;
-    }
-
-    @keyframes form-glow {
-      0%, 100% { color: var(--accent); }
-      50% { color: var(--leaf); }
-    }
-
-    .hero h1 {
-      font-family: var(--font-display);
-      font-weight: 600;
-      font-size: clamp(1.4rem, 2.4vw, 1.95rem);
-      letter-spacing: -0.035em;
-      line-height: 1.15;
-      color: var(--ink-soft);
-      max-width: 16ch;
-    }
-
-    .hero .sub {
-      margin-top: 0.75rem;
-      font-size: 1.05rem;
-      color: var(--muted);
-      max-width: 28rem;
-      line-height: 1.48;
-    }
-
-    .cta-row {
-      margin-top: 1.35rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem 1.05rem;
       align-items: center;
+      gap: 1.5rem;
+      padding: 0.85rem 0;
     }
-
-    .cta-note {
-      margin-top: 0.7rem;
-      font-size: 0.82rem;
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 1.22rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .brand:hover { text-decoration: none; }
+    .brand .mark {
+      width: 30px;
+      height: 30px;
+      border-radius: 9px;
+      background: linear-gradient(160deg, var(--leaf), var(--green-deep));
+      display: inline-grid;
+      place-items: center;
+      color: #fff;
+      flex: none;
+    }
+    .brand .mark svg { width: 17px; height: 17px; }
+    .brand em { font-style: normal; color: var(--green); }
+    .nav-links {
+      display: flex;
+      gap: 1.4rem;
+      margin-left: auto;
+      font-size: 0.9rem;
       font-weight: 500;
-      color: var(--muted-soft);
     }
+    .nav-links a { color: var(--muted); }
+    .nav-links a:hover { color: var(--ink); }
 
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-family: var(--font-body);
-      font-size: 0.98rem;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      border-radius: 12px;
-      padding: 0.95rem 1.55rem;
-      border: none;
-      text-decoration: none;
-      transition: background 0.25s var(--ease), transform 0.25s var(--ease), box-shadow 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease);
+      gap: 0.45rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 0.72rem 1.4rem;
+      border: 1px solid transparent;
+      transition: transform 0.18s var(--ease), box-shadow 0.18s ease, background 0.18s ease;
+      white-space: nowrap;
     }
     .btn:hover { text-decoration: none; transform: translateY(-1px); }
-    .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-
     .btn-primary {
-      background: var(--accent-deep);
-      color: #f3faf7;
-      box-shadow: 0 14px 34px rgba(4, 80, 63, 0.24);
-    }
-    .btn-primary:hover {
-      background: var(--ink);
+      background: var(--green);
       color: #fff;
+      box-shadow: 0 8px 20px -8px rgba(11, 107, 86, 0.55);
     }
-
-    .btn-ghost {
+    .btn-primary:hover { background: var(--green-deep); color: #fff; }
+    .btn-quiet {
       background: transparent;
       color: var(--ink);
-      border: 1px solid rgba(7, 17, 14, 0.2);
-      padding: 0.92rem 1.35rem;
-      font-weight: 600;
+      border-color: var(--line-2);
     }
-    .btn-ghost:hover {
-      border-color: rgba(7, 17, 14, 0.36);
-      background: rgba(255, 255, 255, 0.45);
-      color: var(--ink);
-    }
+    .btn-quiet:hover { border-color: var(--ink-2); }
+    .btn-sm { padding: 0.5rem 1.05rem; font-size: 0.875rem; }
 
-    .rise {
-      opacity: 0;
-      transform: translateY(18px);
-      animation: rise-in 0.9s var(--ease-out) forwards;
-    }
-    .rise-d1 { animation-delay: 0.08s; }
-    .rise-d2 { animation-delay: 0.18s; }
-    .rise-d3 { animation-delay: 0.3s; }
-    .rise-d4 { animation-delay: 0.42s; }
-
-    @keyframes rise-in {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* —— Full-bleed product plane —— */
-    .plane {
+    /* ————— Hero ————— */
+    .hero {
       position: relative;
-      width: 100%;
-      border-radius: 18px;
-      overflow: hidden;
-      isolation: isolate;
-      background: var(--desk);
-      border: 1px solid rgba(7, 17, 14, 0.12);
-      box-shadow: 0 28px 80px rgba(7, 17, 14, 0.12);
-      --plane-dur: 10s;
+      padding: 4.2rem 0 4.6rem;
+      overflow: clip;
     }
-
-    .hero-stage {
-      width: 100%;
-      position: relative;
-    }
-
-    .hero-plane {
-      width: 100%;
-      min-height: clamp(280px, 42vh, 460px);
-      aspect-ratio: auto;
-      height: clamp(280px, 42vh, 460px);
-      max-height: 460px;
-      border-radius: 0;
-      border-left: none;
-      border-right: none;
-      box-shadow: 0 24px 60px rgba(7, 17, 14, 0.1);
-    }
-
-    .hero-stage .plane-controls {
-      width: min(1180px, calc(100% - 2.5rem));
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .plane-desk {
+    .hero::before {
+      content: "";
       position: absolute;
       inset: 0;
-      display: flex;
-      flex-direction: column;
+      pointer-events: none;
       background:
-        radial-gradient(ellipse 55% 50% at 78% 88%, rgba(20, 160, 124, 0.12), transparent 60%),
-        radial-gradient(ellipse 40% 40% at 12% 70%, rgba(11, 107, 86, 0.08), transparent 55%),
-        linear-gradient(165deg, #f8fcfa 0%, #eef5f1 48%, #e4eee9 100%);
+        radial-gradient(ellipse 60% 46% at 78% 8%, rgba(23, 169, 126, 0.15), transparent 60%),
+        radial-gradient(ellipse 52% 42% at 8% 88%, rgba(11, 107, 86, 0.1), transparent 62%);
+    }
+    .hero-inner {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 6fr) minmax(0, 6.4fr);
+      gap: 3.4rem;
+      align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--green-deep);
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0.36rem 0.85rem;
+      box-shadow: var(--shadow-1);
+    }
+    .hero-badge .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--leaf);
+      box-shadow: 0 0 0 3px rgba(23, 169, 126, 0.2);
+    }
+    .hero h1 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(2.55rem, 5vw, 3.9rem);
+      line-height: 1.02;
+      letter-spacing: -0.025em;
+      margin: 1.15rem 0 1.1rem;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--green);
+    }
+    .hero-sub {
+      font-size: 1.08rem;
+      color: var(--muted);
+      max-width: 34rem;
+      margin-bottom: 1.7rem;
+    }
+    .hero-sub strong { color: var(--ink-2); font-weight: 600; }
+    .hero-ctas { display: flex; flex-wrap: wrap; gap: 0.8rem; align-items: center; }
+    .hero-ctas .scroll-hint { font-weight: 600; font-size: 0.95rem; color: var(--ink-2); }
+    .hero-ctas .scroll-hint:hover { color: var(--green); }
+    .hero-checks {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem 1.3rem;
+      margin-top: 1.35rem;
+      font-size: 0.855rem;
+      color: var(--faint);
+      font-weight: 500;
+    }
+    .hero-checks span::before {
+      content: "✓";
+      color: var(--leaf);
+      font-weight: 700;
+      margin-right: 0.4rem;
     }
 
-    .plane-menubar {
+    /* Hero product scene */
+    .scene-wrap { position: relative; }
+    .scene {
       position: relative;
-      z-index: 6;
-      height: 32px;
-      flex-shrink: 0;
+      border-radius: var(--r-lg);
+      background: linear-gradient(165deg, #dcebe1 0%, #cfe3d7 52%, #c3dccd 100%);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-2);
+      overflow: hidden;
+      aspect-ratio: 10 / 7.6;
+      max-height: 500px;
+      width: 100%;
+    }
+    .menubar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 0.95rem;
-      background: rgba(246, 250, 248, 0.72);
-      backdrop-filter: blur(18px) saturate(1.25);
-      -webkit-backdrop-filter: blur(18px) saturate(1.25);
-      border-bottom: 1px solid rgba(7, 17, 14, 0.08);
-      color: var(--desk-ink);
-      font-size: 0.7rem;
-      font-weight: 550;
-      user-select: none;
+      padding: 0 0.9rem;
+      height: 30px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(12, 23, 18, 0.06);
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--ink-2);
     }
+    .menubar .mb-left { display: flex; align-items: center; gap: 0.55rem; }
+    .menubar .mb-left .apple { font-size: 0.78rem; line-height: 1; }
+    .menubar .mb-right { display: flex; align-items: center; gap: 0.6rem; }
+    .mb-glyph {
+      display: inline-grid;
+      place-items: center;
+      width: 17px;
+      height: 17px;
+      border-radius: 5px;
+      color: var(--green);
+      transition: color 0.3s ease, background 0.3s ease;
+    }
+    .mb-glyph svg { width: 13px; height: 13px; }
+    .scene[data-state="slouch"] .mb-glyph { color: var(--amber); background: rgba(180, 83, 9, 0.12); }
 
-    .plane-menubar-left {
+    .scene-desk { position: absolute; inset: 30px 0 0; }
+    .doc-window {
+      position: absolute;
+      top: 12%;
+      left: 8%;
+      width: 62%;
+      bottom: 0;
+      background: #fff;
+      border-radius: 12px 12px 0 0;
+      box-shadow: 0 18px 44px -18px rgba(12, 23, 18, 0.35);
+      border: 1px solid rgba(12, 23, 18, 0.07);
+      border-bottom: none;
+      overflow: hidden;
+    }
+    .doc-titlebar {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 0.8rem;
+      border-bottom: 1px solid var(--line);
+      background: #fafcfa;
+    }
+    .tl { width: 9px; height: 9px; border-radius: 50%; }
+    .tl-r { background: #f0b1a8; }
+    .tl-y { background: #f2d49b; }
+    .tl-g { background: #a9d8ab; }
+    .doc-name {
+      margin-left: 0.35rem;
+      font-size: 0.66rem;
+      color: var(--faint);
+      font-weight: 500;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    }
+    .doc-body { padding: 1rem 1.1rem; display: grid; gap: 0.55rem; }
+    .doc-line { height: 8px; border-radius: 4px; background: #e7ede8; }
+    .doc-line.h { height: 13px; width: 55%; background: #d7e2da; margin-bottom: 0.3rem; }
+    .doc-line.w1 { width: 92%; } .doc-line.w2 { width: 84%; } .doc-line.w3 { width: 88%; }
+    .doc-line.w4 { width: 63%; } .doc-line.w5 { width: 90%; } .doc-line.w6 { width: 42%; }
+
+    .posture-pill {
+      position: absolute;
+      top: 8%;
+      right: 6%;
       display: flex;
       align-items: center;
       gap: 0.55rem;
-      opacity: 0.45;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-    }
-    .plane-menubar-left i {
-      display: block;
-      width: 11px;
-      height: 11px;
-      border-radius: 50%;
-      background: currentColor;
-      opacity: 0.55;
-    }
-
-    .plane-menubar-right {
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-    }
-
-    .plane-clock {
-      font-variant-numeric: tabular-nums;
-      opacity: 0.72;
-      letter-spacing: 0.01em;
-    }
-
-    .plane-status {
-      display: grid;
-      place-items: center;
-      width: 20px;
-      height: 20px;
-      border-radius: 5px;
-      color: #1f9a62;
-      transition: color 0.35s var(--ease), filter 0.35s var(--ease);
-    }
-    .plane-status svg {
-      width: 14px;
-      height: 14px;
-      fill: currentColor;
-    }
-
-    .plane-work {
-      position: relative;
-      flex: 1;
-      min-height: 0;
-      overflow: hidden;
-      display: grid;
-      place-items: center;
-      padding: 1.5rem;
-    }
-
-    /* Subtle work surface — not fake OS chrome */
-    .work-sheet {
-      width: min(520px, 72%);
-      height: min(280px, 78%);
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.78);
-      border: 1px solid rgba(7, 17, 14, 0.08);
-      box-shadow:
-        0 1px 0 rgba(255, 255, 255, 0.9) inset,
-        0 18px 40px rgba(7, 17, 14, 0.08);
-      padding: 1.35rem 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.7rem;
-      pointer-events: none;
-    }
-    .work-sheet .line {
-      height: 8px;
-      border-radius: 4px;
-      background: rgba(7, 17, 14, 0.07);
-    }
-    .work-sheet .line.w1 { width: 42%; height: 11px; background: rgba(7, 17, 14, 0.12); }
-    .work-sheet .line.w2 { width: 88%; }
-    .work-sheet .line.w3 { width: 76%; }
-    .work-sheet .line.w4 { width: 92%; }
-    .work-sheet .line.w5 { width: 64%; }
-    .work-sheet .line.w6 { width: 81%; }
-    .work-sheet .gap { flex: 1; }
-
-    .ui-cue {
-      position: absolute;
-      top: 1.15rem;
-      left: 50%;
-      translate: -50% 0;
-      z-index: 5;
-      padding: 0.78rem 1.4rem;
-      border-radius: 14px;
-      background: rgba(14, 28, 23, 0.88);
-      backdrop-filter: blur(20px) saturate(1.2);
-      -webkit-backdrop-filter: blur(20px) saturate(1.2);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 16px 40px rgba(7, 17, 14, 0.28);
-      color: #fff;
-      font-size: 1rem;
-      font-weight: 600;
-      letter-spacing: -0.015em;
-      white-space: nowrap;
-      pointer-events: none;
-    }
-
-    .ui-focus {
-      position: absolute;
-      inset: 0;
-      z-index: 4;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.75rem;
-      padding: 1.5rem;
-      background:
-        radial-gradient(ellipse 70% 60% at 50% 42%, rgba(8, 22, 17, 0.55), rgba(4, 12, 9, 0.78));
-      backdrop-filter: blur(26px) saturate(1.05);
-      -webkit-backdrop-filter: blur(26px) saturate(1.05);
-      pointer-events: none;
-    }
-
-    .ui-focus .focus-title {
-      font-family: var(--font-display);
-      font-size: 1.15rem;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      color: rgba(255, 255, 255, 0.95);
-    }
-    .ui-focus .focus-count {
-      font-family: var(--font-display);
-      font-size: clamp(3rem, 8vw, 4.5rem);
-      font-weight: 800;
-      letter-spacing: -0.05em;
-      line-height: 1;
-      color: #fff;
-      font-variant-numeric: tabular-nums;
-    }
-    .ui-focus .focus-count::before { content: "0"; }
-    .ui-focus .focus-count::after {
-      content: " / 5";
-      font-weight: 700;
-      opacity: 0.88;
-    }
-    .ui-focus .focus-bar {
-      width: min(240px, 55%);
-      height: 6px;
+      background: #fff;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.16);
-      overflow: hidden;
-      margin-top: 0.2rem;
+      padding: 0.5rem 0.9rem 0.5rem 0.6rem;
+      box-shadow: var(--shadow-2);
+      border: 1px solid var(--line);
+      transition: transform 0.35s var(--ease);
     }
-    .ui-focus .focus-bar > i {
+    .posture-pill .ring {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--leaf-soft);
+      color: var(--green);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    .posture-pill .ring svg { width: 15px; height: 15px; }
+    .posture-pill .lbl { font-size: 0.62rem; font-weight: 600; color: var(--faint); letter-spacing: 0.08em; text-transform: uppercase; display: block; line-height: 1.2; }
+    .posture-pill .val { font-size: 0.82rem; font-weight: 700; color: var(--green-deep); line-height: 1.2; transition: color 0.3s ease; }
+    .scene[data-state="slouch"] .posture-pill .ring { background: var(--amber-soft); color: var(--amber); }
+    .scene[data-state="slouch"] .posture-pill .val { color: var(--amber); }
+    .posture-pill .val .v-tall { display: inline; }
+    .posture-pill .val .v-slouch { display: none; }
+    .scene[data-state="slouch"] .val .v-tall { display: none; }
+    .scene[data-state="slouch"] .val .v-slouch { display: inline; }
+
+    .cue-toast {
+      position: absolute;
+      top: 27%;
+      right: 6%;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(16, 32, 26, 0.92);
+      color: #ecf5f0;
+      font-size: 0.78rem;
+      font-weight: 600;
+      border-radius: 11px;
+      padding: 0.55rem 0.9rem;
+      box-shadow: var(--shadow-2);
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: opacity 0.35s ease, transform 0.35s var(--ease);
+      pointer-events: none;
+    }
+    .cue-toast .ping {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--leaf);
+      flex: none;
+    }
+    .scene[data-state="slouch"] .cue-toast { opacity: 1; transform: translateY(0); }
+    .scene[data-state="slouch"] .cue-toast .ping { animation: ping 1.4s ease infinite; }
+    @keyframes ping {
+      0% { box-shadow: 0 0 0 0 rgba(23, 169, 126, 0.55); }
+      70% { box-shadow: 0 0 0 8px rgba(23, 169, 126, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(23, 169, 126, 0); }
+    }
+
+    .tax-chip {
+      position: absolute;
+      left: 5%;
+      bottom: 7%;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--r-md);
+      padding: 0.6rem 0.85rem;
+      box-shadow: var(--shadow-2);
+      min-width: 158px;
+    }
+    .tax-chip .lbl { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--faint); }
+    .tax-chip .meter {
+      height: 6px;
+      border-radius: 3px;
+      background: #edf2ee;
+      margin: 0.45rem 0 0.35rem;
+      overflow: hidden;
+    }
+    .tax-chip .meter i {
       display: block;
       height: 100%;
-      width: 60%;
-      border-radius: inherit;
-      background: linear-gradient(90deg, #2fa866, #66c782);
+      width: 8%;
+      border-radius: 3px;
+      background: var(--leaf);
+      transition: width 1.1s var(--ease), background 0.4s ease;
     }
+    .scene[data-state="slouch"] .tax-chip .meter i { width: 64%; background: var(--amber); }
+    .tax-chip .cap { font-size: 0.7rem; font-weight: 600; color: var(--muted); }
+    .tax-chip .cap .t-ok { display: inline; }
+    .tax-chip .cap .t-warn { display: none; color: var(--amber); }
+    .scene[data-state="slouch"] .tax-chip .cap .t-ok { display: none; }
+    .scene[data-state="slouch"] .tax-chip .cap .t-warn { display: inline; }
 
-    /* Autoplay loop on hero plane */
-    .plane[data-phase="auto"] .plane-status {
-      animation: status-beat var(--plane-dur) var(--ease) infinite;
-    }
-    .plane[data-phase="auto"] .ui-cue {
-      opacity: 0;
-      animation: cue-beat var(--plane-dur) var(--ease) infinite;
-    }
-    .plane[data-phase="auto"] .ui-focus {
-      opacity: 0;
-      animation: focus-beat var(--plane-dur) var(--ease) infinite;
-    }
-    .plane[data-phase="auto"] .ui-focus .focus-count::before {
-      animation: focus-digit var(--plane-dur) steps(1, end) infinite;
-    }
-    .plane[data-phase="auto"] .ui-focus .focus-bar > i {
-      width: 0%;
-      animation: focus-fill var(--plane-dur) var(--ease) infinite;
-    }
-    .plane[data-phase="auto"] .work-sheet {
-      animation: sheet-dim var(--plane-dur) var(--ease) infinite;
-    }
-
-    @keyframes status-beat {
-      0%, 18% { color: #1f9a62; }
-      22%, 42% { color: #c9a227; }
-      48%, 100% { color: #1f9a62; }
-    }
-    @keyframes cue-beat {
-      0%, 18% { opacity: 0; transform: translateY(-12px) scale(0.97); }
-      23% { opacity: 1; transform: translateY(0) scale(1); }
-      25% { transform: translateX(-4px); }
-      27% { transform: translateX(4px); }
-      29% { transform: translateX(-2px); }
-      31%, 42% { opacity: 1; transform: translateX(0); }
-      48%, 100% { opacity: 0; transform: translateY(-8px); }
-    }
-    @keyframes focus-beat {
-      0%, 44% { opacity: 0; }
-      50%, 90% { opacity: 1; }
-      96%, 100% { opacity: 0; }
-    }
-    @keyframes focus-digit {
-      0%, 52% { content: "0"; }
-      56% { content: "1"; }
-      62% { content: "2"; }
-      68% { content: "3"; }
-      74% { content: "4"; }
-      80%, 100% { content: "5"; }
-    }
-    @keyframes focus-fill {
-      0%, 52% { width: 0%; }
-      56% { width: 20%; }
-      62% { width: 40%; }
-      68% { width: 60%; }
-      74% { width: 80%; }
-      80%, 100% { width: 100%; }
-    }
-    @keyframes sheet-dim {
-      0%, 44% { opacity: 1; filter: none; }
-      50%, 90% { opacity: 0.35; filter: blur(2px); }
-      96%, 100% { opacity: 1; filter: none; }
-    }
-
-    .plane[data-phase="quiet"] .ui-cue,
-    .plane[data-phase="quiet"] .ui-focus { opacity: 0; }
-    .plane[data-phase="quiet"] .plane-status { color: #1f9a62; }
-
-    .plane[data-phase="cue"] .ui-cue { opacity: 1; transform: none; }
-    .plane[data-phase="cue"] .ui-focus { opacity: 0; }
-    .plane[data-phase="cue"] .plane-status { color: #c9a227; }
-
-    .plane[data-phase="break"] .ui-cue { opacity: 0; }
-    .plane[data-phase="break"] .ui-focus { opacity: 1; }
-    .plane[data-phase="break"] .ui-focus .focus-count::before { content: "3"; }
-    .plane[data-phase="break"] .ui-focus .focus-bar > i { width: 60%; }
-    .plane[data-phase="break"] .plane-status { color: #1f9a62; }
-    .plane[data-phase="break"] .work-sheet { opacity: 0.35; filter: blur(2px); }
-
-    .plane-controls {
-      margin-top: 1rem;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.35rem 1.35rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .plane-controls button {
-      appearance: none;
-      border: none;
-      background: none;
-      font-family: var(--font-body);
-      font-size: 0.9rem;
-      font-weight: 650;
-      letter-spacing: -0.015em;
-      color: var(--muted-soft);
-      padding: 0.35rem 0;
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
-    }
-    .plane-controls button:hover { color: var(--ink); }
-    .plane-controls button.is-on {
-      color: var(--accent-deep);
-      border-bottom-color: var(--leaf);
-    }
-    .plane-controls button:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 4px;
-    }
-
-    section { position: relative; z-index: 1; }
-
-    .section-head {
-      margin-bottom: 2.75rem;
-      max-width: 34rem;
-    }
-    .section-kicker {
-      display: inline-block;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.7rem;
-    }
-    .section-head h2 {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: clamp(2.1rem, 4vw, 3.1rem);
-      letter-spacing: -0.045em;
-      line-height: 1.05;
-      color: var(--ink);
-      margin-bottom: 0.75rem;
-    }
-    .section-head .lead {
-      font-size: 1.08rem;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    /* —— How it works: stacked full-width bands —— */
-    .how { padding: 1.5rem 0 5.5rem; }
-
-    .band {
-      display: grid;
-      grid-template-columns: minmax(0, 1.55fr) minmax(220px, 0.7fr);
-      gap: clamp(1.5rem, 4vw, 3.25rem);
-      align-items: center;
-      margin-bottom: clamp(2.5rem, 5vw, 4rem);
-    }
-    .band:last-child { margin-bottom: 0; }
-    .band-flip {
-      grid-template-columns: minmax(220px, 0.7fr) minmax(0, 1.55fr);
-    }
-    .band-flip .band-copy { order: -1; }
-
-    .band-plane {
-      min-height: 0;
-      aspect-ratio: 16 / 9;
-      border-left: 1px solid rgba(7, 17, 14, 0.12);
-      border-right: 1px solid rgba(7, 17, 14, 0.12);
-      border-radius: 18px;
-      width: 100%;
-      margin-left: 0;
-    }
-
-    .band-plane .plane-menubar { height: 28px; font-size: 0.64rem; }
-    .band-plane .ui-cue {
-      font-size: 0.92rem;
-      padding: 0.65rem 1.15rem;
-      top: 1rem;
-    }
-    .band-plane .ui-focus .focus-title { font-size: 1rem; }
-    .band-plane .ui-focus .focus-count { font-size: clamp(2.4rem, 5vw, 3.4rem); }
-    .band-plane .work-sheet {
-      width: min(420px, 70%);
-      height: min(220px, 72%);
-      padding: 1.1rem 1.2rem;
-    }
-
-    /* Static per-band states */
-    .band[data-shot="quiet"] .ui-cue,
-    .band[data-shot="quiet"] .ui-focus { display: none; }
-    .band[data-shot="quiet"] .plane-status {
-      animation: status-breathe 4.5s var(--ease) infinite;
-    }
-
-    .band[data-shot="cue"] .ui-focus { display: none; }
-    .band[data-shot="cue"] .ui-cue {
-      opacity: 1;
-      animation: cue-nudge 4.2s var(--ease) infinite;
-    }
-    .band[data-shot="cue"] .plane-status { color: #c9a227; }
-
-    .band[data-shot="break"] .ui-cue { display: none; }
-    .band[data-shot="break"] .ui-focus { opacity: 1; }
-    .band[data-shot="break"] .ui-focus .focus-count::before { content: "3"; }
-    .band[data-shot="break"] .ui-focus .focus-bar > i {
-      animation: break-bar 5s var(--ease) infinite;
-    }
-    .band[data-shot="break"] .work-sheet { opacity: 0.35; filter: blur(2px); }
-    .band[data-shot="break"] .plane-status { color: #1f9a62; }
-
-    @keyframes status-breathe {
-      0%, 100% { opacity: 0.85; }
-      50% { opacity: 1; filter: drop-shadow(0 0 4px rgba(31, 154, 98, 0.45)); }
-    }
-    @keyframes cue-nudge {
-      0%, 100% { transform: translateY(0); }
-      40% { transform: translateY(-3px); }
-      55% { transform: translateX(-2px); }
-      70% { transform: translateX(2px); }
-      85% { transform: translateX(0); }
-    }
-    @keyframes break-bar {
-      0%, 20% { width: 40%; }
-      50% { width: 60%; }
-      80%, 100% { width: 72%; }
-    }
-
-    .band-num {
-      display: block;
-      font-family: var(--font-display);
-      font-size: 0.78rem;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      color: var(--accent);
-      margin-bottom: 0.7rem;
-    }
-    .band-copy h3 {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: clamp(1.45rem, 2.4vw, 1.85rem);
-      letter-spacing: -0.035em;
-      color: var(--ink);
-      margin-bottom: 0.45rem;
-    }
-    .band-copy p {
-      font-size: 1.02rem;
-      color: var(--muted);
-      line-height: 1.5;
-      max-width: 26ch;
-    }
-
-    .pricing { padding: 1rem 0 4.5rem; }
-    .pricing .section-head { max-width: 40rem; }
-
-    .plans {
-      display: grid;
-      grid-template-columns: 1fr 1.08fr;
-      gap: 1rem;
-      align-items: stretch;
-    }
-
-    .plan {
-      border-radius: 18px;
-      padding: 1.85rem 1.7rem 1.9rem;
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.4);
-    }
-
-    .plan-pro {
-      background:
-        linear-gradient(165deg, rgba(11, 107, 86, 0.1), rgba(255, 255, 255, 0.55) 42%, rgba(255, 255, 255, 0.4));
-      border-color: rgba(11, 107, 86, 0.22);
-      box-shadow: 0 22px 50px rgba(4, 80, 63, 0.08);
-      position: relative;
-    }
-
-    .plan-badge {
+    .scene-toggle {
       position: absolute;
-      top: 1.15rem;
-      right: 1.15rem;
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: var(--accent-deep);
-      background: rgba(255, 255, 255, 0.72);
-      border: 1px solid rgba(11, 107, 86, 0.16);
-      border-radius: 8px;
-      padding: 0.28rem 0.55rem;
-    }
-
-    .plan h3 {
-      font-family: var(--font-display);
-      font-size: 1.55rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      margin-bottom: 0.2rem;
-    }
-    .plan .price {
-      font-size: 1rem;
-      color: var(--muted);
-      margin-bottom: 1.35rem;
-      font-weight: 600;
-    }
-    .plan-pro .price { color: var(--accent-deep); }
-
-    .plan ul {
-      list-style: none;
+      right: 5%;
+      bottom: 7%;
       display: flex;
-      flex-direction: column;
-      gap: 0.58rem;
+      align-items: center;
+      gap: 0.6rem;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0.5rem 0.6rem 0.5rem 1rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--ink-2);
+      box-shadow: var(--shadow-2);
     }
-    .plan li {
-      font-size: 0.95rem;
-      color: var(--ink-soft);
-      padding-left: 1.05rem;
+    .scene-toggle .switch {
       position: relative;
-      line-height: 1.4;
+      width: 40px;
+      height: 23px;
+      border-radius: 999px;
+      background: #dde6df;
+      border: none;
+      transition: background 0.25s ease;
     }
-    .plan li::before {
+    .scene-toggle .switch::after {
       content: "";
       position: absolute;
-      left: 0;
-      top: 0.52rem;
-      width: 6px;
-      height: 6px;
-      border-radius: 1.5px;
-      background: var(--accent);
-      opacity: 0.85;
+      top: 2.5px;
+      left: 3px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(12, 23, 18, 0.3);
+      transition: transform 0.25s var(--ease);
     }
+    .scene-toggle.is-on .switch { background: var(--amber); }
+    .scene-toggle.is-on .switch::after { transform: translateX(16px); }
 
-    .plan-cta { margin-top: 1.55rem; }
-    .plan-cta .btn { width: 100%; }
-
-    .plan-note {
-      margin-top: 1.5rem;
-      font-size: 0.9rem;
-      color: var(--muted);
-      max-width: 42rem;
-    }
-
-    .privacy { padding: 3.5rem 0 1rem; }
-    .privacy-panel {
-      padding: 0;
-      border: none;
-      background: none;
-      border-top: 1px solid var(--line-strong);
-      padding-top: 2.25rem;
-    }
-    .privacy h2 {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: clamp(1.55rem, 2.8vw, 2rem);
-      letter-spacing: -0.03em;
-      margin-bottom: 0.75rem;
-    }
-    .privacy p {
-      font-size: 1.05rem;
-      color: var(--muted);
-      max-width: 40rem;
-      line-height: 1.55;
-    }
-    .privacy strong { color: var(--ink); font-weight: 700; }
-
-    footer {
-      position: relative;
-      z-index: 1;
-      padding: 3rem 0 3.5rem;
-      margin-top: 2rem;
-      border-top: 1px solid var(--line);
-    }
-    footer .links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      margin-bottom: 0.85rem;
-      font-size: 0.9rem;
+    .scene-caption {
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--faint);
+      margin-top: 0.85rem;
       font-weight: 500;
     }
-    footer .links a { color: var(--ink-soft); text-decoration: none; }
-    footer .links a:hover { color: var(--accent-deep); }
-    footer .copy { font-size: 0.85rem; color: var(--muted); }
 
-    .reveal {
+    /* ————— Stat strip ————— */
+    .stat-strip {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+      padding: 1.9rem 0;
+    }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      text-align: center;
+    }
+    .stat b {
+      display: block;
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 1.45rem;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+    .stat span {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--faint);
+    }
+
+    /* ————— Sections ————— */
+    .section { padding: 5.6rem 0; }
+    .section-head { text-align: center; max-width: 46rem; margin: 0 auto 3rem; }
+    .kicker {
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 0.9rem;
+    }
+    .section-head h2 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(1.95rem, 3.6vw, 2.8rem);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+    }
+    .section-head .lead {
+      margin-top: 1rem;
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+
+    /* ————— How it works ————— */
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.4rem;
+    }
+    .how-card {
+      position: relative;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-1);
+    }
+    .how-num {
+      position: absolute;
+      top: 0.95rem;
+      left: 0.95rem;
+      z-index: 2;
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 0.8rem;
+      box-shadow: var(--shadow-1);
+    }
+    .how-stage {
+      height: 168px;
+      background: linear-gradient(165deg, #e6f1e9, #d8e8dd);
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      padding: 1rem;
+    }
+    .how-body { padding: 1.35rem 1.45rem 1.6rem; }
+    .how-body h3 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 1.14rem;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.5rem;
+    }
+    .how-body p { font-size: 0.93rem; color: var(--muted); }
+
+    /* mini UI bits inside how-cards */
+    .mini-cal { display: grid; gap: 0.55rem; width: min(230px, 100%); }
+    .mini-chip {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 0.55rem 0.8rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--ink-2);
+      box-shadow: var(--shadow-1);
+    }
+    .mini-chip .ok {
+      width: 17px; height: 17px; border-radius: 50%;
+      background: var(--leaf-soft); color: var(--green);
+      display: grid; place-items: center; font-size: 0.62rem; font-weight: 800;
+      flex: none;
+    }
+    .mini-chip .ok.amb { background: var(--amber-soft); color: var(--amber); }
+    .mini-cal .bar { height: 5px; border-radius: 3px; background: rgba(255,255,255,0.7); overflow: hidden; }
+    .mini-cal .bar i { display: block; height: 100%; width: 100%; background: var(--leaf); border-radius: 3px; }
+
+    .mini-bar {
+      width: min(240px, 100%);
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      padding: 0.4rem 0.7rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--ink-2);
+      box-shadow: var(--shadow-1);
+    }
+    .mini-bar .right { display: flex; align-items: center; gap: 0.45rem; }
+    .mini-bar .g { color: var(--green); display: inline-grid; place-items: center; }
+    .mini-bar .g svg { width: 13px; height: 13px; }
+    .mini-under { margin-top: 0.6rem; font-size: 0.7rem; color: var(--faint); text-align: center; font-weight: 500; }
+
+    .mini-toast {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(16, 32, 26, 0.92);
+      color: #ecf5f0;
+      font-size: 0.78rem;
+      font-weight: 600;
+      border-radius: 11px;
+      padding: 0.6rem 0.95rem;
+      box-shadow: var(--shadow-2);
+    }
+    .mini-toast .ping {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--leaf);
+      animation: ping 1.6s ease infinite;
+      flex: none;
+    }
+
+    /* ————— Bio-Tax (dark) ————— */
+    .biotax {
+      background: linear-gradient(180deg, var(--dark) 0%, var(--dark-2) 100%);
+      color: #e9f2ed;
+      padding: 5.8rem 0 6.2rem;
+    }
+    .biotax .kicker { color: var(--leaf); }
+    .biotax .section-head h2 { color: #f2f8f4; }
+    .biotax .section-head .lead { color: #a4b8ae; }
+
+    .tax-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.8rem;
+      max-width: 780px;
+      margin: 0 auto 2rem;
+    }
+    .tax-step {
+      background: rgba(255, 255, 255, 0.045);
+      border: 1px solid var(--dark-line);
+      border-radius: var(--r-md);
+      padding: 0.85rem 1rem 0.95rem;
+      text-align: left;
+      color: #c6d5cc;
+      transition: border-color 0.25s ease, background 0.25s ease;
+    }
+    .tax-step .t-num {
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #799185;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+    .tax-step .t-name { font-weight: 700; font-size: 0.92rem; color: #edf5f0; display: block; }
+    .tax-step .t-sub { font-size: 0.78rem; color: #93a89d; display: block; margin-top: 0.15rem; }
+    .tax-step .t-track {
+      display: block;
+      height: 3px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.1);
+      margin-top: 0.7rem;
+      overflow: hidden;
+    }
+    .tax-step .t-track i {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: var(--leaf);
+      border-radius: 2px;
+    }
+    .tax-step.is-active { border-color: rgba(23, 169, 126, 0.5); background: rgba(23, 169, 126, 0.08); }
+    .tax-step.is-active .t-track i { animation: fill-track 4.2s linear forwards; }
+    .tax-steps.is-paused .tax-step.is-active .t-track i { animation: none; width: 100%; }
+    @keyframes fill-track { from { width: 0; } to { width: 100%; } }
+
+    .tax-screen-wrap { max-width: 880px; margin: 0 auto; }
+    .tax-screen {
+      position: relative;
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      background: linear-gradient(165deg, #d9e9de 0%, #c8ddd0 100%);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.6);
+      aspect-ratio: 16 / 9.4;
+      color: var(--ink);
+    }
+    .tax-screen .menubar { position: relative; z-index: 2; }
+    .tax-screen .scene-desk { inset: 30px 0 0; }
+    .tax-screen .doc-window { left: 10%; width: 58%; top: 14%; }
+
+    .tax-screen .posture-pill { top: 8%; right: 6%; }
+    .tax-screen .cue-toast { top: 30%; right: 6%; }
+    .tax-screen .posture-pill .ring { background: var(--amber-soft); color: var(--amber); }
+    .tax-screen .posture-pill .val { color: var(--amber); }
+    .tax-screen .val .v-tall { display: none; }
+    .tax-screen .val .v-slouch { display: inline; }
+
+    .tax-screen .cue-toast { opacity: 0; transform: translateY(-8px); }
+    .tax-screen[data-phase="cue"] .cue-toast,
+    .tax-screen[data-phase="tab"] .cue-toast { opacity: 1; transform: translateY(0); }
+    .tax-screen[data-phase="cue"] .cue-toast .ping,
+    .tax-screen[data-phase="tab"] .cue-toast .ping { animation: ping 1.4s ease infinite; }
+
+    .tax-ledger {
+      position: absolute;
+      left: 7%;
+      bottom: 9%;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--r-md);
+      padding: 0.7rem 0.95rem;
+      box-shadow: var(--shadow-2);
+      min-width: 190px;
       opacity: 0;
-      transform: translateY(22px);
-      transition: opacity 0.85s var(--ease-out), transform 0.85s var(--ease-out);
+      transform: translateY(10px);
+      transition: opacity 0.4s ease, transform 0.4s var(--ease);
     }
-    .reveal.is-in {
-      opacity: 1;
-      transform: translateY(0);
+    .tax-screen[data-phase="tab"] .tax-ledger,
+    .tax-screen[data-phase="break"] .tax-ledger { opacity: 1; transform: translateY(0); }
+    .tax-ledger .lbl { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--faint); }
+    .tax-ledger .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 1.2rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--ink-2);
+      margin-top: 0.4rem;
     }
+    .tax-ledger .row .neg { color: var(--amber); }
+    .tax-ledger .due {
+      margin-top: 0.5rem;
+      padding-top: 0.5rem;
+      border-top: 1px dashed var(--line-2);
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .tax-ledger .due b { color: var(--amber); }
+
+    .tax-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(ellipse 90% 80% at 50% 30%, rgba(16, 34, 27, 0.94), rgba(9, 19, 15, 0.97));
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+      text-align: center;
+      color: #eef6f1;
+    }
+    .tax-screen[data-phase="break"] .tax-overlay { opacity: 1; }
+    .tax-overlay .ov-kicker {
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #7fd6b6;
+      margin-bottom: 0.8rem;
+    }
+    .tax-overlay .ov-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(1.2rem, 2.6vw, 1.7rem);
+      letter-spacing: -0.01em;
+    }
+    .tax-overlay .ov-count {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(2.4rem, 6vw, 3.6rem);
+      line-height: 1.1;
+      margin: 0.55rem 0 0.9rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .tax-overlay .ov-count small { font-size: 0.45em; color: #8fae9f; font-weight: 700; }
+    .tax-overlay .ov-bar {
+      width: min(240px, 60%);
+      height: 5px;
+      margin: 0 auto;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.14);
+      overflow: hidden;
+    }
+    .tax-overlay .ov-bar i {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: var(--leaf);
+      border-radius: 3px;
+      transition: width 0.5s var(--ease);
+    }
+    .tax-overlay .ov-note { margin-top: 0.85rem; font-size: 0.78rem; color: #8fae9f; font-weight: 500; }
+
+    .tax-footnote {
+      text-align: center;
+      margin-top: 1.6rem;
+      font-size: 0.88rem;
+      color: #8fa89b;
+    }
+    .tax-footnote strong { color: #cfe2d7; font-weight: 600; }
+
+    /* ————— Panel / dashboard split ————— */
+    .panel-split {
+      display: grid;
+      grid-template-columns: minmax(0, 5.4fr) minmax(0, 6fr);
+      gap: 3.6rem;
+      align-items: center;
+    }
+    .panel-copy .kicker { margin-bottom: 0.8rem; }
+    .panel-copy h2 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(1.9rem, 3.2vw, 2.55rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+    .panel-copy > p { color: var(--muted); font-size: 1rem; margin-bottom: 1.6rem; }
+    .feature-list { display: grid; gap: 1.05rem; }
+    .feature-list li { display: flex; gap: 0.85rem; }
+    .feature-ic {
+      flex: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--leaf-soft);
+      color: var(--green);
+      display: grid;
+      place-items: center;
+    }
+    .feature-ic svg { width: 18px; height: 18px; }
+    .feature-list b { display: block; font-size: 0.95rem; font-weight: 700; }
+    .feature-list p { font-size: 0.88rem; color: var(--muted); }
+    .feature-list .pro-tag {
+      display: inline-block;
+      margin-left: 0.4rem;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--green-deep);
+      background: var(--leaf-soft);
+      border-radius: 4px;
+      padding: 0.08rem 0.4rem;
+      vertical-align: 2px;
+    }
+
+    .popover-stage {
+      position: relative;
+      border-radius: var(--r-lg);
+      background:
+        radial-gradient(ellipse 70% 55% at 30% 20%, rgba(23, 169, 126, 0.14), transparent 60%),
+        linear-gradient(165deg, #e3efe6, #d3e5d9);
+      border: 1px solid var(--line);
+      padding: 3rem 2.4rem 2.6rem;
+      display: grid;
+      place-items: center;
+    }
+    .popover {
+      width: min(340px, 100%);
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-2);
+      overflow: hidden;
+    }
+    .popover::before {
+      content: "";
+      display: block;
+      margin: -8px auto 0;
+      width: 14px;
+      height: 14px;
+      transform: rotate(45deg) translateY(-6px);
+      background: #fff;
+      border-left: 1px solid var(--line);
+      border-top: 1px solid var(--line);
+    }
+    .pop-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.8rem 1.15rem 0.7rem;
+      border-bottom: 1px solid var(--line);
+    }
+    .pop-head .t { font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; }
+    .pop-head .t .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--leaf); }
+    .pop-head .day { font-size: 0.72rem; color: var(--faint); font-weight: 600; }
+    .pop-main {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1.1rem;
+      align-items: center;
+      padding: 1.1rem 1.15rem;
+    }
+    .sit-ring { position: relative; width: 108px; height: 108px; }
+    .sit-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+    .sit-ring .track { stroke: #e8efe9; }
+    .sit-ring .arc { stroke: var(--green); stroke-linecap: round; }
+    .sit-ring .mid {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      text-align: center;
+    }
+    .sit-ring .mid b { font-family: var(--display); font-size: 1.12rem; font-weight: 700; display: block; line-height: 1.1; }
+    .sit-ring .mid span { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--faint); }
+    .pop-stats { display: grid; gap: 0.55rem; }
+    .pop-row { display: flex; justify-content: space-between; align-items: baseline; gap: 0.8rem; font-size: 0.8rem; }
+    .pop-row .k { color: var(--muted); font-weight: 500; }
+    .pop-row .v { font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
+    .pop-row .v.good { color: var(--green-deep); }
+    .pop-row .v.warn { color: var(--amber); }
+    .pop-foot {
+      display: flex;
+      gap: 0.6rem;
+      padding: 0.85rem 1.15rem 1rem;
+      border-top: 1px solid var(--line);
+    }
+    .pop-btn {
+      flex: 1;
+      text-align: center;
+      font-size: 0.78rem;
+      font-weight: 600;
+      border: 1px solid var(--line-2);
+      border-radius: 8px;
+      background: #fff;
+      padding: 0.45rem 0.5rem;
+      color: var(--ink-2);
+    }
+    .pop-btn.solid { background: var(--green); border-color: var(--green); color: #fff; }
+    .popover-note {
+      position: absolute;
+      bottom: 1rem;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 0.74rem;
+      color: var(--faint);
+      font-weight: 500;
+    }
+
+    /* ————— Privacy ————— */
+    .privacy-section { background: #fff; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .privacy-stage {
+      position: relative;
+      max-width: 620px;
+      margin: 0 auto 3.2rem;
+      display: grid;
+      place-items: center;
+      padding: 2.6rem 0 2.2rem;
+    }
+    .orbit {
+      position: absolute;
+      width: min(430px, 92%);
+      aspect-ratio: 1;
+      border: 1.5px dashed rgba(11, 107, 86, 0.3);
+      border-radius: 50%;
+      animation: spin 40s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .laptop { position: relative; width: min(320px, 74%); }
+    .laptop .screen {
+      background: #10201a;
+      border-radius: 14px 14px 3px 3px;
+      border: 3px solid #223730;
+      aspect-ratio: 16 / 10.4;
+      position: relative;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+    .laptop .cam {
+      position: absolute;
+      top: 7px;
+      left: 50%;
+      translate: -50% 0;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #3d5a4e;
+      box-shadow: 0 0 0 2px rgba(23, 169, 126, 0.35);
+    }
+    .laptop .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(23, 169, 126, 0.13);
+      border: 1px solid rgba(23, 169, 126, 0.4);
+      color: #8fdec2;
+      font-size: 0.72rem;
+      font-weight: 700;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      border-radius: 999px;
+      padding: 0.45rem 0.85rem;
+    }
+    .laptop .chip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--leaf); animation: ping 2s ease infinite; }
+    .laptop .base {
+      height: 12px;
+      background: linear-gradient(180deg, #d5dfd8, #b9c8bf);
+      border-radius: 0 0 12px 12px;
+      margin: 0 -7%;
+    }
+    .priv-tag {
+      position: absolute;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0.42rem 0.8rem;
+      font-size: 0.76rem;
+      font-weight: 700;
+      box-shadow: var(--shadow-2);
+      color: var(--ink-2);
+    }
+    .priv-tag .y { color: var(--green); font-weight: 800; }
+    .priv-tag .n { color: #c2410c; font-weight: 800; }
+    .priv-tag.p1 { top: 8%; right: 4%; }
+    .priv-tag.p2 { bottom: 14%; left: 2%; }
+    .priv-tag.p3 { top: 20%; left: 0%; }
+
+    .priv-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.2rem;
+    }
+    .priv-card {
+      background: var(--page);
+      border: 1px solid var(--line);
+      border-radius: var(--r-md);
+      padding: 1.3rem 1.3rem 1.4rem;
+    }
+    .priv-card .ic {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      background: #fff;
+      border: 1px solid var(--line);
+      color: var(--green);
+      display: grid;
+      place-items: center;
+      margin-bottom: 0.85rem;
+    }
+    .priv-card .ic svg { width: 19px; height: 19px; }
+    .priv-card h3 { font-size: 0.98rem; font-weight: 700; margin-bottom: 0.4rem; font-family: var(--display); letter-spacing: -0.01em; }
+    .priv-card p { font-size: 0.86rem; color: var(--muted); }
+    .priv-more { text-align: center; margin-top: 2.2rem; font-size: 0.92rem; color: var(--muted); }
+    .priv-more a { font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+
+    /* ————— Pricing ————— */
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 420px));
+      justify-content: center;
+      gap: 1.5rem;
+      align-items: stretch;
+    }
+    .plan {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      padding: 1.9rem 1.8rem 1.8rem;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-1);
+      position: relative;
+    }
+    .plan-pro { border-color: rgba(11, 107, 86, 0.45); box-shadow: 0 24px 60px -24px rgba(11, 107, 86, 0.35); }
+    .plan-flag {
+      position: absolute;
+      top: -13px;
+      left: 1.6rem;
+      background: var(--green);
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      padding: 0.3rem 0.8rem;
+    }
+    .plan .tier {
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--green);
+    }
+    .plan .tier-sub { color: var(--muted); font-size: 0.88rem; margin-top: 0.5rem; min-height: 2.6em; }
+    .plan .amount {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 2.3rem;
+      letter-spacing: -0.02em;
+      margin: 0.9rem 0 0.1rem;
+    }
+    .plan .amount small { font-size: 0.42em; font-weight: 600; color: var(--faint); letter-spacing: 0; }
+    .plan .amount-note { font-size: 0.8rem; color: var(--faint); margin-bottom: 1.2rem; }
+    .plan ul { display: grid; gap: 0.6rem; margin-bottom: 1.7rem; }
+    .plan li {
+      font-size: 0.9rem;
+      color: var(--ink-2);
+      padding-left: 1.45rem;
+      position: relative;
+    }
+    .plan li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--leaf);
+      font-weight: 800;
+    }
+    .plan .plan-cta { margin-top: auto; }
+    .plan .plan-cta .btn { width: 100%; }
+    .plans-note {
+      text-align: center;
+      margin-top: 1.8rem;
+      font-size: 0.88rem;
+      color: var(--faint);
+    }
+
+    /* ————— FAQ ————— */
+    .faq-list { display: grid; }
+    .faq-item { border-bottom: 1px solid var(--line-2); }
+    .faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 1.15rem 0.2rem;
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .faq-q .plus {
+      flex: none;
+      color: var(--green);
+      font-size: 1.3rem;
+      font-weight: 500;
+      line-height: 1;
+      transition: transform 0.25s var(--ease);
+    }
+    .faq-item.is-open .faq-q .plus { transform: rotate(45deg); }
+    .faq-a {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.35s var(--ease);
+    }
+    .faq-a p {
+      padding: 0 2.4rem 1.25rem 0.2rem;
+      font-size: 0.94rem;
+      color: var(--muted);
+    }
+
+    /* ————— Final CTA ————— */
+    .final-cta {
+      background: linear-gradient(150deg, var(--green) 0%, var(--green-deep) 78%);
+      border-radius: 26px;
+      padding: 4.2rem 2rem 4.4rem;
+      text-align: center;
+      color: #f0f8f3;
+      position: relative;
+      overflow: hidden;
+    }
+    .final-cta::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 70% at 50% -10%, rgba(23, 169, 126, 0.5), transparent 65%);
+      pointer-events: none;
+    }
+    .final-cta h2 {
+      position: relative;
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(2rem, 4.2vw, 3rem);
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin-bottom: 0.9rem;
+    }
+    .final-cta p { position: relative; color: #bcdccd; max-width: 32rem; margin: 0 auto 1.9rem; font-size: 1rem; }
+    .final-cta .btn-light {
+      position: relative;
+      background: #fff;
+      color: var(--green-deep);
+      font-size: 1.02rem;
+      padding: 0.85rem 1.9rem;
+      box-shadow: 0 14px 34px -12px rgba(0, 0, 0, 0.4);
+    }
+    .final-cta .cta-under { position: relative; margin: 1.1rem 0 0; font-size: 0.82rem; color: #9cc4b1; }
+
+    /* ————— Footer ————— */
+    .site-footer { padding: 4rem 0 2.4rem; }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2.2fr 1fr 1fr;
+      gap: 2.5rem;
+      padding-bottom: 2.4rem;
+      border-bottom: 1px solid var(--line);
+    }
+    .footer-brand p { margin-top: 0.8rem; font-size: 0.9rem; color: var(--muted); max-width: 21rem; }
+    .footer-col h4 {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 0.9rem;
+    }
+    .footer-col ul { display: grid; gap: 0.55rem; }
+    .footer-col a { font-size: 0.9rem; color: var(--ink-2); }
+    .footer-col a:hover { color: var(--green); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      padding-top: 1.5rem;
+      font-size: 0.82rem;
+      color: var(--faint);
+    }
+
+    /* ————— Reveal ————— */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s ease, transform 0.7s var(--ease); }
+    .reveal.is-in { opacity: 1; transform: none; }
     .reveal-d1 { transition-delay: 0.08s; }
     .reveal-d2 { transition-delay: 0.16s; }
-
+    .reveal-d3 { transition-delay: 0.24s; }
     @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .orbit, .cue-toast .ping, .mini-toast .ping, .laptop .chip .dot { animation: none !important; }
       html { scroll-behavior: auto; }
-      .atmosphere::before,
-      .brand span,
-      .plane[data-phase="auto"] .plane-status,
-      .plane[data-phase="auto"] .ui-cue,
-      .plane[data-phase="auto"] .ui-focus,
-      .plane[data-phase="auto"] .ui-focus .focus-count::before,
-      .plane[data-phase="auto"] .ui-focus .focus-bar > i,
-      .plane[data-phase="auto"] .work-sheet,
-      .band[data-shot="quiet"] .plane-status,
-      .band[data-shot="cue"] .ui-cue,
-      .band[data-shot="break"] .ui-focus .focus-bar > i { animation: none !important; }
-      .rise {
-        opacity: 1;
-        transform: none;
-        animation: none;
-      }
-      .reveal {
-        opacity: 1;
-        transform: none;
-        transition: none;
-      }
-      .btn { transition: none; }
-      .plane[data-phase="auto"] .ui-cue { opacity: 0; }
-      .plane[data-phase="auto"] .ui-focus { opacity: 1; }
-      .plane[data-phase="auto"] .ui-focus .focus-count::before { content: "3"; }
-      .plane[data-phase="auto"] .ui-focus .focus-bar > i { width: 60%; }
-      .plane[data-phase="auto"] .work-sheet { opacity: 0.35; filter: blur(2px); }
     }
 
-    @media (max-width: 900px) {
-      .band,
-      .band-flip {
-        grid-template-columns: 1fr;
-        gap: 1.15rem;
-      }
-      .band-flip .band-copy { order: 0; }
-      .band-copy p { max-width: none; }
-      .band-plane { aspect-ratio: 16 / 10; }
-      .hero { min-height: auto; padding: 1rem 0 2.25rem; }
-      .hero-plane {
-        height: clamp(260px, 48vh, 360px);
-        max-height: 360px;
-      }
-      .plans { grid-template-columns: 1fr; }
-      .ui-cue { font-size: 0.88rem; white-space: normal; text-align: center; max-width: 90%; }
+    /* ————— Responsive ————— */
+    @media (max-width: 980px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 2.6rem; }
+      .hero { padding-top: 2.8rem; }
+      .hero-sub { max-width: none; }
+      .panel-split { grid-template-columns: 1fr; gap: 2.4rem; }
+      .priv-grid { grid-template-columns: repeat(2, 1fr); }
+      .how-grid { grid-template-columns: 1fr; max-width: 460px; margin: 0 auto; }
+      .stat-grid { grid-template-columns: repeat(2, 1fr); gap: 1.6rem 1rem; }
+      .plans { grid-template-columns: minmax(0, 460px); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
     }
-
-    @media (max-width: 480px) {
-      .wrap, .wrap-wide { width: calc(100% - 1.5rem); }
-      .brand {
-        font-size: min(12vw, 3.1rem);
-        margin-bottom: 0.85rem;
-        max-width: 100%;
-        overflow: hidden;
-      }
-      .hero h1 { max-width: none; }
-      .hero-intro { margin-bottom: 1.15rem; }
-      .cta-row { flex-direction: column; align-items: stretch; gap: 0.7rem; }
-      .btn { width: 100%; }
-      .plane-controls { gap: 0.25rem 1rem; }
-      .plane-controls button { font-size: 0.84rem; }
-      .how, .pricing { padding-bottom: 3.25rem; }
-      .plan { padding: 1.5rem 1.25rem; }
-      .plan-badge { position: static; display: inline-flex; margin-bottom: 0.75rem; }
-      .work-sheet { width: min(280px, 78%); height: min(160px, 70%); }
-      .hero-plane { height: 280px; max-height: 280px; }
-      .hero-stage .plane-controls { width: calc(100% - 1.5rem); }
+    @media (max-width: 700px) {
+      .nav-links { display: none; }
+      .header-inner { justify-content: space-between; gap: 0.8rem; }
+      .header-inner .btn-sm { padding: 0.48rem 0.9rem; font-size: 0.82rem; }
+      .brand { font-size: 1.08rem; }
+      .brand .mark { width: 27px; height: 27px; }
+      .section { padding: 4rem 0; }
+      .biotax { padding: 4.2rem 0 4.6rem; }
+      .tax-steps { grid-template-columns: 1fr; max-width: 420px; }
+      .tax-step { display: grid; grid-template-columns: 1fr; }
+      .tax-screen { aspect-ratio: 4 / 3.4; }
+      .tax-screen .doc-window { width: 72%; left: 5%; }
+      .tax-ledger { left: 5%; bottom: 6%; min-width: 160px; padding: 0.55rem 0.75rem; }
+      .posture-pill { padding: 0.38rem 0.7rem 0.38rem 0.45rem; gap: 0.45rem; }
+      .posture-pill .ring { width: 22px; height: 22px; }
+      .posture-pill .ring svg { width: 13px; height: 13px; }
+      .posture-pill .lbl { font-size: 0.55rem; }
+      .posture-pill .val { font-size: 0.72rem; }
+      .cue-toast { font-size: 0.7rem; padding: 0.45rem 0.7rem; }
+      .scene { aspect-ratio: 10 / 10.5; }
+      .doc-window { width: 74%; left: 5%; }
+      .posture-pill { right: 4%; }
+      .tax-chip { left: 4%; bottom: 6%; min-width: 138px; }
+      .scene-toggle { right: 4%; bottom: 6%; }
+      .priv-grid { grid-template-columns: 1fr; }
+      .priv-tag.p3 { display: none; }
+      .final-cta { border-radius: 20px; padding: 3.2rem 1.4rem 3.4rem; }
     }
   </style>
 </head>
 <body>
-  <div class="atmosphere" aria-hidden="true"></div>
 
-  <div class="wrap-wide">
-    <nav class="topnav" aria-label="Secondary">
-      <a href="privacy.html">Privacy</a>
-      <a href="mailto:support@apexform.com">Support</a>
-    </nav>
-  </div>
-
-  <header class="hero">
-    <div class="wrap-wide">
-      <div class="hero-intro">
-        <p class="brand rise">Apex<span>Form</span></p>
-        <h1 class="rise rise-d1">Stay upright. Keep moving.</h1>
-        <p class="sub rise rise-d2">Menu-bar coach for Mac. A quiet cue when you slouch. A Bio-Tax break when you’ve sat too long.</p>
-        <div class="cta-row rise rise-d3">
-          <a class="btn btn-primary" href="https://github.com/mrigankgupta/ApexForm-updates/releases/latest">Download for Mac</a>
-          <a class="btn btn-ghost" href="#how">How it works</a>
-        </div>
-        <p class="cta-note rise rise-d4">On-device · Private · Free forever after a soft 10-day Pro trial · macOS 14+</p>
-      </div>
-    </div>
-
-    <div class="hero-stage rise rise-d4">
-      <div class="plane hero-plane" data-phase="auto" id="hero-plane" aria-label="ApexForm product loop">
-        <div class="plane-desk">
-          <div class="plane-menubar" aria-hidden="true">
-            <div class="plane-menubar-left"><i></i> Focus</div>
-            <div class="plane-menubar-right">
-              <span class="plane-status" title="ApexForm">
-                <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3.1"/><circle cx="8" cy="8" r="6.1" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/></svg>
-              </span>
-              <span class="plane-clock">Mon 9:41</span>
-            </div>
-          </div>
-          <div class="plane-work">
-            <div class="work-sheet" aria-hidden="true">
-              <div class="line w1"></div>
-              <div class="gap"></div>
-              <div class="line w2"></div>
-              <div class="line w3"></div>
-              <div class="line w4"></div>
-              <div class="line w5"></div>
-              <div class="line w6"></div>
-            </div>
-            <div class="ui-cue" aria-hidden="true">Lift your chest and sit tall.</div>
-            <div class="ui-focus" aria-hidden="true">
-              <p class="focus-title">5 deep blinks</p>
-              <p class="focus-count"></p>
-              <div class="focus-bar"><i></i></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="plane-controls" role="group" aria-label="Preview product states">
-        <button type="button" data-phase="quiet">Quiet</button>
-        <button type="button" data-phase="cue">Cue</button>
-        <button type="button" data-phase="break">Break</button>
-      </div>
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="ApexForm home">
+        <span class="mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 20V9"/><path d="M7 12l5-5 5 5"/><circle cx="12" cy="4.6" r="1.6" fill="currentColor" stroke="none"/></svg>
+        </span>
+        Apex<em>Form</em>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#how">How it works</a>
+        <a href="#biotax">Bio-Tax</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a class="btn btn-primary btn-sm" href="https://github.com/mrigankgupta/ApexForm-updates/releases/latest">Download for Mac</a>
     </div>
   </header>
 
-  <section class="how" id="how">
-    <div class="wrap-wide">
-      <div class="section-head reveal">
-        <p class="section-kicker">How it works</p>
-        <h2>Watch. Cue. Break.</h2>
-        <p class="lead">Three moments from the real product — almost no reading required.</p>
+  <main id="top">
+
+    <!-- ————— Hero ————— -->
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <span class="hero-badge"><span class="dot" aria-hidden="true"></span>Public beta · macOS 14+</span>
+          <h1>Sit tall,<br>or pay the <em>Bio&#8209;Tax</em>.</h1>
+          <p class="hero-sub">
+            ApexForm lives in your menu bar and watches your posture through the webcam —
+            <strong>entirely on your Mac</strong>. Slouch, and a quiet cue nudges you upright.
+            Ignore it all afternoon, and it charges a short movement break you actually take.
+          </p>
+          <div class="hero-ctas">
+            <a class="btn btn-primary" href="https://github.com/mrigankgupta/ApexForm-updates/releases/latest">Download for Mac</a>
+            <a class="scroll-hint" href="#how">See how it works ↓</a>
+          </div>
+          <div class="hero-checks">
+            <span>Free forever plan</span>
+            <span>Nothing leaves your Mac</span>
+            <span>No account needed</span>
+          </div>
+        </div>
+
+        <div class="scene-wrap">
+          <div class="scene" id="hero-scene" data-state="tall">
+            <div class="menubar" aria-hidden="true">
+              <div class="mb-left"><span class="apple">&#63743;</span><span>Focus</span></div>
+              <div class="mb-right">
+                <span class="mb-glyph" title="ApexForm">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 20V9"/><path d="M7 12l5-5 5 5"/><circle cx="12" cy="4.6" r="1.6" fill="currentColor" stroke="none"/></svg>
+                </span>
+                <span>Mon 9:41</span>
+              </div>
+            </div>
+            <div class="scene-desk" aria-hidden="true">
+              <div class="doc-window">
+                <div class="doc-titlebar">
+                  <span class="tl tl-r"></span><span class="tl tl-y"></span><span class="tl tl-g"></span>
+                  <span class="doc-name">quarterly-notes.md</span>
+                </div>
+                <div class="doc-body">
+                  <div class="doc-line h"></div>
+                  <div class="doc-line w1"></div>
+                  <div class="doc-line w2"></div>
+                  <div class="doc-line w3"></div>
+                  <div class="doc-line w4"></div>
+                  <div class="doc-line w5"></div>
+                  <div class="doc-line w6"></div>
+                </div>
+              </div>
+
+              <div class="cue-toast"><span class="ping"></span>Lift your chest — sit tall</div>
+
+              <div class="posture-pill">
+                <span class="ring">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 20V9"/><path d="M7 12l5-5 5 5"/><circle cx="12" cy="4.6" r="1.6" fill="currentColor" stroke="none"/></svg>
+                </span>
+                <span>
+                  <span class="lbl">Posture</span>
+                  <span class="val"><span class="v-tall">Tall · 96%</span><span class="v-slouch">Slouching</span></span>
+                </span>
+              </div>
+
+              <div class="tax-chip">
+                <span class="lbl">Bio-Tax tab</span>
+                <div class="meter"><i></i></div>
+                <span class="cap"><span class="t-ok">Clear — keep it up</span><span class="t-warn">Building — a break is coming</span></span>
+              </div>
+            </div>
+
+            <button class="scene-toggle" id="slouch-toggle" type="button" aria-pressed="false">
+              Try slouching
+              <span class="switch" aria-hidden="true"></span>
+            </button>
+          </div>
+          <p class="scene-caption">Flip the switch — this is the moment ApexForm catches a slouch.</p>
+        </div>
       </div>
+    </section>
 
-      <article class="band reveal" data-shot="quiet">
-        <div class="plane band-plane" aria-hidden="true">
-          <div class="plane-desk">
-            <div class="plane-menubar">
-              <div class="plane-menubar-left"><i></i> Focus</div>
-              <div class="plane-menubar-right">
-                <span class="plane-status">
-                  <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="3.1"/><circle cx="8" cy="8" r="6.1" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/></svg>
-                </span>
-                <span class="plane-clock">9:41</span>
-              </div>
-            </div>
-            <div class="plane-work">
-              <div class="work-sheet">
-                <div class="line w1"></div>
-                <div class="gap"></div>
-                <div class="line w2"></div>
-                <div class="line w3"></div>
-                <div class="line w4"></div>
-                <div class="line w5"></div>
-                <div class="line w6"></div>
-              </div>
-              <div class="ui-cue">Lift your chest and sit tall.</div>
-              <div class="ui-focus">
-                <p class="focus-title">5 deep blinks</p>
-                <p class="focus-count"></p>
-                <div class="focus-bar"><i></i></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="band-copy">
-          <span class="band-num">01</span>
-          <h3>Watches quietly</h3>
-          <p>Lives in the menu bar. Out of the way until you need it.</p>
-        </div>
-      </article>
-
-      <article class="band band-flip reveal reveal-d1" data-shot="cue">
-        <div class="plane band-plane" aria-hidden="true">
-          <div class="plane-desk">
-            <div class="plane-menubar">
-              <div class="plane-menubar-left"><i></i> Focus</div>
-              <div class="plane-menubar-right">
-                <span class="plane-status">
-                  <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="3.1"/><circle cx="8" cy="8" r="6.1" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/></svg>
-                </span>
-                <span class="plane-clock">9:41</span>
-              </div>
-            </div>
-            <div class="plane-work">
-              <div class="work-sheet">
-                <div class="line w1"></div>
-                <div class="gap"></div>
-                <div class="line w2"></div>
-                <div class="line w3"></div>
-                <div class="line w4"></div>
-                <div class="line w5"></div>
-                <div class="line w6"></div>
-              </div>
-              <div class="ui-cue">Lift your chest and sit tall.</div>
-              <div class="ui-focus">
-                <p class="focus-title">5 deep blinks</p>
-                <p class="focus-count"></p>
-                <div class="focus-bar"><i></i></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="band-copy">
-          <span class="band-num">02</span>
-          <h3>Cue when you slouch</h3>
-          <p>A short posture cue. Sit tall. Keep working.</p>
-        </div>
-      </article>
-
-      <article class="band reveal reveal-d2" data-shot="break">
-        <div class="plane band-plane" aria-hidden="true">
-          <div class="plane-desk">
-            <div class="plane-menubar">
-              <div class="plane-menubar-left"><i></i> Focus</div>
-              <div class="plane-menubar-right">
-                <span class="plane-status">
-                  <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="3.1"/><circle cx="8" cy="8" r="6.1" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/></svg>
-                </span>
-                <span class="plane-clock">9:41</span>
-              </div>
-            </div>
-            <div class="plane-work">
-              <div class="work-sheet">
-                <div class="line w1"></div>
-                <div class="gap"></div>
-                <div class="line w2"></div>
-                <div class="line w3"></div>
-                <div class="line w4"></div>
-                <div class="line w5"></div>
-                <div class="line w6"></div>
-              </div>
-              <div class="ui-cue">Lift your chest and sit tall.</div>
-              <div class="ui-focus">
-                <p class="focus-title">5 deep blinks</p>
-                <p class="focus-count"></p>
-                <div class="focus-bar"><i></i></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="band-copy">
-          <span class="band-num">03</span>
-          <h3>Break when you’ve sat</h3>
-          <p>Bio-Tax Focus Mode — blinks, squats, or twists. Then quiet.</p>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <section class="pricing" id="pricing">
-    <div class="wrap-wide">
-      <div class="section-head reveal">
-        <p class="section-kicker">Pricing</p>
-        <h2>Free forever. Pro when you want more.</h2>
-        <p class="lead">Every download starts with 10 days of full Pro. After that, Normal posture coaching and blink breaks stay free — no lockout, no subscription.</p>
+    <!-- ————— Stat strip ————— -->
+    <section class="stat-strip" aria-label="ApexForm at a glance">
+      <div class="container stat-grid">
+        <div class="stat"><b>100%</b><span>On-device · Apple Vision</span></div>
+        <div class="stat"><b>0</b><span>Frames stored or uploaded</span></div>
+        <div class="stat"><b>Free</b><span>Forever plan · no card</span></div>
+        <div class="stat"><b>macOS 14+</b><span>Menu bar · auto-updates</span></div>
       </div>
+    </section>
 
-      <div class="plans">
-        <div class="plan reveal">
-          <h3>Free</h3>
-          <p class="price">$0 forever</p>
-          <ul>
-            <li>Posture coaching (Normal detection)</li>
-            <li>Real-time slouch alerts + chronic ping</li>
-            <li>Blink movement breaks</li>
-            <li>This Week local dashboard</li>
-            <li>Camera and/or AirPods</li>
-            <li>Auto-updates</li>
+    <!-- ————— How it works ————— -->
+    <section class="section" id="how">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="kicker">How it works</p>
+          <h2>Calibrate once.<br>Sit better every day after.</h2>
+          <p class="lead">No wearables, no browser tabs, no guilt journal. A camera you already have and a coach that mostly stays out of the way.</p>
+        </div>
+        <div class="how-grid">
+          <article class="how-card reveal">
+            <span class="how-num">01</span>
+            <div class="how-stage" aria-hidden="true">
+              <div class="mini-cal">
+                <div class="mini-chip"><span class="ok">✓</span>Sit tall — captured</div>
+                <div class="mini-chip"><span class="ok amb">✓</span>Slouch once — captured</div>
+                <div class="bar"><i></i></div>
+              </div>
+            </div>
+            <div class="how-body">
+              <h3>Teach it your desk</h3>
+              <p>Sit tall, then slouch once. Ten seconds. ApexForm learns what upright looks like for you, at this desk — and you can save a separate baseline for the office.</p>
+            </div>
+          </article>
+          <article class="how-card reveal reveal-d1">
+            <span class="how-num">02</span>
+            <div class="how-stage" aria-hidden="true">
+              <div>
+                <div class="mini-bar">
+                  <span>&#63743;&ensp;Focus</span>
+                  <span class="right">
+                    <span class="g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 20V9"/><path d="M7 12l5-5 5 5"/><circle cx="12" cy="4.6" r="1.6" fill="currentColor" stroke="none"/></svg></span>
+                    <span>9:41</span>
+                  </span>
+                </div>
+                <p class="mini-under">One quiet icon. No window to babysit.</p>
+              </div>
+            </div>
+            <div class="how-body">
+              <h3>Forget it's running</h3>
+              <p>It settles into the menu bar and watches with on-device Apple Vision — through the camera, or AirPods motion if you'd rather keep the lens off.</p>
+            </div>
+          </article>
+          <article class="how-card reveal reveal-d2">
+            <span class="how-num">03</span>
+            <div class="how-stage" aria-hidden="true">
+              <div class="mini-toast"><span class="ping"></span>Lift your chest — sit tall</div>
+            </div>
+            <div class="how-body">
+              <h3>Get a quiet cue</h3>
+              <p>The moment you sag, a soft ping and a small HUD nudge. Sit up and it fades — no streak broken, no popup farm. Keep working.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ————— Bio-Tax ————— -->
+    <section class="biotax" id="biotax">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="kicker">The Bio-Tax</p>
+          <h2>Ignore every cue?<br>That'll cost you a break.</h2>
+          <p class="lead">Chronic slouching runs a tab. When it's due, ApexForm charges a Bio-Tax — a short, full-screen break in the spirit of Focus Mode. Clear it, and you're back to work.</p>
+        </div>
+
+        <div class="tax-steps reveal" id="tax-steps" role="tablist" aria-label="Bio-Tax loop stages">
+          <button class="tax-step is-active" type="button" data-phase="cue" role="tab" aria-selected="true">
+            <span class="t-num">STAGE 1</span>
+            <span class="t-name">The cue</span>
+            <span class="t-sub">A slouch is spotted. A gentle ping asks you to sit tall.</span>
+            <span class="t-track"><i></i></span>
+          </button>
+          <button class="tax-step" type="button" data-phase="tab" role="tab" aria-selected="false">
+            <span class="t-num">STAGE 2</span>
+            <span class="t-name">The tab</span>
+            <span class="t-sub">Cues keep getting ignored. The Bio-Tax ledger fills up.</span>
+            <span class="t-track"><i></i></span>
+          </button>
+          <button class="tax-step" type="button" data-phase="break" role="tab" aria-selected="false">
+            <span class="t-num">STAGE 3</span>
+            <span class="t-name">The break</span>
+            <span class="t-sub">Tax due. A full-screen break — blinks, squats, or twists.</span>
+            <span class="t-track"><i></i></span>
+          </button>
+        </div>
+
+        <div class="tax-screen-wrap reveal reveal-d1">
+          <div class="tax-screen" id="tax-screen" data-phase="cue">
+            <div class="menubar" aria-hidden="true">
+              <div class="mb-left"><span class="apple">&#63743;</span><span>Focus</span></div>
+              <div class="mb-right">
+                <span class="mb-glyph" style="color: var(--amber); background: rgba(180,83,9,0.12);">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 20V9"/><path d="M7 12l5-5 5 5"/><circle cx="12" cy="4.6" r="1.6" fill="currentColor" stroke="none"/></svg>
+                </span>
+                <span>Mon 3:24</span>
+              </div>
+            </div>
+            <div class="scene-desk" aria-hidden="true">
+              <div class="doc-window">
+                <div class="doc-titlebar">
+                  <span class="tl tl-r"></span><span class="tl tl-y"></span><span class="tl tl-g"></span>
+                  <span class="doc-name">quarterly-notes.md</span>
+                </div>
+                <div class="doc-body">
+                  <div class="doc-line h"></div>
+                  <div class="doc-line w1"></div>
+                  <div class="doc-line w2"></div>
+                  <div class="doc-line w3"></div>
+                  <div class="doc-line w4"></div>
+                  <div class="doc-line w5"></div>
+                  <div class="doc-line w6"></div>
+                </div>
+              </div>
+
+              <div class="cue-toast"><span class="ping"></span>Lift your chest — sit tall</div>
+
+              <div class="posture-pill">
+                <span class="ring">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 20V9"/><path d="M7 12l5-5 5 5"/><circle cx="12" cy="4.6" r="1.6" fill="currentColor" stroke="none"/></svg>
+                </span>
+                <span>
+                  <span class="lbl">Posture</span>
+                  <span class="val"><span class="v-tall">Tall</span><span class="v-slouch">Slouching · 22 min</span></span>
+                </span>
+              </div>
+
+              <div class="tax-ledger">
+                <span class="lbl">Bio-Tax ledger</span>
+                <div class="row"><span>Cues ignored</span><span class="neg">× 4</span></div>
+                <div class="row"><span>Slouch streak</span><span class="neg">22 min</span></div>
+                <div class="due"><span>Tax due</span><b>1 break</b></div>
+              </div>
+
+              <div class="tax-overlay">
+                <div>
+                  <p class="ov-kicker">Bio-Tax · Focus break</p>
+                  <p class="ov-title">5 slow squats</p>
+                  <p class="ov-count"><span id="ov-count-n">3</span><small> / 5</small></p>
+                  <div class="ov-bar"><i id="ov-bar-i" style="width: 60%;"></i></div>
+                  <p class="ov-note">Your screen waits for you. About 40 seconds.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="tax-footnote">The tax is honest: skip the cues, take the break. <strong>Blink breaks are free forever</strong> — squats, twists and full schedules come with Pro.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ————— Menu-bar panel ————— -->
+    <section class="section" id="panel">
+      <div class="container panel-split">
+        <div class="panel-copy reveal">
+          <p class="kicker">In your menu bar</p>
+          <h2>A whole sitting day, one small panel.</h2>
+          <p>Click the menu-bar icon for the numbers that matter — and nothing else. No dock icon, no dashboard tab you'll never open again.</p>
+          <ul class="feature-list">
+            <li>
+              <span class="feature-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></span>
+              <span><b>Sit-time tracking</b><p>How long you've been parked, and how tall you sat while you were.</p></span>
+            </li>
+            <li>
+              <span class="feature-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v13"/><path d="M8 8l4-4 4 4"/><path d="M5 21h14"/></svg></span>
+              <span><b>Standing nudges<span class="pro-tag">PRO</span></b><p>Sit-to-stand reminders and standing-work mode when your legs deserve a turn.</p></span>
+            </li>
+            <li>
+              <span class="feature-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 21v-4a4 4 0 014-4h10a4 4 0 014 4v4"/><circle cx="12" cy="7" r="4"/></svg></span>
+              <span><b>Per-desk calibration</b><p>Home desk, office desk, café slump-trap — each gets its own baseline.</p></span>
+            </li>
+            <li>
+              <span class="feature-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20.8 8.6a5.5 5.5 0 00-9.8-2.5 5.5 5.5 0 00-9.8 2.5c0 5.5 9.8 11 9.8 11s9.8-5.5 9.8-11z" transform="translate(1.2 1.5) scale(0.92)"/></svg></span>
+              <span><b>Apple Health sync<span class="pro-tag">PRO</span></b><p>Every cleared break lands in Health as a workout. Write-only — it never reads.</p></span>
+            </li>
           </ul>
-          <div class="plan-cta">
-            <a class="btn btn-ghost" href="https://github.com/mrigankgupta/ApexForm-updates/releases/latest">Download free</a>
+        </div>
+
+        <div class="popover-stage reveal reveal-d1" aria-hidden="true">
+          <div class="popover">
+            <div class="pop-head">
+              <span class="t"><span class="dot"></span>ApexForm</span>
+              <span class="day">Today · Home desk</span>
+            </div>
+            <div class="pop-main">
+              <div class="sit-ring">
+                <svg viewBox="0 0 108 108">
+                  <circle class="track" cx="54" cy="54" r="46" fill="none" stroke-width="9"/>
+                  <circle class="arc" cx="54" cy="54" r="46" fill="none" stroke-width="9" stroke-dasharray="289" stroke-dashoffset="52"/>
+                </svg>
+                <span class="mid"><span><b>82%</b><span>tall today</span></span></span>
+              </div>
+              <div class="pop-stats">
+                <div class="pop-row"><span class="k">Seated</span><span class="v">4h 12m</span></div>
+                <div class="pop-row"><span class="k">Slouch cues</span><span class="v">6</span></div>
+                <div class="pop-row"><span class="k">Bio-Tax paid</span><span class="v good">2 breaks</span></div>
+                <div class="pop-row"><span class="k">Next stand nudge</span><span class="v warn">2:40 pm</span></div>
+              </div>
+            </div>
+            <div class="pop-foot">
+              <span class="pop-btn">Recalibrate</span>
+              <span class="pop-btn">Snooze 30m</span>
+              <span class="pop-btn solid">This Week</span>
+            </div>
+          </div>
+          <p class="popover-note">The This Week dashboard is local — it never syncs anywhere.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ————— Privacy ————— -->
+    <section class="section privacy-section" id="privacy">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="kicker">Your privacy</p>
+          <h2>The camera feed never leaves your Mac.</h2>
+          <p class="lead">Posture detection runs on Apple's Vision framework, on your machine, in memory. We couldn't watch you if we wanted to — there's no server to send anything to.</p>
+        </div>
+
+        <div class="privacy-stage reveal" aria-hidden="true">
+          <div class="orbit"></div>
+          <div class="laptop">
+            <div class="screen">
+              <span class="cam"></span>
+              <span class="chip"><span class="dot"></span>APPLE VISION · ON-DEVICE</span>
+            </div>
+            <div class="base"></div>
+          </div>
+          <span class="priv-tag p1"><span class="n">✕</span>Never uploaded</span>
+          <span class="priv-tag p2"><span class="y">✓</span>Analyzed in memory, then gone</span>
+          <span class="priv-tag p3"><span class="y">✓</span>Works offline</span>
+        </div>
+
+        <div class="priv-grid">
+          <div class="priv-card reveal">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="12" cy="12" r="3.4"/></svg></span>
+            <h3>On-device Vision</h3>
+            <p>Frames are analyzed by Apple's Vision framework on your Mac and immediately discarded.</p>
+          </div>
+          <div class="priv-card reveal reveal-d1">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1.5 9a15 15 0 0121 0"/><path d="M5 12.5a10 10 0 0114 0"/><path d="M8.5 16a5 5 0 017 0"/><path d="M3 3l18 18"/></svg></span>
+            <h3>Works offline</h3>
+            <p>Plane, cabin, dead café wifi — coaching doesn't need the internet, so it doesn't ask for it.</p>
+          </div>
+          <div class="priv-card reveal reveal-d2">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg></span>
+            <h3>Nothing stored</h3>
+            <p>No video is recorded, stored, or uploaded. No account, no ads, no analytics ride-alongs.</p>
+          </div>
+          <div class="priv-card reveal reveal-d3">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 19V5"/><path d="M4 19h16"/><rect x="7" y="10" width="3" height="6" rx="1"/><rect x="12" y="7" width="3" height="9" rx="1"/><rect x="17" y="12" width="3" height="4" rx="1"/></svg></span>
+            <h3>Stats, not snapshots</h3>
+            <p>You keep the numbers — posture time, cues, breaks — in a local This Week view. Never a pixel.</p>
           </div>
         </div>
-        <div class="plan plan-pro reveal reveal-d1">
-          <span class="plan-badge">Full trial first</span>
-          <h3>Pro</h3>
-          <p class="price">One-time unlock · purchase opens soon</p>
+
+        <p class="priv-more reveal">AirPods motion data gets the same treatment. Read the <a href="privacy.html">full privacy policy</a> — it's short, because there's not much we collect.</p>
+      </div>
+    </section>
+
+    <!-- ————— Pricing ————— -->
+    <section class="section" id="pricing">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="kicker">Pricing</p>
+          <h2>Free forever.<br>Pro is a one-time thing.</h2>
+          <p class="lead">Every download starts with 10 days of full Pro. When the trial ends, coaching and blink breaks stay free — no lockout, no subscription.</p>
+        </div>
+
+        <div class="plans">
+          <div class="plan reveal">
+            <span class="tier">Free</span>
+            <p class="tier-sub">Everything you need to stop slouching. Genuinely free, genuinely forever.</p>
+            <p class="amount">$0 <small>forever</small></p>
+            <p class="amount-note">No card. No trial timer on the free features.</p>
+            <ul>
+              <li>Posture coaching — Normal detection</li>
+              <li>Real-time slouch cues + chronic ping</li>
+              <li>Bio-Tax blink breaks</li>
+              <li>This Week local dashboard</li>
+              <li>Camera and/or AirPods sensing</li>
+              <li>Auto-updates</li>
+            </ul>
+            <div class="plan-cta">
+              <a class="btn btn-quiet" href="https://github.com/mrigankgupta/ApexForm-updates/releases/latest">Download free</a>
+            </div>
+          </div>
+
+          <div class="plan plan-pro reveal reveal-d1">
+            <span class="plan-flag">Full trial first</span>
+            <span class="tier">Pro</span>
+            <p class="tier-sub">For people who want the tax collector to have more tools.</p>
+            <p class="amount">One-time <small>unlock</small></p>
+            <p class="amount-note">Purchase opens soon — the 10-day trial is live today.</p>
+            <ul>
+              <li>Relaxed &amp; Strict detection modes</li>
+              <li>Shake &amp; posture-mirror alarms</li>
+              <li>Squat &amp; twist breaks, full schedules</li>
+              <li>Standing work + sit-to-stand nudges</li>
+              <li>Home / Office desk baselines</li>
+              <li>Apple Health workout sync (write-only)</li>
+            </ul>
+            <div class="plan-cta">
+              <a class="btn btn-primary" href="https://github.com/mrigankgupta/ApexForm-updates/releases/latest">Start 10-day Pro trial</a>
+            </div>
+          </div>
+        </div>
+
+        <p class="plans-note">Public beta — checkout isn't live yet. Found a bug? <a href="mailto:support@apexform.com">support@apexform.com</a></p>
+      </div>
+    </section>
+
+    <!-- ————— FAQ ————— -->
+    <section class="section" id="faq">
+      <div class="container-narrow">
+        <div class="section-head reveal">
+          <p class="kicker">Frequently asked</p>
+          <h2>Fair questions, before you point a camera at yourself.</h2>
+        </div>
+
+        <div class="faq-list reveal">
+          <div class="faq-item is-open">
+            <button class="faq-q" type="button" aria-expanded="true">Is the webcam feed really private?<span class="plus" aria-hidden="true">+</span></button>
+            <div class="faq-a"><p>Yes — structurally, not just by promise. Detection runs on Apple's Vision framework on your Mac. Frames are analyzed in memory and discarded; nothing is recorded, stored, or uploaded, and there's no account or server involved. The <a href="privacy.html">privacy policy</a> spells it out.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" type="button" aria-expanded="false">What exactly is the Bio-Tax?<span class="plus" aria-hidden="true">+</span></button>
+            <div class="faq-a"><p>Gentle cues handle the occasional slouch. But when you ignore cue after cue, ApexForm charges a Bio-Tax: a short, full-screen movement break — deep blinks on Free; squats, twists and full schedules on Pro. Clear it and the screen hands your work back. It's the difference between a coach and a screensaver.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" type="button" aria-expanded="false">Can I use it without the camera?<span class="plus" aria-hidden="true">+</span></button>
+            <div class="faq-a"><p>Yes. ApexForm can also read posture from AirPods motion sensors — use camera, AirPods, or both. AirPods data stays on-device too.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" type="button" aria-expanded="false">Will it slow down my Mac or eat the battery?<span class="plus" aria-hidden="true">+</span></button>
+            <div class="faq-a"><p>It's a small menu-bar app built on Apple's own frameworks, with sampling tuned to sip power. No Electron, no background browser, no fans spinning up because you slouched.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" type="button" aria-expanded="false">What do I get free, and what's Pro?<span class="plus" aria-hidden="true">+</span></button>
+            <div class="faq-a"><p>Free keeps you covered: Normal posture detection, real-time cues, blink breaks, and the local This Week dashboard — forever. Pro adds Relaxed &amp; Strict detection, squat &amp; twist breaks with schedules, standing nudges, per-desk baselines, and Apple Health sync, as a one-time unlock. Every download starts with the full 10-day Pro trial.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" type="button" aria-expanded="false">What are the requirements?<span class="plus" aria-hidden="true">+</span></button>
+            <div class="faq-a"><p>macOS 14 or later, plus a webcam or AirPods. The app updates itself automatically. It's currently in public beta — reports to <a href="mailto:support@apexform.com">support@apexform.com</a> are very welcome.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ————— Final CTA ————— -->
+    <section class="section" aria-label="Download ApexForm">
+      <div class="container">
+        <div class="final-cta reveal">
+          <h2>Your spine keeps the receipts.</h2>
+          <p>Download ApexForm, calibrate in ten seconds, and let the Bio-Tax handle the discipline you were going to start on Monday.</p>
+          <a class="btn btn-light" href="https://github.com/mrigankgupta/ApexForm-updates/releases/latest">Download for Mac — free</a>
+          <p class="cta-under">macOS 14+ · On-device · 10-day full Pro trial included</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ————— Footer ————— -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="#top">
+            <span class="mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 20V9"/><path d="M7 12l5-5 5 5"/><circle cx="12" cy="4.6" r="1.6" fill="currentColor" stroke="none"/></svg>
+            </span>
+            Apex<em>Form</em>
+          </a>
+          <p>The menu-bar coach that cues your posture and taxes your slouch — without your camera ever phoning home.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Product</h4>
           <ul>
-            <li>Relaxed &amp; Strict detection</li>
-            <li>Shake &amp; posture-mirror alarms</li>
-            <li>Squat &amp; twist breaks, full schedules</li>
-            <li>Standing work + sit-to-stand nudges</li>
-            <li>Home / Office desk baselines</li>
-            <li>Apple Health workout sync (write-only)</li>
+            <li><a href="#how">How it works</a></li>
+            <li><a href="#biotax">Bio-Tax</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#faq">FAQ</a></li>
           </ul>
-          <div class="plan-cta">
-            <a class="btn btn-primary" href="https://github.com/mrigankgupta/ApexForm-updates/releases/latest">Start 10-day Pro trial</a>
-          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="https://github.com/mrigankgupta/ApexForm-updates/releases/latest">Download</a></li>
+            <li><a href="privacy.html">Privacy policy</a></li>
+            <li><a href="mailto:support@apexform.com">support@apexform.com</a></li>
+          </ul>
         </div>
       </div>
-      <p class="plan-note reveal">Public beta — try the full Pro trial today. Checkout isn’t live yet. Bugs: <a href="mailto:support@apexform.com">support@apexform.com</a>.</p>
-    </div>
-  </section>
-
-  <section class="privacy" id="privacy">
-    <div class="wrap reveal">
-      <div class="privacy-panel">
-        <h2>Private by design</h2>
-        <p>Camera and AirPods motion stay <strong>on your Mac</strong>, in memory. <strong>No video is recorded, stored, or uploaded.</strong> No account, no ads. <a href="privacy.html">Full privacy policy</a>.</p>
+      <div class="footer-bottom">
+        <span>© 2026 ApexForm · Public beta</span>
+        <span>Made for Macs and the spines in front of them.</span>
       </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="wrap">
-      <div class="links">
-        <a href="https://github.com/mrigankgupta/ApexForm-updates/releases/latest">Download</a>
-        <a href="privacy.html">Privacy</a>
-        <a href="mailto:support@apexform.com">Support</a>
-      </div>
-      <p class="copy">© 2026 ApexForm · macOS 14+ · Public beta</p>
     </div>
   </footer>
 
   <script>
     (function () {
       var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      var reveals = document.querySelectorAll(".reveal");
 
+      /* Sticky header edge */
+      var header = document.getElementById("site-header");
+      var onScroll = function () {
+        header.classList.toggle("is-stuck", window.scrollY > 8);
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+
+      /* Reveal on scroll */
+      var reveals = document.querySelectorAll(".reveal");
       if (!reduceMotion && "IntersectionObserver" in window) {
         var io = new IntersectionObserver(function (entries) {
           entries.forEach(function (entry) {
@@ -1190,43 +1819,121 @@
               io.unobserve(entry.target);
             }
           });
-        }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+        }, { threshold: 0.12, rootMargin: "0px 0px -36px 0px" });
         reveals.forEach(function (el) { io.observe(el); });
       } else {
         reveals.forEach(function (el) { el.classList.add("is-in"); });
       }
 
-      var plane = document.getElementById("hero-plane");
-      var phaseBtns = document.querySelectorAll(".plane-controls button");
-      var resumeTimer = null;
-
-      function setPhase(phase, sticky) {
-        if (!plane) return;
-        plane.setAttribute("data-phase", phase);
-        phaseBtns.forEach(function (btn) {
-          btn.classList.toggle("is-on", btn.getAttribute("data-phase") === phase && phase !== "auto");
+      /* Hero: try slouching toggle */
+      var scene = document.getElementById("hero-scene");
+      var toggle = document.getElementById("slouch-toggle");
+      if (scene && toggle) {
+        toggle.addEventListener("click", function () {
+          var slouching = scene.getAttribute("data-state") === "slouch";
+          scene.setAttribute("data-state", slouching ? "tall" : "slouch");
+          toggle.classList.toggle("is-on", !slouching);
+          toggle.setAttribute("aria-pressed", String(!slouching));
         });
-        if (resumeTimer) {
-          clearTimeout(resumeTimer);
-          resumeTimer = null;
-        }
-        if (sticky && !reduceMotion) {
-          resumeTimer = setTimeout(function () {
-            plane.setAttribute("data-phase", "auto");
-            phaseBtns.forEach(function (btn) { btn.classList.remove("is-on"); });
-          }, 7000);
-        }
       }
 
-      phaseBtns.forEach(function (btn) {
+      /* Bio-Tax loop: stepper + autoplay */
+      var taxScreen = document.getElementById("tax-screen");
+      var taxSteps = document.getElementById("tax-steps");
+      var stepBtns = taxSteps ? Array.prototype.slice.call(taxSteps.querySelectorAll(".tax-step")) : [];
+      var phases = ["cue", "tab", "break"];
+      var phaseIdx = 0;
+      var autoTimer = null;
+      var breakTimer = null;
+      var countEl = document.getElementById("ov-count-n");
+      var barEl = document.getElementById("ov-bar-i");
+
+      function animateBreak() {
+        if (breakTimer) { clearInterval(breakTimer); breakTimer = null; }
+        if (!countEl || !barEl) return;
+        var n = 0;
+        countEl.textContent = "0";
+        barEl.style.width = "0%";
+        breakTimer = setInterval(function () {
+          n += 1;
+          if (n > 5) { clearInterval(breakTimer); breakTimer = null; return; }
+          countEl.textContent = String(n);
+          barEl.style.width = (n * 20) + "%";
+        }, 700);
+      }
+
+      function setPhase(idx) {
+        phaseIdx = idx;
+        var phase = phases[idx];
+        if (taxScreen) taxScreen.setAttribute("data-phase", phase);
+        stepBtns.forEach(function (btn, i) {
+          btn.classList.toggle("is-active", i === idx);
+          btn.setAttribute("aria-selected", String(i === idx));
+        });
+        if (phase === "break") animateBreak();
+        else if (breakTimer) { clearInterval(breakTimer); breakTimer = null; }
+      }
+
+      function startAuto() {
+        stopAuto();
+        if (reduceMotion) return;
+        taxSteps.classList.remove("is-paused");
+        autoTimer = setInterval(function () {
+          setPhase((phaseIdx + 1) % phases.length);
+        }, 4200);
+      }
+      function stopAuto() {
+        if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
+      }
+
+      stepBtns.forEach(function (btn, i) {
         btn.addEventListener("click", function () {
-          setPhase(btn.getAttribute("data-phase"), true);
+          stopAuto();
+          taxSteps.classList.add("is-paused");
+          setPhase(i);
+          /* resume the tour after a while */
+          setTimeout(startAuto, 12000);
         });
       });
 
-      if (reduceMotion) {
-        setPhase("break", false);
+      if (taxScreen && "IntersectionObserver" in window && !reduceMotion) {
+        var taxIo = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              setPhase(0);
+              startAuto();
+            } else {
+              stopAuto();
+            }
+          });
+        }, { threshold: 0.35 });
+        taxIo.observe(taxScreen);
+      } else {
+        setPhase(2);
       }
+
+      /* FAQ accordion */
+      var items = document.querySelectorAll(".faq-item");
+      items.forEach(function (item) {
+        var q = item.querySelector(".faq-q");
+        var a = item.querySelector(".faq-a");
+        if (item.classList.contains("is-open")) {
+          a.style.maxHeight = a.scrollHeight + "px";
+        }
+        q.addEventListener("click", function () {
+          var isOpen = item.classList.contains("is-open");
+          items.forEach(function (other) {
+            other.classList.remove("is-open");
+            other.querySelector(".faq-q").setAttribute("aria-expanded", "false");
+            other.querySelector(".faq-a").style.maxHeight = "0px";
+          });
+          if (!isOpen) {
+            item.classList.add("is-open");
+            q.setAttribute("aria-expanded", "true");
+            a.style.maxHeight = a.scrollHeight + "px";
+          }
+        });
+      });
     })();
   </script>
 </body>
