@@ -12,6 +12,27 @@
         https://raw.githubusercontent.com/mrigankgupta/ApexForm-updates/main/appcast.xml
     -->
     <item>
+      <title>Version 1.0.0-beta.3 (Public Beta 3)</title>
+      <sparkle:version>9</sparkle:version>
+      <sparkle:shortVersionString>1.0.0-beta.3</sparkle:shortVersionString>
+      <pubDate>Thu, 06 Aug 2026 13:15:11 +0000</pubDate>
+      <description><![CDATA[
+        <h2>ApexForm Public Beta 3</h2>
+        <ul>
+          <li>Soft 10-day Pro trial, then free forever (Normal coaching + blinks)</li>
+          <li>Home/Office desk profiles (Pro)</li>
+          <li>Calmer Bio-Tax scheduling around standing work</li>
+          <li>Onboarding polish</li>
+          <li>HealthKit removed — unsupported on macOS Developer ID</li>
+        </ul>
+      ]]></description>
+      <enclosure
+        url="https://github.com/mrigankgupta/ApexForm-updates/releases/download/v1.0.0-beta.3/ApexForm-1.0.0-beta.3.dmg"
+        sparkle:edSignature="gYfaZn2Mibe1maLg3fN0WIzOy4MRdJsW+g8geGRZXZF9FAviq7aSTmUKeCI442OU7opIitgAzArJUR+vdEXkAQ=="
+        length="5263722"
+        type="application/octet-stream" />
+    </item>
+    <item>
       <title>Version 1.0.0-beta.2 (Public Beta 2)</title>
       <sparkle:version>8</sparkle:version>
       <sparkle:shortVersionString>1.0.0-beta.2</sparkle:shortVersionString>
