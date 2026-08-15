@@ -12,6 +12,25 @@
         https://raw.githubusercontent.com/mrigankgupta/ApexForm-updates/main/appcast.xml
     -->
     <item>
+      <title>Version 1.0.0-beta.4 (Public Beta 4)</title>
+      <sparkle:version>10</sparkle:version>
+      <sparkle:shortVersionString>1.0.0-beta.4</sparkle:shortVersionString>
+      <pubDate>Sat, 15 Aug 2026 08:00:00 +0000</pubDate>
+      <description><![CDATA[
+        <h2>ApexForm Public Beta 4</h2>
+        <ul>
+          <li>Lemon Squeezy Pro checkout live — $5/mo or $39/yr</li>
+          <li>APEXSUB subscription tokens + Settings Activate / expiry</li>
+          <li>Limited free after trial (not “free forever” full Pro)</li>
+        </ul>
+      ]]></description>
+      <enclosure
+        url="https://github.com/mrigankgupta/ApexForm-updates/releases/download/v1.0.0-beta.4/ApexForm-1.0.0-beta.4.dmg"
+        sparkle:edSignature="dSncFb3sfuxKRyMEcbPNw0xZkoL5iIiDCR1fBcxTgaCy6uyql2yl4eu4X3VC7NlSVuum461mQnN82HRr0z+2Cw=="
+        length="5298104"
+        type="application/octet-stream" />
+    </item>
+    <item>
       <title>Version 1.0.0-beta.3 (Public Beta 3)</title>
       <sparkle:version>9</sparkle:version>
       <sparkle:shortVersionString>1.0.0-beta.3</sparkle:shortVersionString>
