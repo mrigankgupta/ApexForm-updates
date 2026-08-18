@@ -8,6 +8,9 @@
   <meta property="og:title" content="ApexForm — Sit tall, or pay the Bio-Tax">
   <meta property="og:description" content="A gentle cue when you slouch. A Bio-Tax break when you ignore it. On-device, private, 10-day Pro trial then limited free.">
   <meta property="og:type" content="website">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
@@ -1695,8 +1698,8 @@
               <li>Home / Office desk baselines</li>
             </ul>
             <div class="plan-cta">
-              <a class="btn btn-primary" href="https://apexform-pro.lemonsqueezy.com/checkout/buy/50d4c205-f5ff-40fb-881f-2c8af5ed6277">Subscribe yearly — $39</a>
-              <a class="btn btn-quiet" href="https://apexform-pro.lemonsqueezy.com/checkout/buy/eddc2bb7-c343-492e-a16a-82acc6cc0613">Monthly — $5</a>
+              <a class="btn btn-primary" data-checkout="yearly" href="https://apexform-pro.lemonsqueezy.com/checkout/buy/50d4c205-f5ff-40fb-881f-2c8af5ed6277">Subscribe yearly — $39</a>
+              <a class="btn btn-quiet" data-checkout="monthly" href="https://apexform-pro.lemonsqueezy.com/checkout/buy/eddc2bb7-c343-492e-a16a-82acc6cc0613">Monthly — $5</a>
             </div>
           </div>
         </div>
@@ -1733,6 +1736,10 @@
           <div class="faq-item">
             <button class="faq-q" type="button" aria-expanded="false">What do I get free, and what's Pro?<span class="plus" aria-hidden="true">+</span></button>
             <div class="faq-a"><p>After the 10-day full Pro trial, limited free keeps Normal posture detection, real-time cues, blink breaks, and the local This Week dashboard. Pro adds Relaxed &amp; Strict detection, squat &amp; twist breaks with schedules, standing nudges, and per-desk baselines — <strong>$5/month</strong> or <strong>$39/year</strong> via Lemon Squeezy. After checkout, paste the APEXSUB token from your email in Settings.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" type="button" aria-expanded="false">Do referrals / invite links work?<span class="plus" aria-hidden="true">+</span></button>
+            <div class="faq-a"><p>Yes — if a Pro friend shared their invite link, use it for <strong>10% off your first payment</strong>. They earn free Pro months when you subscribe (Settings → Invite a friend). Plain Subscribe buttons on this page stay full price.</p></div>
           </div>
           <div class="faq-item">
             <button class="faq-q" type="button" aria-expanded="false">What are the requirements?<span class="plus" aria-hidden="true">+</span></button>
@@ -1930,6 +1937,33 @@
           }
         });
       });
+
+      /* Referral: ?ref=CODE → sessionStorage + discount on Subscribe CTAs only */
+      (function applyReferral() {
+        var params = new URLSearchParams(window.location.search);
+        var fromQuery = (params.get("ref") || "").trim().toUpperCase().replace(/[^0-9A-Z]/g, "");
+        if (fromQuery.length >= 6 && fromQuery.length <= 12) {
+          try { sessionStorage.setItem("apexform_ref", fromQuery); } catch (e) {}
+        }
+        var ref = null;
+        try { ref = sessionStorage.getItem("apexform_ref"); } catch (e) {}
+        if (!ref) return;
+
+        var discount = "APEXFRIEND";
+        function withRef(href) {
+          try {
+            var u = new URL(href, window.location.href);
+            u.searchParams.set("checkout[discount_code]", discount);
+            u.searchParams.set("checkout[custom][ref]", ref);
+            return u.toString();
+          } catch (e) {
+            return href;
+          }
+        }
+        document.querySelectorAll("a[data-checkout]").forEach(function (a) {
+          a.setAttribute("href", withRef(a.getAttribute("href")));
+        });
+      })();
     })();
   </script>
 </body>
