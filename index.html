@@ -517,6 +517,48 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 1.4rem;
     }
+    .persona-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+      margin-top: 2rem;
+    }
+    .persona-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      padding: 1.25rem 1.3rem 1.35rem;
+      box-shadow: var(--shadow-1);
+    }
+    .persona-card .p-ask {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin: 0 0 0.45rem;
+    }
+    .persona-card h3 {
+      font-family: var(--display);
+      font-size: 1.15rem;
+      margin: 0 0 0.55rem;
+      line-height: 1.25;
+    }
+    .persona-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.45;
+    }
+    .persona-card .p-result {
+      margin-top: 0.85rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--line);
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.4;
+    }
     .how-card {
       position: relative;
       background: var(--card);
@@ -1254,7 +1296,8 @@
       .hero-sub { max-width: none; }
       .panel-split { grid-template-columns: 1fr; gap: 2.4rem; }
       .priv-grid { grid-template-columns: repeat(2, 1fr); }
-      .how-grid { grid-template-columns: 1fr; max-width: 460px; margin: 0 auto; }
+      .how-grid,
+      .persona-grid { grid-template-columns: 1fr; max-width: 460px; margin-left: auto; margin-right: auto; }
       .stat-grid { grid-template-columns: repeat(2, 1fr); gap: 1.6rem 1rem; }
       .plans { grid-template-columns: minmax(0, 460px); }
       .footer-grid { grid-template-columns: 1fr 1fr; }
@@ -1302,6 +1345,7 @@
       </a>
       <nav class="nav-links" aria-label="Primary">
         <a href="#how">How it works</a>
+        <a href="#personalize">Personalized</a>
         <a href="#biotax">Bio-Tax</a>
         <a href="#privacy">Privacy</a>
         <a href="#pricing">Pricing</a>
@@ -1322,7 +1366,9 @@
           <p class="hero-sub">
             ApexForm lives in your menu bar and watches your posture through the webcam —
             <strong>entirely on your Mac</strong>. Slouch, and a quiet cue nudges you upright.
-            Ignore it all afternoon, and it charges a short movement break you actually take.
+            Ignore it all afternoon, and it charges a short movement break tuned to how
+            <em>you</em> work — more squats if you want to burn calories, fewer blinks if
+            you rarely stare at the screen.
           </p>
           <div class="hero-ctas">
             <a class="btn btn-primary" href="https://github.com/mrigankgupta/ApexForm-updates/releases/latest">Download for Mac</a>
@@ -1397,7 +1443,7 @@
       <div class="container stat-grid">
         <div class="stat"><b>100%</b><span>On-device · Apple Vision</span></div>
         <div class="stat"><b>0</b><span>Frames stored or uploaded</span></div>
-        <div class="stat"><b>Free</b><span>Forever plan · no card</span></div>
+        <div class="stat"><b>You</b><span>Breaks tuned to your desk day</span></div>
         <div class="stat"><b>macOS 14+</b><span>Menu bar · auto-updates</span></div>
       </div>
     </section>
@@ -1407,8 +1453,8 @@
       <div class="container">
         <div class="section-head reveal">
           <p class="kicker">How it works</p>
-          <h2>Calibrate once.<br>Sit better every day after.</h2>
-          <p class="lead">No wearables, no browser tabs, no guilt journal. A camera you already have and a coach that mostly stays out of the way.</p>
+          <h2>Calibrate once.<br>Breaks that fit how you work.</h2>
+          <p class="lead">No wearables, no browser tabs, no guilt journal. A camera you already have, a coach that mostly stays out of the way, and movement breaks tuned from three quick questions on first launch.</p>
         </div>
         <div class="how-grid">
           <article class="how-card reveal">
@@ -1422,7 +1468,7 @@
             </div>
             <div class="how-body">
               <h3>Teach it your desk</h3>
-              <p>Sit tall, then slouch once. Ten seconds. ApexForm learns what upright looks like for you, at this desk — and you can save a separate baseline for the office.</p>
+              <p>Answer three quick questions about how you work, then sit tall and slouch once. ApexForm learns your upright baseline — and how to mix blinks, squats, and twists for you.</p>
             </div>
           </article>
           <article class="how-card reveal reveal-d1">
@@ -1458,13 +1504,44 @@
       </div>
     </section>
 
+    <!-- ————— Personalized breaks ————— -->
+    <section class="section" id="personalize" style="padding-top: 0;">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="kicker">Personalized for you</p>
+          <h2>Three questions.<br>Breaks that match your desk day.</h2>
+          <p class="lead">On first launch, ApexForm asks how you work — then biases which Bio-Tax break shows up and how many reps it asks for. Retune anytime in Settings.</p>
+        </div>
+        <div class="persona-grid">
+          <article class="persona-card reveal">
+            <p class="p-ask">Want to move more?</p>
+            <h3>Burn calories</h3>
+            <p>Trading a sit day for a little sweat? ApexForm leans into bigger squat sets.</p>
+            <p class="p-result">→ More squats, bigger sets</p>
+          </article>
+          <article class="persona-card reveal reveal-d1">
+            <p class="p-ask">Eyes on a screen?</p>
+            <h3>Trader · writer · rarely</h3>
+            <p>Staring all day gets more blink breaks. Away from the screen a lot? Fewer of them.</p>
+            <p class="p-result">→ Blink mix tuned to your eyes</p>
+          </article>
+          <article class="persona-card reveal reveal-d2">
+            <p class="p-ask">Long sitting hurt?</p>
+            <h3>Back or hip stiffness</h3>
+            <p>If sitting leaves you sore, breaks favour squats and torso twists to keep you loose.</p>
+            <p class="p-result">→ Extra twists &amp; more squats</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <!-- ————— Bio-Tax ————— -->
     <section class="biotax" id="biotax">
       <div class="container">
         <div class="section-head reveal">
           <p class="kicker">The Bio-Tax</p>
           <h2>Ignore every cue?<br>That'll cost you a break.</h2>
-          <p class="lead">Chronic slouching runs a tab. When it's due, ApexForm charges a Bio-Tax — a short, full-screen break in the spirit of Focus Mode. Clear it, and you're back to work.</p>
+          <p class="lead">Chronic slouching runs a tab. When it's due, ApexForm charges a Bio-Tax — a short, full-screen break in the spirit of Focus Mode, personalized from your onboarding answers. Clear it, and you're back to work.</p>
         </div>
 
         <div class="tax-steps reveal" id="tax-steps" role="tablist" aria-label="Bio-Tax loop stages">
@@ -1483,7 +1560,7 @@
           <button class="tax-step" type="button" data-phase="break" role="tab" aria-selected="false">
             <span class="t-num">STAGE 3</span>
             <span class="t-name">The break</span>
-            <span class="t-sub">Tax due. A full-screen break — blinks, squats, or twists.</span>
+            <span class="t-sub">Tax due. A personalized break — blinks, squats, or twists.</span>
             <span class="t-track"><i></i></span>
           </button>
         </div>
@@ -1546,7 +1623,7 @@
               </div>
             </div>
           </div>
-          <p class="tax-footnote">The tax is honest: skip the cues, take the break. <strong>Blink breaks stay on limited free</strong> — squats, twists and full schedules come with Pro (monthly or yearly).</p>
+          <p class="tax-footnote">The tax is honest: skip the cues, take the break. Breaks are <strong>tuned to you</strong> from setup — and <strong>blink breaks stay on limited free</strong>. Squats, twists and full schedules come with Pro (monthly or yearly).</p>
         </div>
       </div>
     </section>
@@ -1566,6 +1643,10 @@
             <li>
               <span class="feature-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v13"/><path d="M8 8l4-4 4 4"/><path d="M5 21h14"/></svg></span>
               <span><b>Standing nudges<span class="pro-tag">PRO</span></b><p>Sit-to-stand reminders and standing-work mode when your legs deserve a turn.</p></span>
+            </li>
+            <li>
+              <span class="feature-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16"/><path d="M4 12h10"/><path d="M4 17h13"/><circle cx="19" cy="12" r="2"/><circle cx="17" cy="17" r="2"/></svg></span>
+              <span><b>Personalized break mix</b><p>Three setup questions bias blinks, squats, and twists to how you sit and what you want from breaks. Retune in Settings.</p></span>
             </li>
             <li>
               <span class="feature-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 21v-4a4 4 0 014-4h10a4 4 0 014 4v4"/><circle cx="12" cy="7" r="4"/></svg></span>
@@ -1674,7 +1755,7 @@
             <ul>
               <li>Posture coaching — Normal detection</li>
               <li>Real-time slouch cues + chronic ping</li>
-              <li>Bio-Tax blink breaks</li>
+              <li>Bio-Tax blink breaks, tuned to you</li>
               <li>This Week local dashboard</li>
               <li>Camera and/or AirPods sensing</li>
               <li>Auto-updates</li>
@@ -1693,7 +1774,7 @@
             <ul>
               <li>Relaxed &amp; Strict detection modes</li>
               <li>Shake &amp; posture-mirror alarms</li>
-              <li>Squat &amp; twist breaks, full schedules</li>
+              <li>Personalized squat &amp; twist breaks, full schedules</li>
               <li>Standing work + sit-to-stand nudges</li>
               <li>Home / Office desk baselines</li>
             </ul>
@@ -1723,7 +1804,11 @@
           </div>
           <div class="faq-item">
             <button class="faq-q" type="button" aria-expanded="false">What exactly is the Bio-Tax?<span class="plus" aria-hidden="true">+</span></button>
-            <div class="faq-a"><p>Gentle cues handle the occasional slouch. But when you ignore cue after cue, ApexForm charges a Bio-Tax: a short, full-screen movement break — deep blinks on Free; squats, twists and full schedules on Pro. Clear it and the screen hands your work back. It's the difference between a coach and a screensaver.</p></div>
+            <div class="faq-a"><p>Gentle cues handle the occasional slouch. But when you ignore cue after cue, ApexForm charges a Bio-Tax: a short, full-screen movement break — deep blinks on Free; squats, twists and full schedules on Pro. Which break you get, and how many reps it asks for, is personalized from three setup questions (calories, screen time, sitting discomfort) — retune anytime in Settings. Clear it and the screen hands your work back.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" type="button" aria-expanded="false">How does ApexForm personalize my breaks?<span class="plus" aria-hidden="true">+</span></button>
+            <div class="faq-a"><p>On first launch it asks what you want from breaks, how much you stare at the screen, and whether long sitting bothers your back or hips. Those answers bias the mix — more and bigger squats if you want to burn calories, fewer blinks if you're rarely eyes-on-screen, extra twists when sitting leaves you stiff. Free still gets blink-only Bio-Tax; Pro unlocks squats and twists in that same personalized mix.</p></div>
           </div>
           <div class="faq-item">
             <button class="faq-q" type="button" aria-expanded="false">Can I use it without the camera?<span class="plus" aria-hidden="true">+</span></button>
@@ -1754,7 +1839,7 @@
       <div class="container">
         <div class="final-cta reveal">
           <h2>Your spine keeps the receipts.</h2>
-          <p>Download ApexForm, calibrate in ten seconds, and let the Bio-Tax handle the discipline you were going to start on Monday.</p>
+          <p>Download ApexForm, answer three quick questions, calibrate in ten seconds, and let the Bio-Tax handle the discipline you were going to start on Monday — with breaks tuned to how you actually work.</p>
           <a class="btn btn-light" href="https://github.com/mrigankgupta/ApexForm-updates/releases/latest">Download for Mac — free</a>
           <p class="cta-under">macOS 14+ · On-device · 10-day full Pro trial included</p>
         </div>
@@ -1779,6 +1864,7 @@
           <h4>Product</h4>
           <ul>
             <li><a href="#how">How it works</a></li>
+            <li><a href="#personalize">Personalized</a></li>
             <li><a href="#biotax">Bio-Tax</a></li>
             <li><a href="#pricing">Pricing</a></li>
             <li><a href="#faq">FAQ</a></li>
