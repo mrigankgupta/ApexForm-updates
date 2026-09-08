@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ApexForm — the Mac menu-bar coach that taxes your slouch</title>
-  <meta name="description" content="ApexForm watches your posture through the webcam with on-device Apple Vision. Slouch and you get a gentle cue. Ignore it and it charges a Bio-Tax — a short full-screen movement break. Private, 10-day Pro trial, macOS 14+.">
-  <meta property="og:title" content="ApexForm — Sit tall, or pay the Bio-Tax">
-  <meta property="og:description" content="A gentle cue when you slouch. A Bio-Tax break when you ignore it. On-device, private, 10-day Pro trial then limited free.">
+  <meta name="description" content="ApexForm watches your posture through the webcam with on-device Apple Vision. Slouch and you get a gentle cue. Ignore it and a Desk Reset takes over — a short full-screen movement break that undoes the sitting. Private, 10-day Pro trial, macOS 14+.">
+  <meta property="og:title" content="ApexForm — Sit tall, or take a Desk Reset">
+  <meta property="og:description" content="A gentle cue when you slouch. A Desk Reset when you ignore it. On-device, private, 10-day Pro trial then limited free.">
   <meta property="og:type" content="website">
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -1346,7 +1346,7 @@
       <nav class="nav-links" aria-label="Primary">
         <a href="#how">How it works</a>
         <a href="#personalize">Personalized</a>
-        <a href="#biotax">Bio-Tax</a>
+        <a href="#biotax">Desk Reset</a>
         <a href="#privacy">Privacy</a>
         <a href="#pricing">Pricing</a>
         <a href="#faq">FAQ</a>
@@ -1362,7 +1362,7 @@
       <div class="container hero-inner">
         <div class="hero-copy">
           <span class="hero-badge"><span class="dot" aria-hidden="true"></span>Public beta · macOS 14+</span>
-          <h1>Sit tall,<br>or pay the <em>Bio&#8209;Tax</em>.</h1>
+          <h1>Sit tall,<br>or take a <em>Desk&nbsp;Reset</em>.</h1>
           <p class="hero-sub">
             ApexForm lives in your menu bar and watches your posture through the webcam —
             <strong>entirely on your Mac</strong>. Slouch, and a quiet cue nudges you upright.
@@ -1422,7 +1422,7 @@
               </div>
 
               <div class="tax-chip">
-                <span class="lbl">Bio-Tax tab</span>
+                <span class="lbl">Desk Reset tab</span>
                 <div class="meter"><i></i></div>
                 <span class="cap"><span class="t-ok">Clear — keep it up</span><span class="t-warn">Building — a break is coming</span></span>
               </div>
@@ -1510,7 +1510,7 @@
         <div class="section-head reveal">
           <p class="kicker">Personalized for you</p>
           <h2>Three questions.<br>Breaks that match your desk day.</h2>
-          <p class="lead">On first launch, ApexForm asks how you work — then biases which Bio-Tax break shows up and how many reps it asks for. Retune anytime in Settings.</p>
+          <p class="lead">On first launch, ApexForm asks how you work — then biases which Desk Reset shows up and how many reps it asks for. Retune anytime in Settings.</p>
         </div>
         <div class="persona-grid">
           <article class="persona-card reveal">
@@ -1539,12 +1539,12 @@
     <section class="biotax" id="biotax">
       <div class="container">
         <div class="section-head reveal">
-          <p class="kicker">The Bio-Tax</p>
+          <p class="kicker">The Desk Reset</p>
           <h2>Ignore every cue?<br>That'll cost you a break.</h2>
-          <p class="lead">Chronic slouching runs a tab. When it's due, ApexForm charges a Bio-Tax — a short, full-screen break in the spirit of Focus Mode, personalized from your onboarding answers. Clear it, and you're back to work.</p>
+          <p class="lead">Chronic slouching runs a tab. When it's due, ApexForm calls a Desk Reset — a short, full-screen break that reverses the last stretch of sitting, personalized from your onboarding answers. Clear it, and you're back to work.</p>
         </div>
 
-        <div class="tax-steps reveal" id="tax-steps" role="tablist" aria-label="Bio-Tax loop stages">
+        <div class="tax-steps reveal" id="tax-steps" role="tablist" aria-label="Desk Reset loop stages">
           <button class="tax-step is-active" type="button" data-phase="cue" role="tab" aria-selected="true">
             <span class="t-num">STAGE 1</span>
             <span class="t-name">The cue</span>
@@ -1554,13 +1554,13 @@
           <button class="tax-step" type="button" data-phase="tab" role="tab" aria-selected="false">
             <span class="t-num">STAGE 2</span>
             <span class="t-name">The tab</span>
-            <span class="t-sub">Cues keep getting ignored. The Bio-Tax ledger fills up.</span>
+            <span class="t-sub">Cues keep getting ignored. A Desk Reset comes due.</span>
             <span class="t-track"><i></i></span>
           </button>
           <button class="tax-step" type="button" data-phase="break" role="tab" aria-selected="false">
             <span class="t-num">STAGE 3</span>
             <span class="t-name">The break</span>
-            <span class="t-sub">Tax due. A personalized break — blinks, squats, or twists.</span>
+            <span class="t-sub">Reset due. A personalized break — blinks, squats, or twists.</span>
             <span class="t-track"><i></i></span>
           </button>
         </div>
@@ -1606,15 +1606,15 @@
               </div>
 
               <div class="tax-ledger">
-                <span class="lbl">Bio-Tax ledger</span>
+                <span class="lbl">Desk Reset ledger</span>
                 <div class="row"><span>Cues ignored</span><span class="neg">× 4</span></div>
                 <div class="row"><span>Slouch streak</span><span class="neg">22 min</span></div>
-                <div class="due"><span>Tax due</span><b>1 break</b></div>
+                <div class="due"><span>Reset due</span><b>1 break</b></div>
               </div>
 
               <div class="tax-overlay">
                 <div>
-                  <p class="ov-kicker">Bio-Tax · Focus break</p>
+                  <p class="ov-kicker">Desk Reset · Focus break</p>
                   <p class="ov-title">5 slow squats</p>
                   <p class="ov-count"><span id="ov-count-n">3</span><small> / 5</small></p>
                   <div class="ov-bar"><i id="ov-bar-i" style="width: 60%;"></i></div>
@@ -1623,7 +1623,7 @@
               </div>
             </div>
           </div>
-          <p class="tax-footnote">The tax is honest: skip the cues, take the break. Breaks are <strong>tuned to you</strong> from setup — and <strong>blink breaks stay on limited free</strong>. Squats, twists and full schedules come with Pro (monthly or yearly).</p>
+          <p class="tax-footnote">The deal is honest: skip the cues, take the break. Breaks are <strong>tuned to you</strong> from setup — and <strong>blink breaks stay on limited free</strong>. Squats, twists and full schedules come with Pro (monthly or yearly).</p>
         </div>
       </div>
     </section>
@@ -1672,7 +1672,7 @@
               <div class="pop-stats">
                 <div class="pop-row"><span class="k">Seated</span><span class="v">4h 12m</span></div>
                 <div class="pop-row"><span class="k">Slouch cues</span><span class="v">6</span></div>
-                <div class="pop-row"><span class="k">Bio-Tax paid</span><span class="v good">2 breaks</span></div>
+                <div class="pop-row"><span class="k">Desk Resets cleared</span><span class="v good">2</span></div>
                 <div class="pop-row"><span class="k">Next stand nudge</span><span class="v warn">2:40 pm</span></div>
               </div>
             </div>
@@ -1755,7 +1755,7 @@
             <ul>
               <li>Posture coaching — Normal detection</li>
               <li>Real-time slouch cues + chronic ping</li>
-              <li>Bio-Tax blink breaks, tuned to you</li>
+              <li>Desk Reset blink breaks, tuned to you</li>
               <li>This Week local dashboard</li>
               <li>Camera and/or AirPods sensing</li>
               <li>Auto-updates</li>
@@ -1768,7 +1768,7 @@
           <div class="plan plan-pro reveal reveal-d1">
             <span class="plan-flag">Full trial first</span>
             <span class="tier">Pro</span>
-            <p class="tier-sub">For people who want the tax collector to have more tools.</p>
+            <p class="tier-sub">For people who want the coach to have more tools.</p>
             <p class="amount">$39 <small>/ year</small></p>
             <p class="amount-note">Or $5 / month. Cancel anytime. After checkout, paste your APEXSUB token in Settings.</p>
             <ul>
@@ -1803,12 +1803,12 @@
             <div class="faq-a"><p>Yes — structurally, not just by promise. Detection runs on Apple's Vision framework on your Mac. Frames are analyzed in memory and discarded; nothing is recorded, stored, or uploaded, and there's no account or server involved. The <a href="privacy.html">privacy policy</a> spells it out.</p></div>
           </div>
           <div class="faq-item">
-            <button class="faq-q" type="button" aria-expanded="false">What exactly is the Bio-Tax?<span class="plus" aria-hidden="true">+</span></button>
-            <div class="faq-a"><p>Gentle cues handle the occasional slouch. But when you ignore cue after cue, ApexForm charges a Bio-Tax: a short, full-screen movement break — deep blinks on Free; squats, twists and full schedules on Pro. Which break you get, and how many reps it asks for, is personalized from three setup questions (calories, screen time, sitting discomfort) — retune anytime in Settings. Clear it and the screen hands your work back.</p></div>
+            <button class="faq-q" type="button" aria-expanded="false">What exactly is a Desk Reset?<span class="plus" aria-hidden="true">+</span></button>
+            <div class="faq-a"><p>Gentle cues handle the occasional slouch. But when you ignore cue after cue, ApexForm calls a Desk Reset: a short, full-screen movement break that undoes the sitting streak — deep blinks on Free; squats, twists and full schedules on Pro. Which break you get, and how many reps it asks for, is personalized from three setup questions (calories, screen time, sitting discomfort) — retune anytime in Settings. Clear it and the screen hands your work back.</p></div>
           </div>
           <div class="faq-item">
             <button class="faq-q" type="button" aria-expanded="false">How does ApexForm personalize my breaks?<span class="plus" aria-hidden="true">+</span></button>
-            <div class="faq-a"><p>On first launch it asks what you want from breaks, how much you stare at the screen, and whether long sitting bothers your back or hips. Those answers bias the mix — more and bigger squats if you want to burn calories, fewer blinks if you're rarely eyes-on-screen, extra twists when sitting leaves you stiff. Free still gets blink-only Bio-Tax; Pro unlocks squats and twists in that same personalized mix.</p></div>
+            <div class="faq-a"><p>On first launch it asks what you want from breaks, how much you stare at the screen, and whether long sitting bothers your back or hips. Those answers bias the mix — more and bigger squats if you want to burn calories, fewer blinks if you're rarely eyes-on-screen, extra twists when sitting leaves you stiff. Free still gets blink-only Desk Resets; Pro unlocks squats and twists in that same personalized mix.</p></div>
           </div>
           <div class="faq-item">
             <button class="faq-q" type="button" aria-expanded="false">Can I use it without the camera?<span class="plus" aria-hidden="true">+</span></button>
@@ -1839,7 +1839,7 @@
       <div class="container">
         <div class="final-cta reveal">
           <h2>Your spine keeps the receipts.</h2>
-          <p>Download ApexForm, answer three quick questions, calibrate in ten seconds, and let the Bio-Tax handle the discipline you were going to start on Monday — with breaks tuned to how you actually work.</p>
+          <p>Download ApexForm, answer three quick questions, calibrate in ten seconds, and let Desk Resets handle the discipline you were going to start on Monday — with breaks tuned to how you actually work.</p>
           <a class="btn btn-light" href="https://github.com/mrigankgupta/ApexForm-updates/releases/latest">Download for Mac — free</a>
           <p class="cta-under">macOS 14+ · On-device · 10-day full Pro trial included</p>
         </div>
@@ -1865,7 +1865,7 @@
           <ul>
             <li><a href="#how">How it works</a></li>
             <li><a href="#personalize">Personalized</a></li>
-            <li><a href="#biotax">Bio-Tax</a></li>
+            <li><a href="#biotax">Desk Reset</a></li>
             <li><a href="#pricing">Pricing</a></li>
             <li><a href="#faq">FAQ</a></li>
           </ul>
