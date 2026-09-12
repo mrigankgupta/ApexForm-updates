@@ -3,17 +3,33 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ApexForm — the Mac menu-bar coach that taxes your slouch</title>
+  <title>ApexForm — Sit tall, or take a Desk Reset</title>
   <meta name="description" content="ApexForm watches your posture through the webcam with on-device Apple Vision. Slouch and you get a gentle cue. Ignore it and a Desk Reset takes over — a short full-screen movement break that undoes the sitting. Private, 10-day Pro trial, macOS 14+.">
   <meta property="og:title" content="ApexForm — Sit tall, or take a Desk Reset">
   <meta property="og:description" content="A gentle cue when you slouch. A Desk Reset when you ignore it. On-device, private, 10-day Pro trial then limited free.">
   <meta property="og:type" content="website">
+  <link rel="canonical" href="https://apexform.me/">
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  <!-- Privacy-friendly site analytics (not in the Mac app). Create the
+       code at https://www.goatcounter.com if missing, then confirm hits. -->
+  <script>
+    window.goatcounter = {
+      path: function (p) {
+        try {
+          var ch = sessionStorage.getItem("apexform_channel");
+          if (ch) return (location.pathname || "/") + "?ref=" + encodeURIComponent(ch);
+        } catch (e) {}
+        return p;
+      }
+    };
+  </script>
+  <script data-goatcounter="https://apexform.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
   <style>
     :root {
       --ink: #0c1712;
@@ -1858,7 +1874,7 @@
             </span>
             Apex<em>Form</em>
           </a>
-          <p>The menu-bar coach that cues your posture and taxes your slouch — without your camera ever phoning home.</p>
+          <p>The menu-bar coach that cues your posture and undoes long sitting — without your camera ever phoning home.</p>
         </div>
         <div class="footer-col">
           <h4>Product</h4>
@@ -2024,30 +2040,59 @@
         });
       });
 
-      /* Referral: ?ref=CODE → sessionStorage + discount on Subscribe CTAs only */
-      (function applyReferral() {
+      /* Attribution:
+         - Channel bios: ?ref=tt|ig|rd|x|ph|hn|yt (short tags) → sessionStorage
+           apexform_channel; GoatCounter path includes ?ref= so Monday reviews
+           can split traffic by channel.
+         - Friend invites: ?ref=ABCDEF (6–12 chars) → apexform_ref + APEXFRIEND
+           discount on Subscribe CTAs only. */
+      (function applyAttribution() {
         var params = new URLSearchParams(window.location.search);
-        var fromQuery = (params.get("ref") || "").trim().toUpperCase().replace(/[^0-9A-Z]/g, "");
-        if (fromQuery.length >= 6 && fromQuery.length <= 12) {
-          try { sessionStorage.setItem("apexform_ref", fromQuery); } catch (e) {}
+        var raw = (params.get("ref") || "").trim().toLowerCase().replace(/[^0-9a-z]/g, "");
+        var channels = { tt: 1, ig: 1, rd: 1, x: 1, ph: 1, hn: 1, yt: 1, email: 1 };
+        if (raw && channels[raw]) {
+          try { sessionStorage.setItem("apexform_channel", raw); } catch (e) {}
+        } else if (raw.length >= 6 && raw.length <= 12) {
+          try { sessionStorage.setItem("apexform_ref", raw.toUpperCase()); } catch (e) {}
         }
-        var ref = null;
-        try { ref = sessionStorage.getItem("apexform_ref"); } catch (e) {}
-        if (!ref) return;
 
+        var channel = null;
+        var friendRef = null;
+        try { channel = sessionStorage.getItem("apexform_channel"); } catch (e) {}
+        try { friendRef = sessionStorage.getItem("apexform_ref"); } catch (e) {}
+
+        function withChannel(href) {
+          if (!channel) return href;
+          try {
+            var u = new URL(href, window.location.href);
+            if (!u.searchParams.get("ref")) u.searchParams.set("ref", channel);
+            return u.toString();
+          } catch (e) {
+            return href;
+          }
+        }
+
+        // Keep channel on in-page nav / download so deep clicks stay attributed.
+        document.querySelectorAll('a[href^="#"], a[href*="github.com"], a[data-download]').forEach(function (a) {
+          var href = a.getAttribute("href");
+          if (!href || href.charAt(0) === "#") return;
+          a.setAttribute("href", withChannel(href));
+        });
+
+        if (!friendRef) return;
         var discount = "APEXFRIEND";
-        function withRef(href) {
+        function withFriend(href) {
           try {
             var u = new URL(href, window.location.href);
             u.searchParams.set("checkout[discount_code]", discount);
-            u.searchParams.set("checkout[custom][ref]", ref);
+            u.searchParams.set("checkout[custom][ref]", friendRef);
             return u.toString();
           } catch (e) {
             return href;
           }
         }
         document.querySelectorAll("a[data-checkout]").forEach(function (a) {
-          a.setAttribute("href", withRef(a.getAttribute("href")));
+          a.setAttribute("href", withFriend(a.getAttribute("href")));
         });
       })();
     })();
