@@ -12,6 +12,24 @@
         https://raw.githubusercontent.com/mrigankgupta/ApexForm-updates/main/appcast.xml
     -->
     <item>
+      <title>Version 1.0.0-beta.6 (Public Beta 6)</title>
+      <sparkle:version>12</sparkle:version>
+      <sparkle:shortVersionString>1.0.0-beta.6</sparkle:shortVersionString>
+      <pubDate>Thu, 01 Oct 2026 12:30:00 +0000</pubDate>
+      <description><![CDATA[
+        <h2>ApexForm Public Beta 6</h2>
+        <ul>
+          <li>Pro checkout uses the live Lemon Squeezy store ($5/mo or $39/yr)</li>
+          <li>New installs get a 3-day full Pro trial, then limited free</li>
+        </ul>
+      ]]></description>
+      <enclosure
+        url="https://github.com/mrigankgupta/ApexForm-updates/releases/download/v1.0.0-beta.6/ApexForm-1.0.0-beta.6.dmg"
+        sparkle:edSignature="wRZ+uQvIumVF6139X8DWAbVW43UZ4iYQS+isRK6nG2i7RV6RDd4xgQHyTILObaohmZ7YmHxkVaw8Ff7FcQo1AA=="
+        length="7470089"
+        type="application/octet-stream" />
+    </item>
+    <item>
       <title>Version 1.0.0-beta.5 (Public Beta 5)</title>
       <sparkle:version>11</sparkle:version>
       <sparkle:shortVersionString>1.0.0-beta.5</sparkle:shortVersionString>
