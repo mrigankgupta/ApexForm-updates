@@ -12,6 +12,25 @@
         https://raw.githubusercontent.com/mrigankgupta/ApexForm-updates/main/appcast.xml
     -->
     <item>
+      <title>Version 1.0.0-beta.7 (Public Beta 7)</title>
+      <sparkle:version>13</sparkle:version>
+      <sparkle:shortVersionString>1.0.0-beta.7</sparkle:shortVersionString>
+      <pubDate>Sun, 04 Oct 2026 18:30:00 +0000</pubDate>
+      <description><![CDATA[
+        <h2>ApexForm Public Beta 7</h2>
+        <ul>
+          <li>On-screen posture card names what slipped (head, shoulders, chest) and stays until you sit back up</li>
+          <li>Settings › Cue as: Sound, On-screen card, or both — card-only is silent for shared offices</li>
+          <li>Clearer Invite a friend wording</li>
+        </ul>
+      ]]></description>
+      <enclosure
+        url="https://github.com/mrigankgupta/ApexForm-updates/releases/download/v1.0.0-beta.7/ApexForm-1.0.0-beta.7.dmg"
+        sparkle:edSignature="uMmbfSUsnGmXDzZ+02aX6RVFADLsmRlaB9azk8FwDQ3JOCAtaHlhkysw5qeUJzA3azTxCm2TSV0hkZYXdxvgDQ=="
+        length="7495630"
+        type="application/octet-stream" />
+    </item>
+    <item>
       <title>Version 1.0.0-beta.6 (Public Beta 6)</title>
       <sparkle:version>12</sparkle:version>
       <sparkle:shortVersionString>1.0.0-beta.6</sparkle:shortVersionString>
