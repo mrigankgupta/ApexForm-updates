@@ -12,6 +12,25 @@
         https://raw.githubusercontent.com/mrigankgupta/ApexForm-updates/main/appcast.xml
     -->
     <item>
+      <title>Version 1.0.0-beta.9 (Public Beta 9)</title>
+      <sparkle:version>15</sparkle:version>
+      <sparkle:shortVersionString>1.0.0-beta.9</sparkle:shortVersionString>
+      <pubDate>Tue, 06 Oct 2026 15:00:00 +0000</pubDate>
+      <description><![CDATA[
+        <h2>ApexForm Public Beta 9</h2>
+        <ul>
+          <li>One referral credit per friend — extra Lemon webhooks no longer stack months</li>
+          <li>Friend invite code vs Activate token are clearly separate in Settings</li>
+          <li>Subscribe links hide once you’re already Pro</li>
+        </ul>
+      ]]></description>
+      <enclosure
+        url="https://github.com/mrigankgupta/ApexForm-updates/releases/download/v1.0.0-beta.9/ApexForm-1.0.0-beta.9.dmg"
+        sparkle:edSignature="5zxKxIksmrMY0sV0JRiPmHAVy+KGwjiOr0bAesd+0SbfyTr4+DTsbkQG1pz8lLabcaAm2vLzghDrguAaYlDZBA=="
+        length="7499019"
+        type="application/octet-stream" />
+    </item>
+    <item>
       <title>Version 1.0.0-beta.8 (Public Beta 8)</title>
       <sparkle:version>14</sparkle:version>
       <sparkle:shortVersionString>1.0.0-beta.8</sparkle:shortVersionString>
