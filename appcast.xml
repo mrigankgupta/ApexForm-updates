@@ -12,6 +12,24 @@
         https://raw.githubusercontent.com/mrigankgupta/ApexForm-updates/main/appcast.xml
     -->
     <item>
+      <title>Version 1.0.0-beta.10 (Public Beta 10)</title>
+      <sparkle:version>16</sparkle:version>
+      <sparkle:shortVersionString>1.0.0-beta.10</sparkle:shortVersionString>
+      <pubDate>Thu, 08 Oct 2026 12:00:00 +0000</pubDate>
+      <description><![CDATA[
+        <h2>ApexForm Public Beta 10</h2>
+        <ul>
+          <li>Squat counting: continuous sets no longer collapse into one discarded rep when you don’t stand back to the exact same height</li>
+          <li>Settings now states the monthly/yearly price and that Pro renews until you cancel</li>
+        </ul>
+      ]]></description>
+      <enclosure
+        url="https://github.com/mrigankgupta/ApexForm-updates/releases/download/v1.0.0-beta.10/ApexForm-1.0.0-beta.10.dmg"
+        sparkle:edSignature="43VHV07DCiMGJckejaNCb8uwgy6HZ14/md39rRYSq+FnAD0bzUKPetfYqckE1Hnkn516UZ4O3qGNaJD0HhYeBw=="
+        length="7422580"
+        type="application/octet-stream" />
+    </item>
+    <item>
       <title>Version 1.0.0-beta.9 (Public Beta 9)</title>
       <sparkle:version>15</sparkle:version>
       <sparkle:shortVersionString>1.0.0-beta.9</sparkle:shortVersionString>
