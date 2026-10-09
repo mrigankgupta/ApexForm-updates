@@ -12,6 +12,25 @@
         https://raw.githubusercontent.com/mrigankgupta/ApexForm-updates/main/appcast.xml
     -->
     <item>
+      <title>Version 1.0.0-beta.12 (Public Beta 12)</title>
+      <sparkle:version>18</sparkle:version>
+      <sparkle:shortVersionString>1.0.0-beta.12</sparkle:shortVersionString>
+      <pubDate>Fri, 09 Oct 2026 12:30:00 +0000</pubDate>
+      <description><![CDATA[
+        <h2>ApexForm Public Beta 12</h2>
+        <ul>
+          <li>Squat breaks now tell you when the camera can’t see you or when someone else is in frame</li>
+          <li>Near-miss hints say exactly what to change — stayed low too long, read as a lean, lost your shoulders</li>
+          <li>A second person in frame pauses counting instead of silently taking over your reps</li>
+        </ul>
+      ]]></description>
+      <enclosure
+        url="https://github.com/mrigankgupta/ApexForm-updates/releases/download/v1.0.0-beta.12/ApexForm-1.0.0-beta.12.dmg"
+        sparkle:edSignature="HTXQT1eVv1F0N81IGAoXOG/B/crLFtJr9G54SXVs9e5/2uPPE60x3uUmjyYXZpjGe0ffFYKwZn5nZXQ2+YlLCQ=="
+        length="7465001"
+        type="application/octet-stream" />
+    </item>
+    <item>
       <title>Version 1.0.0-beta.11 (Public Beta 11)</title>
       <sparkle:version>17</sparkle:version>
       <sparkle:shortVersionString>1.0.0-beta.11</sparkle:shortVersionString>
