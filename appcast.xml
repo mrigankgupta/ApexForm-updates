@@ -22,6 +22,7 @@
           <li>A second person has to stay in frame before posture cues pause</li>
           <li>Switching to AirPods, or putting them away, clears a cue that was already on screen</li>
           <li>A camera calibration no longer keeps saying chin up after that switch</li>
+          <li>Settings closes when you start a calibration, so it does not cover the camera</li>
         </ul>
       ]]></description>
       <enclosure
