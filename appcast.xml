@@ -12,6 +12,44 @@
         https://raw.githubusercontent.com/mrigankgupta/ApexForm-updates/main/appcast.xml
     -->
     <item>
+      <title>Version 1.0.0-beta.16 (Public Beta 16)</title>
+      <sparkle:version>22</sparkle:version>
+      <sparkle:shortVersionString>1.0.0-beta.16</sparkle:shortVersionString>
+      <pubDate>Wed, 14 Oct 2026 07:05:00 +0000</pubDate>
+      <description><![CDATA[
+        <h2>ApexForm Public Beta 16</h2>
+        <ul>
+          <li>A second person has to stay in frame before posture cues pause</li>
+          <li>Switching to AirPods, or putting them away, clears a cue that was already on screen</li>
+          <li>A camera calibration no longer keeps saying chin up after that switch</li>
+        </ul>
+      ]]></description>
+      <enclosure
+        url="https://github.com/mrigankgupta/ApexForm-updates/releases/download/v1.0.0-beta.16/ApexForm-1.0.0-beta.16.dmg"
+        sparkle:edSignature="2NdxX8t6iM44tC2EXCkZ5uIb27d63kR4d2e1Tsb9xlfNL1WJiG3I2f87wyb2hortMaGxYI144tjJk7BNcwoZDQ=="
+        length="7523539"
+        type="application/octet-stream" />
+    </item>
+    <item>
+      <title>Version 1.0.0-beta.15 (Public Beta 15)</title>
+      <sparkle:version>21</sparkle:version>
+      <sparkle:shortVersionString>1.0.0-beta.15</sparkle:shortVersionString>
+      <pubDate>Tue, 13 Oct 2026 04:00:00 +0000</pubDate>
+      <description><![CDATA[
+        <h2>ApexForm Public Beta 15</h2>
+        <ul>
+          <li>Standing time starts when the camera sees you stay standing</li>
+          <li>The standing row says when you still look seated</li>
+          <li>The cue card hint fits on two lines, and the rounded corners stay clear</li>
+        </ul>
+      ]]></description>
+      <enclosure
+        url="https://github.com/mrigankgupta/ApexForm-updates/releases/download/v1.0.0-beta.15/ApexForm-1.0.0-beta.15.dmg"
+        sparkle:edSignature="wVFRFvcR1KOsxfzdizP9niHcBkNijiGoYQuk+whN0E+bOMLrqk/1vEKpuBj/JzWDQD5z69vLIchFamEZdi5gCw=="
+        length="7509223"
+        type="application/octet-stream" />
+    </item>
+    <item>
       <title>Version 1.0.0-beta.14 (Public Beta 14)</title>
       <sparkle:version>20</sparkle:version>
       <sparkle:shortVersionString>1.0.0-beta.14</sparkle:shortVersionString>
