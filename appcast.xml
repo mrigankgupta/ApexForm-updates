@@ -13,7 +13,7 @@
     -->
     <item>
       <title>Version 1.1.0</title>
-      <sparkle:version>27</sparkle:version>
+      <sparkle:version>28</sparkle:version>
       <sparkle:shortVersionString>1.1.0</sparkle:shortVersionString>
       <pubDate>Mon, 16 Nov 2026 12:00:00 +0000</pubDate>
       <description><![CDATA[
@@ -23,12 +23,13 @@
           <li>The cat shows each move: in the welcome tour, on your first squat and twist reset, and after a missed rep</li>
           <li>Sitting back down after a break no longer brings back an old slouch alert</li>
           <li>The slouch mirror stays open until you sit up or leave your seat</li>
+          <li>A long slouch alert no longer fires when you were mostly sitting straight</li>
         </ul>
       ]]></description>
       <enclosure
         url="https://github.com/mrigankgupta/ApexForm-updates/releases/download/v1.1.0/ApexForm-1.1.0.dmg"
-        sparkle:edSignature="E2hcBiwNto3Vr8kA0ektUD8qNEegD/Uw2fFWk8THNbebgmo9PgaoI9PCPbTUbEkmFpvyXJ1pSQlBU3N+NRJGDQ=="
-        length="24104658"
+        sparkle:edSignature="rV1fKPukcuFD0aLBqvIuC4YipickHjySFg9U8IqkZs5sD956h92h15g9o30SrivM+b+cV2tpuYhR7KGeAhnfBg=="
+        length="24105002"
         type="application/octet-stream" />
     </item>
     <item>
