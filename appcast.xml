@@ -12,6 +12,26 @@
         https://raw.githubusercontent.com/mrigankgupta/ApexForm-updates/main/appcast.xml
     -->
     <item>
+      <title>Version 1.1.0</title>
+      <sparkle:version>27</sparkle:version>
+      <sparkle:shortVersionString>1.1.0</sparkle:shortVersionString>
+      <pubDate>Mon, 16 Nov 2026 12:00:00 +0000</pubDate>
+      <description><![CDATA[
+        <h2>ApexForm 1.1.0</h2>
+        <ul>
+          <li>Squat and twist Desk Resets now have a 3D coach cat that moves with you</li>
+          <li>The cat shows each move: in the welcome tour, on your first squat and twist reset, and after a missed rep</li>
+          <li>Sitting back down after a break no longer brings back an old slouch alert</li>
+          <li>The slouch mirror stays open until you sit up or leave your seat</li>
+        </ul>
+      ]]></description>
+      <enclosure
+        url="https://github.com/mrigankgupta/ApexForm-updates/releases/download/v1.1.0/ApexForm-1.1.0.dmg"
+        sparkle:edSignature="E2hcBiwNto3Vr8kA0ektUD8qNEegD/Uw2fFWk8THNbebgmo9PgaoI9PCPbTUbEkmFpvyXJ1pSQlBU3N+NRJGDQ=="
+        length="24104658"
+        type="application/octet-stream" />
+    </item>
+    <item>
       <title>Version 1.0.1</title>
       <sparkle:version>26</sparkle:version>
       <sparkle:shortVersionString>1.0.1</sparkle:shortVersionString>
