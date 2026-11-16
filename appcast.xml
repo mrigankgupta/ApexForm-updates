@@ -13,7 +13,7 @@
     -->
     <item>
       <title>Version 1.1.0</title>
-      <sparkle:version>28</sparkle:version>
+      <sparkle:version>29</sparkle:version>
       <sparkle:shortVersionString>1.1.0</sparkle:shortVersionString>
       <pubDate>Mon, 16 Nov 2026 12:00:00 +0000</pubDate>
       <description><![CDATA[
@@ -24,12 +24,13 @@
           <li>Sitting back down after a break no longer brings back an old slouch alert</li>
           <li>The slouch mirror stays open until you sit up or leave your seat</li>
           <li>A long slouch alert no longer fires when you were mostly sitting straight</li>
+          <li>Every Desk Reset exercise you turn on comes up regularly, including blinks</li>
         </ul>
       ]]></description>
       <enclosure
         url="https://github.com/mrigankgupta/ApexForm-updates/releases/download/v1.1.0/ApexForm-1.1.0.dmg"
-        sparkle:edSignature="rV1fKPukcuFD0aLBqvIuC4YipickHjySFg9U8IqkZs5sD956h92h15g9o30SrivM+b+cV2tpuYhR7KGeAhnfBg=="
-        length="24105002"
+        sparkle:edSignature="EcgrSnA32ZKtBIDiZvpQF55a3FcAs2sTZunN5gAcdL/JlAm314EcPKDTtqoVGKivNQhbTgGPWXFd/ayFmtYmCg=="
+        length="24112316"
         type="application/octet-stream" />
     </item>
     <item>
