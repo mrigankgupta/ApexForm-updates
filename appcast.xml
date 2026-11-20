@@ -12,6 +12,26 @@
         https://raw.githubusercontent.com/mrigankgupta/ApexForm-updates/main/appcast.xml
     -->
     <item>
+      <title>Version 1.1.1</title>
+      <sparkle:version>31</sparkle:version>
+      <sparkle:shortVersionString>1.1.1</sparkle:shortVersionString>
+      <pubDate>Fri, 20 Nov 2026 12:00:00 +0000</pubDate>
+      <description><![CDATA[
+        <h2>ApexForm 1.1.1</h2>
+        <ul>
+          <li>Twists count when a deep turn takes your shoulders out of view</li>
+          <li>The squat cat keeps squatting with you after someone else steps in and out of frame</li>
+          <li>The cat squats for counted reps it couldn't see, like ones below the camera</li>
+          <li>Sitting up closes the slouch mirror even if the camera briefly lost your body</li>
+        </ul>
+      ]]></description>
+      <enclosure
+        url="https://github.com/mrigankgupta/ApexForm-updates/releases/download/v1.1.1/ApexForm-1.1.1.dmg"
+        sparkle:edSignature="2YPm0sVc/C1Lhsp7GxvmXANRrh6G+vNGhOv/ijHPEiGFYQ1M8gCfnfDf2LIzyVlVT5VaZMcDR1NwyqN/0EkmAQ=="
+        length="24129173"
+        type="application/octet-stream" />
+    </item>
+    <item>
       <title>Version 1.1.0</title>
       <sparkle:version>30</sparkle:version>
       <sparkle:shortVersionString>1.1.0</sparkle:shortVersionString>
