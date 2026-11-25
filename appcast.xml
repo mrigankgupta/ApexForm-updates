@@ -12,6 +12,23 @@
         https://raw.githubusercontent.com/mrigankgupta/ApexForm-updates/main/appcast.xml
     -->
     <item>
+      <title>Version 1.2.1</title>
+      <sparkle:version>33</sparkle:version>
+      <sparkle:shortVersionString>1.2.1</sparkle:shortVersionString>
+      <pubDate>Wed, 25 Nov 2026 16:00:00 +0000</pubDate>
+      <description><![CDATA[
+        <h2>ApexForm 1.2.1</h2>
+        <ul>
+          <li>A long slouch brings up the posture mirror even when a close camera only catches your shoulders now and then</li>
+        </ul>
+      ]]></description>
+      <enclosure
+        url="https://github.com/mrigankgupta/ApexForm-updates/releases/download/v1.2.1/ApexForm-1.2.1.dmg"
+        sparkle:edSignature="pONfcVgBRBEWO7dLr8GMywFPvfRd21N9MPNiwbYS6u9AmzYsE/N/pkhcpMA603qFCgd0wLf2lmqle4n6C3SdCQ=="
+        length="25401206"
+        type="application/octet-stream" />
+    </item>
+    <item>
       <title>Version 1.2.0</title>
       <sparkle:version>32</sparkle:version>
       <sparkle:shortVersionString>1.2.0</sparkle:shortVersionString>
