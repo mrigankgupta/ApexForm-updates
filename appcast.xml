@@ -12,6 +12,26 @@
         https://raw.githubusercontent.com/mrigankgupta/ApexForm-updates/main/appcast.xml
     -->
     <item>
+      <title>Version 1.2.0</title>
+      <sparkle:version>32</sparkle:version>
+      <sparkle:shortVersionString>1.2.0</sparkle:shortVersionString>
+      <pubDate>Wed, 25 Nov 2026 12:00:00 +0000</pubDate>
+      <description><![CDATA[
+        <h2>ApexForm 1.2.0</h2>
+        <ul>
+          <li>ApexForm now speaks German, French, Spanish, Italian, Portuguese (Brazil), Japanese and Simplified Chinese</li>
+          <li>Calibration watches about 8 seconds of you sitting the way you work</li>
+          <li>A Done button finishes a Desk Reset when the camera can't see you</li>
+          <li>ApexForm asks "Are you standing?" instead of guessing after the camera or desk moved</li>
+        </ul>
+      ]]></description>
+      <enclosure
+        url="https://github.com/mrigankgupta/ApexForm-updates/releases/download/v1.2.0/ApexForm-1.2.0.dmg"
+        sparkle:edSignature="ikcV1Q5+1WDAL6dLHGdXZcLQ1HdEl2o8DcN1ReIHBxS8B2JThU80DnNqMmHafXyVxFBusMHGcYtulKgaodHCAw=="
+        length="25400263"
+        type="application/octet-stream" />
+    </item>
+    <item>
       <title>Version 1.1.1</title>
       <sparkle:version>31</sparkle:version>
       <sparkle:shortVersionString>1.1.1</sparkle:shortVersionString>
