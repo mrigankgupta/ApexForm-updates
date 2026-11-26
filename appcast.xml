@@ -12,6 +12,24 @@
         https://raw.githubusercontent.com/mrigankgupta/ApexForm-updates/main/appcast.xml
     -->
     <item>
+      <title>Version 1.2.2</title>
+      <sparkle:version>34</sparkle:version>
+      <sparkle:shortVersionString>1.2.2</sparkle:shortVersionString>
+      <pubDate>Thu, 26 Nov 2026 16:00:00 +0000</pubDate>
+      <description><![CDATA[
+        <h2>ApexForm 1.2.2</h2>
+        <ul>
+          <li>ApexForm no longer slows down over a long day when both your Home and Office desks are calibrated</li>
+          <li>Uses less CPU: the menu bar panel stops refreshing while it's closed, and face tracking does less work on each camera frame</li>
+        </ul>
+      ]]></description>
+      <enclosure
+        url="https://github.com/mrigankgupta/ApexForm-updates/releases/download/v1.2.2/ApexForm-1.2.2.dmg"
+        sparkle:edSignature="7jTKV8mvrGndmaUBZA8GtfaLbzebNZ8IVAxOqlJ9lTuE/d5ukL8101vcz6bJmz9uzam47HzwOY4Kwc656feTAw=="
+        length="25403304"
+        type="application/octet-stream" />
+    </item>
+    <item>
       <title>Version 1.2.1</title>
       <sparkle:version>33</sparkle:version>
       <sparkle:shortVersionString>1.2.1</sparkle:shortVersionString>
