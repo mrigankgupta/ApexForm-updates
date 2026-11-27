@@ -12,6 +12,24 @@
         https://raw.githubusercontent.com/mrigankgupta/ApexForm-updates/main/appcast.xml
     -->
     <item>
+      <title>Version 1.2.3</title>
+      <sparkle:version>35</sparkle:version>
+      <sparkle:shortVersionString>1.2.3</sparkle:shortVersionString>
+      <pubDate>Fri, 27 Nov 2026 14:00:00 +0000</pubDate>
+      <description><![CDATA[
+        <h2>ApexForm 1.2.3</h2>
+        <ul>
+          <li>When you lean in so close that the camera loses your shoulders, ApexForm asks you to sit back instead of going quiet</li>
+          <li>Someone else in the room no longer pauses posture cues, only a person right next to you or at your desk spot</li>
+        </ul>
+      ]]></description>
+      <enclosure
+        url="https://github.com/mrigankgupta/ApexForm-updates/releases/download/v1.2.3/ApexForm-1.2.3.dmg"
+        sparkle:edSignature="J0KuzlI2S0ZQ0z3rEnu/+epy3be/Fk8L82/bGrr9PIN4sErpnfHP1b5NBtx3gn7VQGHIMaxDQnUMVEI9CyIJAQ=="
+        length="25415714"
+        type="application/octet-stream" />
+    </item>
+    <item>
       <title>Version 1.2.2</title>
       <sparkle:version>34</sparkle:version>
       <sparkle:shortVersionString>1.2.2</sparkle:shortVersionString>
